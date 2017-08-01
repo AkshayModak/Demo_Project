@@ -1,0 +1,53 @@
+<div ng-include="'final/innerNavbar.html'"></div>
+<div class="container" style="margin-top: 150px;" ng-controller="formula1Controller">
+    <span ng-repeat="f1 in formula1" class="col-xs-4 f1-cards">
+      <md-card>
+        <img ng-src="{{imagePath}}" class="md-card-image" alt="Washed Out">
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">
+              <div class="f1-heading">{{ f1.mainRace.name }},</div>
+              <div class="f1-heading">{{ f1.mainRace.country }}</div>
+            </span>
+            <span class="f1-date-time">On {{ f1.mainRace.date }} at {{ f1.mainRace.time | date:'HH:MM a' }}</span>
+            <span ng-if="f1.isFinished" class="label label-danger">Event Finished</span>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content ng-show="f1.expanded" class="animate-hide">
+          <div class="f1-practice-block">
+            <div class="text-center">
+              <ul class="list-inline">
+                <li class="f1-practice">{{ f1.FIRSTPRACTICE.name }}</li>
+                <li class="f1-practice">{{ f1.FIRSTPRACTICE.date }}</li>
+                <li class="f1-practice">{{ f1.FIRSTPRACTICE.time | date:'HH:MM a' }}</li>
+              </ul>
+            </div>
+            <div class="text-center">
+              <ul class="list-inline">
+                <li class="f1-practice">{{ f1.SECONDPRACTICE.name }}</li>
+                <li class="f1-practice">{{ f1.SECONDPRACTICE.date }}</li>
+                <li class="f1-practice">{{ f1.SECONDPRACTICE.time }}</li>
+              </ul>
+            </div>
+            <div class="text-center">
+              <ul class="list-inline">
+                <li class="f1-practice">{{ f1.THIRDPRACTICE.name }}</li>
+                <li class="f1-practice">{{ f1.THIRDPRACTICE.date }}</li>
+                <li class="f1-practice">{{ f1.THIRDPRACTICE.time }}</li>
+              </ul>
+            </div>
+            <div class="text-center">
+              <ul class="list-inline">
+                <li class="f1-practice">{{ f1.QUALIFYING.name }}</li>
+                <li class="f1-practice">{{ f1.QUALIFYING.date }}</li>
+                <li class="f1-practice">{{ f1.QUALIFYING.time }}</li>
+              </ul>
+            </div>
+          </div>
+        </md-card-content>
+        <md-card-actions layout="row" layout-align="center" ng-click="f1.expanded = !f1.expanded">
+                <md-button class="md-icon-button"><i ng-class="f1.expanded ? 'fa fa-chevron-down' : 'fa fa-chevron-up'" aria-hidden="true"></i></md-button>
+        </md-card-actions>
+        </div>
+      </md-card>
+    </span>

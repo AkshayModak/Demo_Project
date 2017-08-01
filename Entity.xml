@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<entity-def>
+    <table name="TestEntityReader">
+        <column name="Id" data-type="int" primary-key="true" distinct="true"/>
+        <column name="TestColumn1" data-type="varchar(255)"/>
+        <column name="TestColumn2" data-type="varchar(155)"/>
+        <column name="TestColumn3" data-type="varchar(55)"/>
+        <column name="TestColumn4" data-type="varchar(10)"/>
+    </table>
+    <table name="TestEntityReader1">
+        <column name="Id" data-type="int" primary-key="true" distinct="true"/>
+        <column name="TestColumn1" data-type="varchar(255)"/>
+        <column name="TestColumn2" data-type="varchar(155)"/>
+        <column name="TestColumn3" data-type="varchar(55)"/>
+        <column name="TestColumn4" data-type="varchar(10)"/>
+        <column name="TestColumn5" data-type="varchar(525)"/>
+        <column name="TestColumn6" data-type="varchar(101)"/>
+    </table>
+    <table name="TestEntityReader2">
+        <column name="Id" data-type="int" primary-key="true" distinct="true"/>
+        <column name="TestColumn1" data-type="varchar(255)"/>
+        <column name="TestColumn2" data-type="varchar(155)"/>
+        <column name="TestColumn3" data-type="varchar(55)"/>
+        <column name="TestColumn4" data-type="varchar(10)"/>
+        <column name="TestColumn5" data-type="varchar(525)"/>
+        <column name="TestColumn6" data-type="varchar(101)"/>
+        <column name="TestColumn7" data-type="int"/>
+        <column name="TestColumn8" data-type="varchar(11)"/>
+    </table>
+    <table name="FinalTest1">
+        <column name="Id" data-type="int"/>
+        <column name="TestColumn1" data-type="varchar(255)"/>
+        <column name="TestColumn2" data-type="varchar(155)"/>
+        <column name="TestColumn3" data-type="varchar(55)"/>
+        <column name="TestColumn4" data-type="varchar(10)"/>
+    </table>
+    <table name="InsertTest">
+        <column name="id" data-type="int"/>
+        <column name="country" data-type="varchar(80)"/>
+        <column name="city" data-type="varchar(80)"/>
+        <column name="location" data-type="varchar(255)"/>
+        <column name="time" data-type="varchar(100)"/>
+    </table>
+    <table name="Formula1_Race_Type">
+        <column name="id" data-type="int" auto-increment="true" primary-key="true"/>
+        <column name="raceType" data-type="varchar(25)"/>
+        <column name="description" data-type="varchar(80)"/>
+    </table>
+</entity-def>

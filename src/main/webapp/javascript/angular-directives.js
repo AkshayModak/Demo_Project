@@ -1,0 +1,76 @@
+
+
+
+/*http://www.folio3.com/blog/angularjs-file-upload-example-tutorial/*/
+myApp.directive('demoFileModel', function ($parse) {
+        return {
+            restrict: 'A', //the directive can be used as an attribute only
+ 
+            /*
+             link is a function that defines functionality of directive
+             scope: scope associated with the element
+             element: element on which this directive used
+             attrs: key value pair of element attributes
+             */
+            link: function (scope, element, attrs) {
+                var model = $parse(attrs.demoFileModel),
+                    modelSetter = model.assign; //define a setter for demoFileModel
+ 
+                //Bind change event on the element
+                element.bind('change', function () {
+                    //Call apply on scope, it checks for value changes and reflect them on UI
+                    scope.$apply(function () {
+                        //set the model value
+                        modelSetter(scope, element[0].files[0]);
+                    });
+                });
+            }
+        };
+    });
+
+
+
+myApp.directive('slideable', function () {
+    return {
+        restrict:'C',
+        compile: function (element, attr) {
+            // wrap tag
+            var contents = element.html();
+            element.html('<div class="slideable_content"_{{$index}} style="margin:0 !important; padding:0 !important" >' + contents + '</div>');
+
+            return function postLink(scope, element, attrs) {
+                // default properties
+                attrs.duration = (!attrs.duration) ? '.5s' : attrs.duration;
+                attrs.easing = (!attrs.easing) ? 'ease-in-out' : attrs.easing;
+                element.css({
+                    'overflow': 'hidden',
+                    'height': '0px',
+                    'transitionProperty': 'height',
+                    'transitionDuration': attrs.duration,
+                    'transitionTimingFunction': attrs.easing
+                });
+            };
+        }
+    };
+})
+.directive('slideToggle', function() {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var target = document.querySelector(attrs.slideToggle);
+            attrs.expanded = false;
+            element.bind('click', function() {
+                var content = target.querySelector('.slideable_content_{{$index}}');
+                if(!attrs.expanded) {
+                    content.style.border = '1px solid rgba(0,0,0,0)';
+                    var y = content.clientHeight;
+                    content.style.border = 0;
+                    target.style.height = y + 'px';
+                } else {
+                    target.style.height = '0px';
+                }
+                attrs.expanded = !attrs.expanded;
+            });
+        }
+    }
+});

@@ -36,8 +36,9 @@ public class Formula1Helper {
 			String date = (String) DefaultObjects.formatDate((String) f1ScheduleMap.get("date"));
 			String time = (String) DefaultObjects.formatTimeForFrontEnd((String) f1ScheduleMap.get("time"));
 			String raceType = (String) f1ScheduleMap.get("race_type_id");
+			String imagePath = (String) f1ScheduleMap.get("imagePath");
 			
-			formula1Map.put("mainRace", f1First.getF1MainRace(id, name, city, country, date, time, raceType));
+			formula1Map.put("mainRace", f1First.getF1MainRace(id, name, city, country, date, time, raceType, imagePath));
 			
 			Map<String, Object> formula1Params = new HashMap<String, Object>();
 			formula1Params.put("formula_one_id", id);
@@ -84,8 +85,9 @@ public class Formula1Helper {
 			String date = (String) f1ScheduleMap.get("date");
 			String time = (String) f1ScheduleMap.get("time");
 			String raceType = (String) f1ScheduleMap.get("race_type_id");
+			String imagePath = (String) f1ScheduleMap.get("imagePath");
 			
-			formula1Map.put("result", f1First.getF1MainRace(formulaOneId, name, city, country, date, time, raceType));
+			formula1Map.put("result", f1First.getF1MainRace(formulaOneId, name, city, country, date, time, raceType, imagePath));
 			
 			formula1List.add(formula1Map);
 			Map<String, Object> formula1Params = new HashMap<String, Object>();
@@ -125,6 +127,7 @@ public class Formula1Helper {
 		String formulaOneId = params.get("formulaOneId").get(0);
 		String time = params.get("time").get(0);
 		String name = params.get("name").get(0);
+		String imagePath = params.getFirst("imagePath");
 		
 		if (params.get("formulaOnePracticeId") != null) {
 			String formulaOnePracticeId = params.get("formulaOnePracticeId").get(0);
@@ -144,6 +147,7 @@ public class Formula1Helper {
 		queryMap.put("time", time);
 		queryMap.put("date", date);
 		queryMap.put("race_type_id", raceType);
+		queryMap.put("imagePath", imagePath);
 		
 		DatabaseUtils du = new DatabaseUtils();
 		
@@ -165,6 +169,7 @@ public class Formula1Helper {
 		String raceType = params.get("raceType").get(0);
 		String time = params.get("time").get(0);
 		String name = params.get("name").get(0);
+		String imagePath = params.getFirst("imagePath");
 		if (params.get("city") != null) {
 			String city = params.get("city").get(0);
 			queryMap.put("city", city);
@@ -177,6 +182,7 @@ public class Formula1Helper {
 		queryMap.put("time", time);
 		queryMap.put("date", date);
 		queryMap.put("race_type_id", raceType);
+		queryMap.put("imagePath", imagePath);
 		
 		DatabaseUtils du = new DatabaseUtils();
 		

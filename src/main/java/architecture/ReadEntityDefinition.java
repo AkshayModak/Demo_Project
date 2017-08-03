@@ -35,6 +35,7 @@ public class ReadEntityDefinition {
 	Connection conn;
 	private Map<String, Object> tablesMap = new HashMap<String, Object>();
 	
+	private String nextrr_home = System.getProperty("user.dir") + "/";
 	private void setDBUrl() {
 		DB_URL = "jdbc:mysql://" + HOST + "/" + DATABASE_NAME;
 	}
@@ -76,8 +77,8 @@ public class ReadEntityDefinition {
 
 		Map<String, Object> nodeResult = new HashMap<String, Object>();
 		try {
-			
-	    	File file = new File("/home/akshay/Java/RestCheck/Entity.xml");
+			String fileName = nextrr_home + "Entity.xml";
+			File file = new File(fileName);
 			DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			Document doc = dBuilder.parse(file);
 			
@@ -480,7 +481,8 @@ public class ReadEntityDefinition {
 	}
 	
 	public String createTable() {
-		Map<String, Object> setupConfig = ReadXMLFile.getXMLData("/home/akshay/Java/RestCheck/setup.xml");
+		String fileName = nextrr_home + "setup.xml";
+		Map<String, Object> setupConfig = ReadXMLFile.getXMLData(fileName);
 		USER = (String) setupConfig.get("username");
 		PASS = (String) setupConfig.get("password");
 		DATABASE_NAME = (String) setupConfig.get("database-name");

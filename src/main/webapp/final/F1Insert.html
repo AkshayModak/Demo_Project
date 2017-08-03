@@ -11,6 +11,7 @@
 <script src="javascript/angular-controllers.js"></script>
 <script src="javascript/angular-services.js"></script>
 <script src="javascript/angular-directives.js"></script>
+<script src="javascript/ng-infinite-scroll.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
@@ -42,6 +43,7 @@
                     <th>Time</th>
                     <th>Date</th>
                     <th>Race Type</th>
+                    <th>Image Path</th>
                     <th>Action</th>
 				</tr>
 			</thead>
@@ -87,19 +89,24 @@
 					     <md-option ng-repeat="raceType in raceTypes.result" value="{{ raceType.raceType }}" ng-selected="f1.result.type == raceType.raceType">{{ raceType.description }}</md-option>
 					   </md-select>
 					</td>
+					<td>
+					   <md-input-container class="md-icon-float md-block">
+					       <input ng-disabled="f1.result.type != 'MAINRACE'" ng-model="f1.result.imagePath" type="text"/>
+					   </md-input-container>
+					</td>
                      <td>
                        <ul class="list-inline">
-                         <li ng-if="f1.addBtn">
+                         <li ng-if="f1.addBtn" style="padding: 0;">
                            <button type="submit" class="btn btn-link" ng-click="createF1(f1.result)">
                              <i class="fa fa-plus" aria-hidden="true"></i>
                            </button>
                          </li>
-                         <li ng-if="!f1.addBtn">
+                         <li ng-if="!f1.addBtn" style="padding: 0;">
                            <button type="submit" class="btn btn-link" ng-click="practice(f1.result)">
                              <i class="fa fa-refresh" aria-hidden="true"></i>
                            </button>
                          </li>
-                         <li ng-if="!f1.addBtn">
+                         <li ng-if="!f1.addBtn" style="padding: 0;">
                            <button type="submit" class="btn btn-link" ng-click="removeF1(f1.result)">
                              <i class="fa fa-times" aria-hidden="true"></i>
                            </button>

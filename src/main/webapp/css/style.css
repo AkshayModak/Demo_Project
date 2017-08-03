@@ -204,6 +204,10 @@ md-input-container { margin: 0 0 !important; }
 	font-family: 'Fira Sans', sans-serif;
 }
 
+.f1-cards{
+	padding: 0;
+}
+
 .animate-hide {
  -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) .1s;
   -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) .1s;
@@ -331,9 +335,23 @@ footer {
 }
 
 @media (min-width: 768px) {
-    .cricket-bar { margin-left: 20% !important; }
+    .cricket-menubar { position: fixed; background-color: white; z-index: 999; }
 }
 
 @media (max-width: 767px) {
-    .cricket-bar > li > a.btn { padding: 6px 6px !important; }
+    .cricket-menubar > li > a.btn { padding: 6px 6px !important; }
+}
+
+.cricket-head {
+	background-color: #707070;
+}
+
+.cricket-row {
+	transition: all .1s ease-in-out;
+	font-weight: bold;
+}
+
+.cricket-row:hover {
+	background-color:  #F5F5F5;
+	transform: scale(1.1);
 }

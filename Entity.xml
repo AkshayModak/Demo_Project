@@ -1,49 +1,50 @@
 <?xml version="1.0"?>
 <entity-def>
-    <table name="TestEntityReader">
-        <column name="Id" data-type="int" primary-key="true" distinct="true"/>
-        <column name="TestColumn1" data-type="varchar(255)"/>
-        <column name="TestColumn2" data-type="varchar(155)"/>
-        <column name="TestColumn3" data-type="varchar(55)"/>
-        <column name="TestColumn4" data-type="varchar(10)"/>
-    </table>
-    <table name="TestEntityReader1">
-        <column name="Id" data-type="int" primary-key="true" distinct="true"/>
-        <column name="TestColumn1" data-type="varchar(255)"/>
-        <column name="TestColumn2" data-type="varchar(155)"/>
-        <column name="TestColumn3" data-type="varchar(55)"/>
-        <column name="TestColumn4" data-type="varchar(10)"/>
-        <column name="TestColumn5" data-type="varchar(525)"/>
-        <column name="TestColumn6" data-type="varchar(101)"/>
-    </table>
-    <table name="TestEntityReader2">
-        <column name="Id" data-type="int" primary-key="true" distinct="true"/>
-        <column name="TestColumn1" data-type="varchar(255)"/>
-        <column name="TestColumn2" data-type="varchar(155)"/>
-        <column name="TestColumn3" data-type="varchar(55)"/>
-        <column name="TestColumn4" data-type="varchar(10)"/>
-        <column name="TestColumn5" data-type="varchar(525)"/>
-        <column name="TestColumn6" data-type="varchar(101)"/>
-        <column name="TestColumn7" data-type="int"/>
-        <column name="TestColumn8" data-type="varchar(11)"/>
-    </table>
-    <table name="FinalTest1">
-        <column name="Id" data-type="int"/>
-        <column name="TestColumn1" data-type="varchar(255)"/>
-        <column name="TestColumn2" data-type="varchar(155)"/>
-        <column name="TestColumn3" data-type="varchar(55)"/>
-        <column name="TestColumn4" data-type="varchar(10)"/>
-    </table>
-    <table name="InsertTest">
-        <column name="id" data-type="int"/>
-        <column name="country" data-type="varchar(80)"/>
-        <column name="city" data-type="varchar(80)"/>
-        <column name="location" data-type="varchar(255)"/>
-        <column name="time" data-type="varchar(100)"/>
-    </table>
+    <!--
+        **** Example code to write entity defintion ****
+            <table name="TestEntityReader">
+                <column name="Id" data-type="int" primary-key="true" distinct="true" null="false" auto-increment="true"/>
+                <column name="TestColumn1" data-type="varchar" column-size="1" null="false"/>
+                <column name="TestColumn2" data-type="int" null="false"/>
+                <column name="TestColumn3" data-type="varchar" column-size="3"/>
+                <column name="TestColumn4" data-type="varchar" column-size="4"/>
+                <column name="TestColumn5" data-type="varchar" column-size="5" null="false"/>
+                <column name="TestColumn6" data-type="varchar" column-size="7"/>
+            </table>
+    -->
     <table name="Formula1_Race_Type">
         <column name="id" data-type="int" auto-increment="true" primary-key="true"/>
-        <column name="raceType" data-type="varchar(25)"/>
-        <column name="description" data-type="varchar(80)"/>
+        <column name="raceType" data-type="varchar" column-size="25"/>
+        <column name="description" data-type="varchar" column-size="80"/>
+    </table>
+    <table name="formula_one">
+        <column name="formula_one_id" data-type="int" null="false" primary-key="true" auto-increment="true"/>
+        <column name="name" data-type="varchar" column-size="50"/>
+        <column name="city" data-type="varchar" column-size="30"/>
+        <column name="country" data-type="varchar" column-size="20"/>
+        <column name="date" data-type="varchar" column-size="255"/>
+        <column name="time" data-type="varchar" column-size="255"/>
+        <column name="race_type_id" data-type="varchar" column-size="50"/>
+        <column name="imagePath" data-type="varchar" column-size="255"/>
+    </table>
+    <table name="formula_one_practice">
+        <column name="formula_one_practice_id" data-type="int" null="false" primary-key="true" auto-increment="true"/>
+        <column name="formula_one_id" data-type="int" null="false"/>
+        <column name="date" data-type="varchar" column-size="255"/>
+        <column name="time" data-type="varchar" column-size="255"/>
+        <column name="race_type_id" data-type="varchar" column-size="80"/>
+        <column name="name" data-type="varchar" column-size="255"/>
+    </table>
+    <table name="movies">
+        <column name="movie_id" data-type="int" null="false" primary-key="true" auto-increment="true"/>
+        <column name="movie_type_id" data-type="varchar" column-size="10" null="false"/>
+        <column name="movie_name" data-type="varchar" column-size="100" null="false"/>
+        <column name="release_date" data-type="varchar" column-size="255" null="false"/>
+        <column name="trailer_link" data-type="varchar" column-size="255"/>
+        <column name="cast" data-type="varchar" column-size="255"/>
+    </table>
+    <table name="movie_type">
+        <column name="movie_type_id" data-type="varchar" column-size="15" null="false" primary-key="true"/>
+        <column name="description" data-type="varchar" column-size="15" null="false"/>
     </table>
 </entity-def>

@@ -1,5 +1,5 @@
 
-var myApp = angular.module("myModule", ["ui.router",'ngAnimate', 'ngSanitize', "ui.bootstrap", "ngMaterial", "ngMessages"]);
+var myApp = angular.module("myModule", ["ui.router",'ngAnimate', 'ngSanitize', "ui.bootstrap", "ngMaterial", "ngMessages", "infinite-scroll"]);
 
 /*myApp.run(function($rootScope, $templateCache) {
 	$rootScope.$on('$viewContentLoaded', function() {
@@ -13,8 +13,12 @@ var myApp = angular.module("myModule", ["ui.router",'ngAnimate', 'ngSanitize', "
    $scope.loader=true;
 });*/
 
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 myApp.controller('navbarController', function ($scope) {
-	  $scope.isNavCollapsed = true;
+	  $scope.isNavCollapsed = false;
 	  $scope.isCollapsed = false;
 	  $scope.isCollapsedHorizontal = false;
 });
@@ -54,7 +58,11 @@ var cricketController = function($scope, APIService, ModalService, $http, $uibMo
 	
 	$scope.selectedTeam = $stateParams.teamId;
 	$scope.expanded = false;
-	console.log(location);
+
+	$scope.expandDropdown = function(expanded, index) {
+		$scope.expanded = !expanded;
+		$scope.dropdown_index = index;
+	}
 }
 
 var moviesController = function($scope, APIService, ModalService, $http, $uibModal, $stateParams) {
@@ -67,7 +75,6 @@ var moviesController = function($scope, APIService, ModalService, $http, $uibMod
 	}
 	
 	$scope.showAllMovies = function(movies) {
-		console.log(movies);
 		var today = new Date();
 		today.setHours(0,0,0,0);
 		if ($scope.released) {
@@ -91,8 +98,15 @@ var moviesController = function($scope, APIService, ModalService, $http, $uibMod
             "params": {movieType: movieType},
         }).success(function(data) {
         	var colors = ['#1a237e', '#880e4f', '#4a148c', '#004d40', '#6d4c41', '#455a64'];
+			data.sort(function(a, b) {
+				// Turn your strings into dates, and then subtract them
+				// to get a value that is either negative, positive, or
+				// zero.
+				return new Date(a.releaseDate) - new Date(b.releaseDate);
+			});
         	for (i = 0; i < data.length; i++) {
-            	data[i].movieColor = colors[i];
+var randomColor = getRandomInt(0, 4);
+				data[i].movieColor = colors[randomColor];
             	var today = new Date();
             	today.setHours(0,0,0,0);
             	var releaseDate = new Date(data[i].releaseDate);
@@ -146,7 +160,6 @@ var editMoviesController = function($scope, APIService, $http) {
     getMoviesToEdit();
     
     $scope.setMovie=function(movie){
-    	console.log(movie);
         APIService.doApiCall({
             "req_name": "setMovie",
             "params": {"movieName":movie.movieName,"releaseDate":movie.releaseDate, "cast": movie.cast, "trailer":movie.trailer, "movieType": movie.movieType}
@@ -161,7 +174,6 @@ var editMoviesController = function($scope, APIService, $http) {
     }
     
     $scope.removeMovie = function(movie) {
-    	console.log(movie.isDelete);
     	if (movie.isDelete) {
 	    	APIService.doApiCall({
 	            "req_name": "removeMovie",
@@ -180,7 +192,6 @@ var editMoviesController = function($scope, APIService, $http) {
     }
     
     $scope.updateMovie=function(movie){
-    	console.log(movie);
         APIService.doApiCall({
             "req_name": "updateMovie",
             "params": {"movieName":movie.movieName,"releaseDate":movie.releaseDate, "cast": movie.cast, "trailer":movie.trailer, "movieId": movie.movieId, "movieType": movie.movieType}
@@ -247,7 +258,6 @@ var formula1Controller = function($scope, APIService, $http) {
         	if (data[i].FIRSTPRACTICE != null || data[i].FIRSTPRACTICE != undefined) {
         		var firstPracticeDate = new Date(data[i].FIRSTPRACTICE.date);
         		data[i].FIRSTPRACTICE.date = firstPracticeDate.getDate() + " " + monthNames[firstPracticeDate.getMonth()];
-        		console.log(firstPracticeDate);
         	}
         	var raceDate = mainRaceDate.getDate();
         	var currentDate = new Date().getDate();
@@ -258,8 +268,6 @@ var formula1Controller = function($scope, APIService, $http) {
         }
         $scope.formula1 = data;
     });
-    
-    $scope.imagePath = "images/flags/canadaFlag.png";
 }
 
 myApp.controller("isrcorders", function($scope, $http, APIService, $filter) {
@@ -284,13 +292,11 @@ myApp.controller("isrcorders", function($scope, $http, APIService, $filter) {
     getFormula1ToEdit();
     
     $scope.practice=function(f1){
-    	console.log(f1.image);
-    	
         APIService.doApiCall({
             "req_name": "updateF1Practice",
             "params": {"time":f1.time,"date":f1.date, "raceType": f1.type,
             	"formulaOneId":f1.id, "formulaOnePracticeId":f1.practiceId, "name":f1.name, "country": f1.country,
-            	"city":f1.city}
+                "city":f1.city, "imagePath": f1.imagePath}
         }).success(function(data) {
         	if (data != null || data != "") {
             	$scope.alerts = [{ type: 'success', msg: 'Nice! Record Updated Successfully.' }];
@@ -304,10 +310,9 @@ myApp.controller("isrcorders", function($scope, $http, APIService, $filter) {
     }
     
     $scope.createF1=function(f1){
-    	console.log("===========f1.image============"+f1.image);
         APIService.doApiCall({
             "req_name": "setF1Schedule",
-            "params": {"time":f1.time,"date":f1.date, "raceType": f1.type, "name":f1.name, "country": f1.country, "city":f1.city, "formula1Id": f1.id}
+            "params": {"time":f1.time,"date":f1.date, "raceType": f1.type, "name":f1.name, "country": f1.country, "city":f1.city, "formula1Id": f1.id, "imagePath": f1.imagePath}
         }).success(function(data) {
         	if (data != null || data != "") {
             	$scope.alerts = [{ type: 'success', msg: 'Nice! Record Updated Successfully.' }];

@@ -9,26 +9,50 @@
         </li>
     </ul>
   </div>
-  <div class="container">
-      <table class="table" style="margin-top: 100px;">
-          <thead>
-              <tr class="cricket-head">
-                  <th>Match</th>
-                  <th>Between</th>
-                  <th>Location</th>
-                  <th>Date</th>
-                  <th>Time</th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr class="cricket-row">
-                  <td>1st Test</td>
-                  <td>India vs Srilanka</td>
-                  <td>Pallekele International Cricket Stadium, Pallekele</td>
-                  <td>Jul 21, Fri - Jul 22, Sat</td>
-                  <td>8:30PM IST</td>
-              </tr>
-          </tbody>
-      </table>
+  <div class="container-fluid" style="margin-top: 100px;">
+      <div class="col-xs-2">
+        <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" md-whiteframe="4">
+            <md-toolbar class="md-theme-indigo">
+                <h1 class="md-toolbar-tools sidenav-heading">Sidenav Left</h1>
+            </md-toolbar>
+            <md-content>
+                <div style="border-bottom: 1px solid grey;">
+                    <md-button class="dropdown" style="margin: 0; padding:0; width:100%;" ng-click="expandDropdown(expanded, 0)">Australia</md-button>
+                    <ul class="list-unstyled" ng-class="expanded && dropdown_index == 0 ? 'show-sidenav-dropdown' : 'hide-sidenav-dropdown'">
+                        <li><md-button style="margin: 0; padding:0; width:100%;">Big Bash</md-button></li>
+                    </ul>
+                </div>
+                <div>
+                    <md-button class="dropdown" style="margin: 0; padding:0; width:100%;" ng-click="expandDropdown(expanded, 1)">India</md-button>
+                    <ul class="list-unstyled" ng-class="expanded && dropdown_index == 1 ? 'show-sidenav-dropdown' : 'hide-sidenav-dropdown'">
+                        <li><md-button style="margin: 0; padding:0; width:100%;">Indian Premier League</md-button></li>
+                    </ul>
+                </div>
+            </md-content>
+
+            </md-sidenav>
+        </div>
+      <div class="col-xs-10">
+          <table class="table" style="width: 80% !important; float:center;">
+              <thead>
+                  <tr class="cricket-head">
+                      <th style="color:white">Match</th>
+                      <th style="color:white">Between</th>
+                      <th style="color:white">Location</th>
+                      <th style="color:white">Date</th>
+                      <th style="color:white">Time</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr class="cricket-row">
+                      <td>1st Test</td>
+                      <td>India vs Srilanka</td>
+                      <td>Pallekele International Cricket Stadium, Pallekele</td>
+                      <td>Jul 21, Fri - Jul 22, Sat</td>
+                      <td>8:30PM IST</td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
     </div>
 </div>

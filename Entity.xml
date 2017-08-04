@@ -47,4 +47,19 @@
         <column name="movie_type_id" data-type="varchar" column-size="15" null="false" primary-key="true"/>
         <column name="description" data-type="varchar" column-size="15" null="false"/>
     </table>
+    <table name="cricket_international">
+        <column name="cricket_intl_id" data-type="int" null="false" primary-key="true" auto-increment="true"/>
+        <column name="crckt_match_type" data-type="varchar" column-size="55" null="false"/>
+        <column name="team1" data-type="varchar" column-size="20" null="false"/>
+        <column name="team2" data-type="varchar" column-size="20" null="false"/>
+        <column name="stadium" data-type="varchar" column-size="60" null="false"/>
+        <column name="city" data-type="varchar" column-size="30" null="false"/>
+        <column name="country" data-type="varchar" column-size="30" null="false"/>
+        <column name="match_from_date" data-type="varchar" column-size="255"/>
+        <column name="match_to_date" data-type="varchar" column-size="255"/>
+    </table>
+    <table name="crckt_match_type">
+        <column name="crckt_match_type_id" data-type="varchar" column-size="15" null="false" primary-key="true"/>
+        <column name="description" data-type="varchar" column-size="55" null="false"/>
+    </table>
 </entity-def>

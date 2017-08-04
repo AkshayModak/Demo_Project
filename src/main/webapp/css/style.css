@@ -303,9 +303,9 @@ md-tabs.md-default-theme md-ink-bar, md-tabs md-ink-bar {
     background-color: black !important;
 }
 
-md-toolbar {
+/* md-toolbar {
     background-color: white !important;
-}
+} */
 
 md-toolbar > md-tabs > md-tabs-wrapper { background-color: black !important; color: white;}
 md-tab-item:hover { background-color: #F0F0F0 !important; color: black !important; }
@@ -343,7 +343,7 @@ footer {
 }
 
 .cricket-head {
-	background-color: #707070;
+	background-color: #2E353D;
 }
 
 .cricket-row {
@@ -354,4 +354,21 @@ footer {
 .cricket-row:hover {
 	background-color:  #F5F5F5;
 	transform: scale(1.1);
+}
+
+.sidenav-heading {
+	background-color: #2e353d;
+}
+
+.show-sidenav-dropdown {
+	height:0;
+	visibility:hidden;
+	margin:0;
+	overflow:hidden;
+	transition: all .1s ease-in-out;
+}
+
+.hide-sidenav-dropdown {
+    height: auto;
+    transition: all .1s ease-in-out;
 }

@@ -3,3 +3,5 @@ runtime/logs/nextrr-success.log
 .gradle/
 bin/
 build/
+.settings/
+.classpath

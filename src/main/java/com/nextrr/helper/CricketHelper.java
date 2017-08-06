@@ -169,7 +169,9 @@ public class CricketHelper {
 		queryMap.put("cricket_id", cricketId);
 		queryMap.put("sports_child_type_id", sportsChildTypeId);
 		queryMap.put("team_one_geoId", teamOneGeoId);
-		queryMap.put("team_two_geoId", teamTwoGeoId);
+        if (!"N/A".equals(teamTwoGeoId)) {
+            queryMap.put("team_two_geoId", teamTwoGeoId);
+        }
 		queryMap.put("stadium", stadium);
 		queryMap.put("city", city);
 		queryMap.put("time", time);

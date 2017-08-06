@@ -124,6 +124,9 @@ var editCricketController = function($scope, APIService, $http, $uibModal, $stat
     }
 
     $scope.updateCricket=function(cricket){
+        if ("Invalid Date" == cricket.match_to_date) {
+            cricket.match_to_date = "N/A";
+        }
         APIService.doApiCall({
             "req_name": "updateCricket",
             "params": {"cricketId": cricket.cricket_id, "teamOneId":cricket.team_one_geoId,"teamTwoId":cricket.team_two_geoId, "stadium": cricket.stadium, "city":cricket.city, "matchNumber": cricket.match_number,

@@ -68,7 +68,9 @@
     <table name="country_assoc">
         <column name="country_assoc_id" data-type="int" null="false" primary-key="true" auto-increment="true"/>
         <column name="country_id" data-type="varchar" column-size="15" null="false"/>
+        <column name="description" data-type="varchar" column-size="255" null="false"/>
         <column name="sports_type_id" data-type="varchar" column-size="55" null="false"/>
+        <column name="small_flag_path" data-type="varchar" column-size="255" null="true"/>
     </table>
     <table name="sports_type">
         <column name="sports_type_id" data-type="varchar" column-size="15" null="false" primary-key="true"/>
@@ -79,8 +81,20 @@
         <column name="description" data-type="varchar" column-size="55" null="false"/>
     </table>
     <table name="validation">
-        <column name="validation_id" data-type="int" column-size="15" null="false" primary-key="true" auto-increment="true"/>
+        <column name="validation_id" data-type="int" null="false" primary-key="true" auto-increment="true"/>
         <column name="validation_type_id" data-type="varchar" column-size="15" null="false"/>
         <column name="regex" data-type="varchar" column-size="255" null="false"/>
+    </table>
+    <table name="cricket_assoc">
+        <column name="cricket_assoc_id" data-type="int" null="false" primary-key="true" auto-increment="true"/>
+        <column name="country_geo_id" data-type="varchar" column-size="10" null="false"/>
+        <column name="sports_league_id" data-type="varchar" column-size="10" null="false"/>
+    </table>
+    <table name="sports_league">
+        <column name="sports_league_id" data-type="varchar" column-size="10" null="false" primary-key="true"/>
+        <column name="country_geo_id" data-type="varchar" column-size="10" null="false"/>
+        <column name="description" data-type="varchar" column-size="255" null="false"/>
+        <column name="from_date" data-type="varchar" column-size="255"/>
+        <column name="to_date" data-type="varchar" column-size="255"/>
     </table>
 </entity-def>

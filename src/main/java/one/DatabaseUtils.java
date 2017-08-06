@@ -8,6 +8,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import com.nextrr.helper.Formula1Helper;
 
 import architecture.ReadEntityDefinition;
@@ -109,7 +111,7 @@ public class DatabaseUtils {
 		String columnNames = "";
 		while (columnEntries.hasNext()) {
 		    Map.Entry<String, Object> entry = columnEntries.next();
-		    	columnNames += entry.getKey() + " = '" + entry.getValue() + "'";
+		        columnNames += entry.getKey() + " = '" + NextrrUtils.escapeMetaCharacters((String) entry.getValue()) + "'";
 			    if (columnEntries.hasNext()) {
 			    	columnNames = columnNames + ", ";
 			    } else {

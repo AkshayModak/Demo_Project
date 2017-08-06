@@ -37,4 +37,18 @@ public class GenericHelper {
 		DebugWrapper.logInfo("getCountriesBySports finished running", className);
 		return new Gson().toJson(countryGeoList);
 	}
+
+	public String getCountryAssoc(String sport) {
+		DebugWrapper.logInfo("Initiating getCountryAssoc of GenericHelper", className);
+		ArrayList<Map> formula1List = new ArrayList<Map>();
+		DatabaseUtils dbUtils = new DatabaseUtils();
+
+		Map<String, Object> conditionParams = new HashMap<String, Object>();
+		conditionParams.put("sports_type_id", sport);
+		Map<String, Object> countryAssoc = dbUtils.getEntityDataWithConditions("country_assoc", conditionParams);
+		List<Object> countryAssocList = (List) countryAssoc.get("result");
+
+		DebugWrapper.logInfo("getCountryAssoc finished running", className);
+		return new Gson().toJson(countryAssocList);
+	}
 }

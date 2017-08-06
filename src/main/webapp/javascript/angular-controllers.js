@@ -57,9 +57,22 @@ var cricketController = function($scope, APIService, ModalService, $http, $uibMo
     /*$scope.selectedTeam = $stateParams.teamId;*/
     $scope.expanded = false;
 
+    $scope.filterCricket = function(string) {
+        $scope.filterString = string;
+    }
+
     $scope.expandDropdown = function(expanded, index) {
         $scope.expanded = !expanded;
         $scope.dropdown_index = index;
+    }
+
+    getCricketCountries = function() {
+        APIService.doApiCall({
+            "req_name": "getCountryAssoc",
+            "params": {"sports_type_id": "CRICKET"}
+        }).success(function(data) {
+            $scope.teams = data;
+        });
     }
 
     getIntlCricket = function() {
@@ -70,6 +83,7 @@ var cricketController = function($scope, APIService, ModalService, $http, $uibMo
             $scope.cricketList = data.result;
         });
     }
+    getCricketCountries();
     getIntlCricket();
 }
 

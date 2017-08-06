@@ -35,15 +35,11 @@ dependencies {
     // http://logging.apache.org/log4j/2.x/maven-artifacts.html
     compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.8.2'
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.8.2'
-    
-    
-    
-    
+    // https://mvnrepository.com/artifact/commons-lang/commons-lang
+    compile group: 'commons-lang', name: 'commons-lang', version: '2.6'
     
     /** The ‘providedCompile’ line means don’t include this jar in the WEB-INF/lib directory, 
     since Tomcat7 will already have this. The rest will be placed in that directory. **/
-    
-    
     def tomcatVersion = '7.0.59'
     
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",

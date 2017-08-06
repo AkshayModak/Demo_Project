@@ -11,6 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.QueryParam;
 import com.google.gson.Gson;
 
 import com.nextrr.helper.Formula1Helper;
@@ -31,6 +32,17 @@ public class UserService implements Serializable{
 	private static final long serialVersionUID = 1L;
 	public final String className = UserService.class.getName();
 
+	/* Generic User Services*/
+	@POST
+	@Path("/getCountryAssoc")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getCountryAssoc(@QueryParam("sports_type_id") String sports_type_id) {
+		GenericHelper genericHelper = new GenericHelper();
+		String result = genericHelper.getCountryAssoc(sports_type_id);
+		return result;
+	}
+
+	/* Formula1 User Services*/
 	@POST
 	@Path("/getFormula1Schedule")
 	@Produces(MediaType.APPLICATION_JSON)

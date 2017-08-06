@@ -61,6 +61,15 @@ var cricketController = function($scope, APIService, ModalService, $http, $uibMo
         $scope.filterString = string;
     }
 
+    getCricketLeagues = function() {
+    	APIService.doApiCall({
+            "req_name": "getCricketLeagues",
+            "params": {}
+        }).success(function(data) {
+            $scope.cricketLeagues = data;
+        });
+    }
+
     $scope.expandDropdown = function(expanded, index) {
         $scope.expanded = !expanded;
         $scope.dropdown_index = index;
@@ -69,7 +78,7 @@ var cricketController = function($scope, APIService, ModalService, $http, $uibMo
     getCricketCountries = function() {
         APIService.doApiCall({
             "req_name": "getCountryAssoc",
-            "params": {"sports_type_id": "CRICKET"}
+            "params": {"sports_type_id": "CRICKET", "format": "GSON"}
         }).success(function(data) {
             $scope.teams = data;
         });
@@ -84,6 +93,7 @@ var cricketController = function($scope, APIService, ModalService, $http, $uibMo
         });
     }
     getCricketCountries();
+    getCricketLeagues();
     getIntlCricket();
 }
 

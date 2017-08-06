@@ -38,7 +38,7 @@ public class GenericHelper {
 		return new Gson().toJson(countryGeoList);
 	}
 
-	public String getCountryAssoc(String sport) {
+	public Object getCountryAssoc(String sport, String _format) {
 		DebugWrapper.logInfo("Initiating getCountryAssoc of GenericHelper", className);
 		ArrayList<Map> formula1List = new ArrayList<Map>();
 		DatabaseUtils dbUtils = new DatabaseUtils();
@@ -49,6 +49,9 @@ public class GenericHelper {
 		List<Object> countryAssocList = (List) countryAssoc.get("result");
 
 		DebugWrapper.logInfo("getCountryAssoc finished running", className);
-		return new Gson().toJson(countryAssocList);
+		if ("GSON".equals(_format)) {
+			return new Gson().toJson(countryAssocList);
+		}
+		return (Object) countryAssocList;
 	}
 }

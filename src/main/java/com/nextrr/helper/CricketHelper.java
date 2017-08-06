@@ -188,4 +188,43 @@ public class CricketHelper {
 		
 		return new Gson().toJson(new ArrayList<String>().add("success"));
 	}
+
+	public String getCricketLeagues() {
+		GenericHelper genericHelper = new GenericHelper();
+		List<Map<String, Object>> countryAssocList = (List<Map<String, Object>>) genericHelper.getCountryAssoc("CRICKET", null);
+		List<Map<String, Object>> resultList = new ArrayList();
+		for (Map<String, Object> countryAssoc : countryAssocList) {
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			DatabaseUtils dbUtils = new DatabaseUtils();
+			Map<String, Object> queryParams = new HashMap<String, Object>();
+			queryParams.put("country_geo_id", countryAssoc.get("country_id"));
+			Map<String, Object> cricketAssocResult = dbUtils.getEntityDataWithConditions("cricket_assoc", queryParams);
+
+			if (!cricketAssocResult.isEmpty()) {
+				List<Map<String, Object>> cricketAssocList = (List<Map<String, Object>>) cricketAssocResult.get("result");
+				if (!cricketAssocList.isEmpty()) {
+					resultMap.put("country_geo_id", countryAssoc.get("country_id"));
+					resultMap.put("country_description", countryAssoc.get("description"));
+					List<Map<String, Object>> sportsLeagueList = new ArrayList<Map<String, Object>>();
+					for (Map<String, Object> cricketAssoc : cricketAssocList) {
+						cricketAssoc.forEach((key,value)->{
+							if ("sports_league_id".equals(key)) {
+								queryParams.clear();
+								queryParams.put("sports_league_id", value);
+								Map<String, Object> sports_league = dbUtils.getFirstEntityDataWithConditions("sports_league", queryParams);
+								sportsLeagueList.add(sports_league);
+							}
+						});
+					}
+					if (!sportsLeagueList.isEmpty()) {
+						resultMap.put("sports_leagues", sportsLeagueList);
+					}
+				}
+				if (!resultMap.isEmpty() && resultMap.containsKey("sports_leagues")) {
+					resultList.add(resultMap);
+				}
+			}
+		}
+		return new Gson().toJson(resultList);
+	}
 }

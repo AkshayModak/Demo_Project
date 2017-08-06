@@ -38,7 +38,7 @@ public class UserService implements Serializable{
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getCountryAssoc(@QueryParam("sports_type_id") String sports_type_id) {
 		GenericHelper genericHelper = new GenericHelper();
-		String result = genericHelper.getCountryAssoc(sports_type_id);
+		String result = (String) genericHelper.getCountryAssoc(sports_type_id, "GSON");
 		return result;
 	}
 
@@ -195,6 +195,15 @@ public class UserService implements Serializable{
 	public String updateCricket(@Context UriInfo uriInfo) {
 		CricketHelper cricketHelper = new CricketHelper();
 		String result = cricketHelper.updateCricket(uriInfo.getQueryParameters());
+		return result;
+	}
+
+	@POST
+	@Path("/getCricketLeagues")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getCricketLeagues() {
+		CricketHelper cricketHelper = new CricketHelper();
+		String result = cricketHelper.getCricketLeagues();
 		return result;
 	}
 }

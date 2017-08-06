@@ -272,8 +272,11 @@ public class DatabaseUtils {
 	public Map<String, Object> getFirstEntityDataWithConditions(String entityName, Map<String, Object> queryParams) {
 		Map<String, Object> dataMap = getEntityDataWithConditions(entityName, queryParams);
 		List resultList = (List) dataMap.get("result");
-		Map<String, Object> resultMap = (Map<String, Object>) resultList.get(0);
-		return resultMap;
+		if (!dataMap.isEmpty()) {
+			Map<String, Object> resultMap = (Map<String, Object>) resultList.get(0);
+			return resultMap;
+		}
+		return DefaultObjects.getErrorMap();
 	}
 
 	public void runUpdateQuery(String entityName, Map<String, Object> queryMap, String primaryKey) {

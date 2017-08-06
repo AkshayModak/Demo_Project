@@ -14,26 +14,19 @@
         <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" md-whiteframe="4">
             <md-toolbar class="md-theme-indigo">
                 <h1 class="md-toolbar-tools sidenav-heading">Filters
-                <button ng-if="filterString" type="button" class="btn btn-default" style="margin:auto;" ng-click="filterCricket('')">Clear</button>
+                    <button ng-if="filterString" type="button" class="btn btn-default" style="margin:auto;" ng-click="filterCricket('')">Clear</button>
                 </h1>
             </md-toolbar>
             <md-content>
-                <div style="border-bottom: 1px solid grey;">
-                    <md-button class="dropdown" style="margin: 0; padding:0; width:100%;" ng-click="expandDropdown(expanded, 0)">Australia</md-button>
-                    <ul class="list-unstyled" ng-class="expanded && dropdown_index == 0 ? 'show-sidenav-dropdown' : 'hide-sidenav-dropdown'">
-                        <li><md-button style="margin: 0; padding:0; width:100%;">Big Bash</md-button></li>
-                    </ul>
-                </div>
-                <div>
-                    <md-button class="dropdown" style="margin: 0; padding:0; width:100%;" ng-click="expandDropdown(expanded, 1)">India</md-button>
-                    <ul class="list-unstyled" ng-class="expanded && dropdown_index == 1 ? 'show-sidenav-dropdown' : 'hide-sidenav-dropdown'">
-                        <li><md-button style="margin: 0; padding:0; width:100%;">Indian Premier League</md-button></li>
+                <div ng-repeat="cricketLeague in cricketLeagues">
+                    <md-button class="dropdown" style="margin: 0; padding:0; width:100%;" ng-click="expandDropdown(expanded, $index)">{{ cricketLeague.country_description }}</md-button>
+                    <ul class="list-unstyled" ng-class="expanded && dropdown_index == $parent.$index ? 'hide-sidenav-dropdown' : 'show-sidenav-dropdown'" ng-repeat="sportsLeagues in cricketLeague.sports_leagues">
+                        <li><md-button style="margin: 0; padding:0; width:100%;">{{ sportsLeagues.description }}</md-button></li>
                     </ul>
                 </div>
             </md-content>
-
-            </md-sidenav>
-        </div>
+        </md-sidenav>
+      </div>
       <div class="col-xs-10">
           <table class="table" style="width: 80% !important; float:center;">
               <thead>
@@ -45,7 +38,7 @@
                       <th style="color:white">Time</th>
                   </tr>
               </thead>
-              <tbody>{{ filterString }}==
+              <tbody>
                   <tr class="cricket-row" ng-repeat="cricket in cricketList | filter: filterString">
                       <td>
                           <span ng-if = "cricket.match_number != 0">

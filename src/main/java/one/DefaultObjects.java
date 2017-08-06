@@ -37,7 +37,13 @@ public class DefaultObjects {
 		
 		return successMessage;
 	}
-	
+
+	public static Map<String, Object> getErrorMap() {
+		Map<String, Object> errorMessage = new HashMap<String, Object>();
+		errorMessage.put("errorMessage", "Error During Operation!");
+		return errorMessage;
+	}
+
 	public static Map<String, Object> getErrorMap(Exception e) {
 	
 		Map<String, Object> errorMessage = new HashMap<String, Object>();

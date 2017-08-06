@@ -1,6 +1,8 @@
 package one;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -9,10 +11,17 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
+import com.google.gson.Gson;
 
 import com.nextrr.helper.Formula1Helper;
 import com.nextrr.helper.MoviesHelper;
 import com.nextrr.helper.MoviesServices;
+
+import architecture.utils.DebugWrapper;
+
+import com.nextrr.helper.CricketHelper;
+import com.nextrr.helper.GenericHelper;
+import one.DatabaseUtils;
 
 @Path("/UserService")
 public class UserService implements Serializable{
@@ -20,6 +29,7 @@ public class UserService implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	public final String className = UserService.class.getName();
 
 	@POST
 	@Path("/getFormula1Schedule")
@@ -92,7 +102,7 @@ public class UserService implements Serializable{
 		String result = movieServices.setMovie(uriInfo.getQueryParameters());
 		return result;
 	}
-	
+
 	@POST
 	@Path("/removeMovie")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -101,13 +111,78 @@ public class UserService implements Serializable{
 		String result = movieServices.removeMovie(uriInfo.getQueryParameters());
 		return result;
 	}
-	
+
 	@POST
 	@Path("/updateMovie")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String updateMovie(@Context UriInfo uriInfo) {
 		MoviesServices movieServices = new MoviesServices();
 		String result = movieServices.updateMovie(uriInfo.getQueryParameters());
+		return result;
+	}
+
+	@POST
+	@Path("/setCricket")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String setCricket(@Context UriInfo uriInfo) {
+		CricketHelper cricketHelper = new CricketHelper();
+		String result = cricketHelper.setCricket(uriInfo.getQueryParameters());
+		return result;
+	}
+
+	@POST
+	@Path("/getIntlCricket")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getIntlCricket() {
+		CricketHelper cricketHelper = new CricketHelper();
+		String result = cricketHelper.getIntlCricket();
+		return result;
+	}
+
+	@POST
+	@Path("/getIntlCricketToDisplay")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getIntlCricketToDisplay() {
+		CricketHelper cricketHelper = new CricketHelper();
+		String result = cricketHelper.getIntlCricketToDisplay();
+		return result;
+	}
+
+	@POST
+	@Path("/getCricketCountries")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getCricketCountries() {
+		GenericHelper genericHelper = new GenericHelper();
+		String result = genericHelper.getCountriesBySport("CRICKET");
+		return result;
+	}
+
+	@POST
+	@Path("/getCricketMatchTypes")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getCricketMatchTypes() {
+		DatabaseUtils dbUtils = new DatabaseUtils();
+		Map<String, Object> queryParams = new HashMap<String, Object>();
+		queryParams.put("sports_type_id", "CRICKET");
+		Map<String, Object> resultMap = dbUtils.getEntityDataWithConditions("sports_child_type", queryParams);
+		return new Gson().toJson(resultMap);
+	}
+
+	@POST
+	@Path("/removeCricket")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String removeCricket(@Context UriInfo uriInfo) {
+		CricketHelper cricketHelper = new CricketHelper();
+		String result = cricketHelper.removeCricket(uriInfo.getQueryParameters());
+		return result;
+	}
+
+	@POST
+	@Path("/updateCricket")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String updateCricket(@Context UriInfo uriInfo) {
+		CricketHelper cricketHelper = new CricketHelper();
+		String result = cricketHelper.updateCricket(uriInfo.getQueryParameters());
 		return result;
 	}
 }

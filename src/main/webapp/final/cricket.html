@@ -44,12 +44,12 @@
                   </tr>
               </thead>
               <tbody>
-                  <tr class="cricket-row">
-                      <td>1st Test</td>
-                      <td>India vs Srilanka</td>
-                      <td>Pallekele International Cricket Stadium, Pallekele</td>
-                      <td>Jul 21, Fri - Jul 22, Sat</td>
-                      <td>8:30PM IST</td>
+                  <tr class="cricket-row" ng-repeat="cricket in cricketList">
+                      <td>{{ cricket.sports_child_type_id }}</td>
+                      <td>{{ cricket.team_one_geoId }} vs {{ cricket.team_two_geoId }}</td>
+                      <td>{{ cricket.stadium }}, {{ cricket.city }}</td>
+                      <td>{{ cricket.match_from_date }} {{ cricket.match_to_date }}</td>
+                      <td>{{ cricket.time }}</td>
                   </tr>
               </tbody>
           </table>

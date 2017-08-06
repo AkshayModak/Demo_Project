@@ -16,7 +16,7 @@ import architecture.utils.DebugWrapper;
 public class DefaultObjects {
 	
 	private static Map<String, Object> paramMap;
-	public static final String className = Formula1Helper.class.getName();
+	public static final String className = DefaultObjects.class.getName();
 	
 	public static Map<String, Object> getSuccessMap(String message) {
 		
@@ -122,6 +122,7 @@ public class DefaultObjects {
 		return formattedTime;
 	}
 	
+	@Deprecated
 	public static String formatDateToDisplay(String date) {
 		
 		String formattedDate = null;

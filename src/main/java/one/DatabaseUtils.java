@@ -20,7 +20,7 @@ public class DatabaseUtils {
 	static String DATABASE_NAME;
 	static String HOST;
 	static String ENTITY;
-	public static final String className = Formula1Helper.class.getName();
+	public static final String className = DatabaseUtils.class.getName();
 
 	final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 	String DB_URL;
@@ -61,6 +61,9 @@ public class DatabaseUtils {
 			while (entries.hasNext()) {
 				Map.Entry<String, Object> entry = entries.next();
 				selectSqlQuery += " " + entry.getKey() + "='" + entry.getValue() + "'";
+				if (entries.hasNext()) {
+					selectSqlQuery = selectSqlQuery + " AND";
+				}
 			}
 			sqlQuery = "SELECT * FROM " + ENTITY + " WHERE" + selectSqlQuery + ";";
 		} else {
@@ -264,6 +267,13 @@ public class DatabaseUtils {
 		return result;
 	}
 	
+	public Map<String, Object> getFirstEntityDataWithConditions(String entityName, Map<String, Object> queryParams) {
+		Map<String, Object> dataMap = getEntityDataWithConditions(entityName, queryParams);
+		List resultList = (List) dataMap.get("result");
+		Map<String, Object> resultMap = (Map<String, Object>) resultList.get(0);
+		return resultMap;
+	}
+
 	public void runUpdateQuery(String entityName, Map<String, Object> queryMap, String primaryKey) {
 		String fileName = nextrr_home + "setup.xml";
 		Map<String, Object> setupConfig = ReadXMLFile.getXMLData(fileName);

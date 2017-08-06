@@ -1,0 +1,119 @@
+<!doctype html>
+<html ng-app="myModule">
+<head>
+<title>Insert Cricket</title>
+<base href="/Demo_Project/">
+<script src="javascript/angular.js"></script>
+<script src="javascript/angular-ui-router.js"></script>
+<script src="javascript/angular-animate.js"></script>
+<script src="javascript/angular-sanitize.js"></script>
+<script src="javascript/ui-bootstrap-tpls.js"></script>
+<script src="javascript/angular-controllers.js"></script>
+<script src="javascript/angular-services.js"></script>
+<script src="javascript/angular-directives.js"></script>
+<script src="javascript/ng-infinite-scroll.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+<script src="javascript/filter.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+<link href="https://fonts.googleapis.com/css?family=Cinzel|Shadows+Into+Light" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<link href="css/style.css" rel="stylesheet">
+</head>
+<div ng-include="'final/innerNavbar.html'" style="margin-bottom: 150px;"></div>
+<body ng-controller="editCricketController" class="container-fluid">
+<div class="row">
+    <div class="col-xs-12">
+        <md-button class="md-raised md-primary" ng-click="addNew()">Create New</md-button>
+    </div>
+</div>
+<div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type)" class="alert-fade" close="closeAlert($index)" dismiss-on-timeout="2000">{{alert.msg}}</div>
+    <form>
+        <table test1="" id="isrctable" class="table table-condensed table-bordered">
+            <thead>
+                <tr class="cricket-head">
+                    <th></th>
+                    <th style="color:white" class="text-center">Cricket ID</th>
+                    <th style="color:white" class="text-center">Team One ID</th>
+                    <th style="color:white" class="text-center">Team Two ID</th>
+                    <th style="color:white" class="text-center">Stadium</th>
+                    <th style="color:white" class="text-center">City</th>
+                    <th style="color:white" class="text-center">Country</th>
+                    <th style="color:white" class="text-center">Match Type</th>
+                    <th style="color:white" class="text-center">From Date</th>
+                    <th style="color:white" class="text-center">To Date</th>
+                    <th style="color:white" class="text-center">Time</th>
+                    <th style="color:white" class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                 <tr ng-repeat="cricket in cricketList">
+                     <td><md-checkbox ng-model="cricket.isDelete" aria-label="Checkbox 1"></md-checkbox></td>
+                     <td class="text-center">
+                       <span ng-if="!cricket.addBtn">{{ cricket.cricket_id }}</span>
+                     </td>
+                     <td>
+                         <md-select ng-model="cricket.team_one_geoId" placeholder="Australia">
+                            <md-option ng-repeat="team in teams" value="{{ team.country_geo_id }}">{{ team.description }}</md-option>
+                         </md-select>
+                     </td>
+                     <td>
+                         <md-select ng-model="cricket.team_two_geoId" placeholder="India">
+                            <md-option ng-repeat="team in teams" value="{{ team.country_geo_id }}">{{ team.description }}</md-option>
+                         </md-select>
+                     </td>
+                     <td>
+                       <md-input-container class="md-icon-float md-block">
+                         <input ng-model="cricket.stadium" type="text">
+                       </md-input-container>
+                     </td>
+                     <td>
+                       <md-input-container class="md-icon-float md-block">
+                         <input ng-model="cricket.city" type="text">
+                       </md-input-container>
+                     </td>
+                     <td>
+                         <md-select ng-model="cricket.country_geoId" placeholder="India">
+                            <md-option ng-repeat="team in teams" value="{{ team.country_geo_id }}">{{ team.description }}</md-option>
+                         </md-select>
+                     </td>
+                     <td>
+                         <md-select ng-model="cricket.sports_child_type_id" placeholder="ODI">
+                            <md-option ng-repeat="matchType in matchTypes" value="{{ matchType.sports_child_type_id }}">{{ matchType.description }}</md-option>
+                         </md-select>
+                     </td>
+                     <td>
+                       <md-datepicker ng-model="cricket.match_from_date" md-placeholder="Enter date"></md-datepicker>
+                     </td>
+                     <td>
+                        <md-datepicker ng-hide="cricket.sports_child_type_id == 'ODI' || cricket.sports_child_type_id == 'T20'" ng-model="cricket.match_to_date" md-placeholder="Enter date"></md-datepicker>
+                     </td>
+                     <td><div uib-timepicker ng-model="cricket.time" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian" show-spinners="false"></div></td>
+                     <td>
+                       <ul class="list-inline">
+                         <li ng-if="cricket.addBtn" style="padding: 0;">
+                           <button type="submit" class="btn btn-link" ng-click="createCricket(cricket)">
+                             <i class="fa fa-plus" aria-hidden="true"></i>
+                           </button>
+                         </li>
+                         <li ng-if="!cricket.addBtn" style="padding: 0;">
+                           <button type="submit" class="btn btn-link" ng-click="updateCricket(cricket)">
+                             <i class="fa fa-refresh" aria-hidden="true"></i>
+                           </button>
+                         </li>
+                         <li ng-if="!cricket.addBtn" style="padding: 0;">
+                           <button type="submit" class="btn btn-link" ng-click="removeCricket(cricket)">
+                             <i class="fa fa-times" aria-hidden="true"></i>
+                           </button>
+                         </li>
+                       </ul>
+                     </td>
+                 </tr>
+            </tbody>
+        </table>
+    </form>
+</body>
+</html>
+

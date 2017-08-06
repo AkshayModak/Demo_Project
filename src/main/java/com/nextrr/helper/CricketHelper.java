@@ -29,6 +29,7 @@ public class CricketHelper {
 		String country = params.getFirst("country");
 		String city = params.getFirst("city");
 		String time = params.getFirst("time");
+		String matchNumber = params.getFirst("matchNumber");
 		
 		if (params.getFirst("fromDate") != null) {
 			String fromDate = params.getFirst("fromDate");
@@ -39,6 +40,7 @@ public class CricketHelper {
 			String toDate = params.getFirst("toDate");
 			queryMap.put("match_to_date", toDate);
 		}
+		queryMap.put("match_number", matchNumber);
 		queryMap.put("sports_child_type_id", sportsChildTypeId);
 		queryMap.put("team_one_geoId", teamOneGeoId);
 		queryMap.put("team_two_geoId", teamTwoGeoId);
@@ -71,6 +73,9 @@ public class CricketHelper {
 	}
 	
 	public String getIntlCricketToDisplay() {
+
+		String[] cricketMatchList = {"1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th"};
+
 		DatabaseUtils dbUtils = new DatabaseUtils();
 		Map<String, Object> resultMap = dbUtils.getAllEntityData("cricket");
 		
@@ -79,6 +84,9 @@ public class CricketHelper {
 			List<Map<String, Object>> valueList = (List<Map<String, Object>>) value;
 			
 			for (int i = 0; i < valueList.size(); i++) {
+				if (valueList.get(i).get("match_number") != null && Integer.valueOf((String) valueList.get(i).get("match_number")) != 0) {
+					valueList.get(i).put("match_number", cricketMatchList[Integer.valueOf((String) valueList.get(i).get("match_number")) - 1]);
+				}
 				if (valueList.get(i).get("team_one_geoId") != null) {
 					paramMap.clear();
 					paramMap.put("country_geo_id", valueList.get(i).get("team_one_geoId"));
@@ -106,11 +114,11 @@ public class CricketHelper {
 				}
 				
 				if (valueList.get(i).get("match_from_date") != null) {
-					valueList.get(i).put("match_from_date", DefaultObjects.formatDate((String) valueList.get(i).get("match_from_date")));
+					valueList.get(i).put("match_from_date", DefaultObjects.formatDate((String) valueList.get(i).get("match_from_date"), "CRICKET"));
 				}
 				
 				if (valueList.get(i).get("match_to_date") != null) {
-					valueList.get(i).put("match_to_date", DefaultObjects.formatDate((String) valueList.get(i).get("match_to_date")));
+					valueList.get(i).put("match_to_date", DefaultObjects.formatDate((String) valueList.get(i).get("match_to_date"), "CRICKET"));
 				}
 			}
 			resultMap.put(key, valueList);
@@ -146,6 +154,7 @@ public class CricketHelper {
 		String country = params.getFirst("country");
 		String city = params.getFirst("city");
 		String time = params.getFirst("time");
+		String matchNumber = params.getFirst("matchNumber");
 		
 		if (params.getFirst("fromDate") != null) {
 			String fromDate = params.getFirst("fromDate");
@@ -156,6 +165,7 @@ public class CricketHelper {
 			String toDate = params.getFirst("toDate");
 			queryMap.put("match_to_date", toDate);
 		}
+		queryMap.put("match_number", matchNumber);
 		queryMap.put("cricket_id", cricketId);
 		queryMap.put("sports_child_type_id", sportsChildTypeId);
 		queryMap.put("team_one_geoId", teamOneGeoId);

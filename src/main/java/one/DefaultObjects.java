@@ -56,21 +56,37 @@ public class DefaultObjects {
 		return paramMap;
 	}
 	
-	public static String formatDate(String date) {
+	public static String formatDate(String date, String validation_type) {
 		
 		String formattedDate = null;
-		
-		DebugWrapper.logInfo("=======date========"+date, className);
 		try {
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-		Date parsedDate = df.parse(date);
-		DateFormat formatter = new SimpleDateFormat("d MMMM YYYY");
-		formattedDate = formatter.format(parsedDate);
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+			Date parsedDate = df.parse(date);
+			String regex = null;
+			if (validation_type != null) {
+				DatabaseUtils dbUtils = new DatabaseUtils();
+				Map<String, Object> queryParams = new HashMap<String, Object>();
+				queryParams.put("validation_type_id", validation_type);
+				Map<String, Object> validationResult = dbUtils.getFirstEntityDataWithConditions("validation", queryParams);
+
+				if (validationResult != null) {
+					regex = (String) validationResult.get("regex");
+				}
+			} else {
+				regex = "d MMMM YYYY";
+			}
+
+			DateFormat formatter = new SimpleDateFormat(regex);
+			formattedDate = formatter.format(parsedDate);
 		} catch(ParseException pe) {
-			System.out.println(pe);
+			DebugWrapper.logError(pe.toString(), className);
 		}
 		
 		return formattedDate;
+	}
+
+	public static String formatDate(String date) {
+		return formatDate(date, null);
 	}
 
 	public static String formatTime(String time) {

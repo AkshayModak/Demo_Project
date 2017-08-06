@@ -148,6 +148,10 @@ uib-accordion-group > .panel-heading {
     font-family: 'Cinzel', serif;
 }
 
+.table>tbody>tr>td>span {
+    font-family: 'Cinzel', serif;
+}
+
 /* Fade animation for alerts */
 .alert {
   position:fixed;

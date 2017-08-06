@@ -111,7 +111,7 @@ var editCricketController = function($scope, APIService, $http, $uibModal, $stat
     $scope.createCricket=function(cricket){
         APIService.doApiCall({
             "req_name": "setCricket",
-            "params": {"teamOneId":cricket.team_one_geoId,"teamTwoId":cricket.team_two_geoId, "stadium": cricket.stadium, "city":cricket.city, 
+            "params": {"teamOneId":cricket.team_one_geoId,"teamTwoId":cricket.team_two_geoId, "stadium": cricket.stadium, "city":cricket.city, "matchNumber": cricket.match_number,
                 "country": cricket.country_geoId, "matchType": cricket.sports_child_type_id, "fromDate": cricket.match_from_date, "toDate": cricket.match_to_date, "time": cricket.time}
         }).success(function(data) {
             if (data != null || data != "") {
@@ -126,7 +126,7 @@ var editCricketController = function($scope, APIService, $http, $uibModal, $stat
     $scope.updateCricket=function(cricket){
         APIService.doApiCall({
             "req_name": "updateCricket",
-            "params": {"cricketId": cricket.cricket_id, "teamOneId":cricket.team_one_geoId,"teamTwoId":cricket.team_two_geoId, "stadium": cricket.stadium, "city":cricket.city, 
+            "params": {"cricketId": cricket.cricket_id, "teamOneId":cricket.team_one_geoId,"teamTwoId":cricket.team_two_geoId, "stadium": cricket.stadium, "city":cricket.city, "matchNumber": cricket.match_number,
                 "country": cricket.country_geoId, "matchType": cricket.sports_child_type_id, "fromDate": cricket.match_from_date, "toDate": cricket.match_to_date, "time": cricket.time}
         }).success(function(data) {
             if (data != null || data != "") {
@@ -263,7 +263,7 @@ var editMoviesController = function($scope, APIService, $http) {
             "params": {"movieName":movie.movieName,"releaseDate":movie.releaseDate, "cast": movie.cast, "trailer":movie.trailer, "movieType": movie.movieType}
         }).success(function(data) {
         	if (data != null || data != "") {
-            	$scope.alerts = [{ type: 'success', msg: 'Nice! Record Updated Successfully.' }];
+                $scope.alerts = [{ type: 'success', msg: 'Nice! Record Created Successfully.' }];
         	} else {
         		$scope.alerts = [{ type: 'warning', msg: 'Oops! There seems to be some error.' }];
         	}
@@ -278,7 +278,7 @@ var editMoviesController = function($scope, APIService, $http) {
 	            "params": {"movieId": movie.movieId}
 	        }).success(function(data) {
 	        	if (data != null || data != "") {
-	            	$scope.alerts = [{ type: 'success', msg: 'Nice! Record Updated Successfully.' }];
+	                $scope.alerts = [{ type: 'success', msg: 'Nice! Record Removed Successfully.' }];
 	        	} else {
 	        		$scope.alerts = [{ type: 'warning', msg: 'Oops! There seems to be some error.' }];
 	        	}

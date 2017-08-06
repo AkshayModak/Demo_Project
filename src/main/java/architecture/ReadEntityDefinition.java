@@ -24,6 +24,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import architecture.utils.DebugWrapper;
 import one.DefaultObjects;
 import one.ReadXMLFile;
 
@@ -34,6 +35,7 @@ public class ReadEntityDefinition {
 	private String DB_URL, USER, PASS, DATABASE_NAME, HOST;
 	Connection conn;
 	private Map<String, Object> tablesMap = new HashMap<String, Object>();
+	public final String className = ReadEntityDefinition.class.getName();
 	
 	private String nextrr_home = System.getProperty("user.dir") + "/";
 	private void setDBUrl() {
@@ -46,11 +48,11 @@ public class ReadEntityDefinition {
 		
 		try {
 		      Class.forName(JDBC_DRIVER);
-		      System.out.println("Connecting to "+ DATABASE_NAME + " database...");
+		      DebugWrapper.logInfo("Connecting to "+ DATABASE_NAME + " database...", className);
 		      conn = DriverManager.getConnection(DB_URL, USER, PASS);
-		      System.out.println("Connected database successfully...");
+		      DebugWrapper.logInfo("Connected database successfully...", className);
 		} catch(Exception e) {
-			System.out.println("Error During Loading Driver"+e);
+			DebugWrapper.logInfo("Error During Loading Driver"+e, className);
 			return DefaultObjects.getErrorMap(e);
 		}
 		

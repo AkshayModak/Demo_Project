@@ -49,6 +49,7 @@
     </table>
     <table name="cricket">
         <column name="cricket_id" data-type="int" null="false" primary-key="true" auto-increment="true"/>
+        <column name="match_number" data-type="int" column-size="10" null="false"/>
         <column name="sports_child_type_id" data-type="varchar" column-size="55" null="false"/>
         <column name="team_one_geoId" data-type="varchar" column-size="20" null="false"/>
         <column name="team_two_geoId" data-type="varchar" column-size="20" null="false"/>
@@ -76,5 +77,10 @@
     <table name="country_geo">
         <column name="country_geo_id" data-type="varchar" column-size="15" null="false" primary-key="true"/>
         <column name="description" data-type="varchar" column-size="55" null="false"/>
+    </table>
+    <table name="validation">
+        <column name="validation_id" data-type="int" column-size="15" null="false" primary-key="true" auto-increment="true"/>
+        <column name="validation_type_id" data-type="varchar" column-size="15" null="false"/>
+        <column name="regex" data-type="varchar" column-size="255" null="false"/>
     </table>
 </entity-def>

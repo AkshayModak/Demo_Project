@@ -21,7 +21,7 @@ public class DatabaseUtils {
 	static String PASS;
 	static String DATABASE_NAME;
 	static String HOST;
-	static String ENTITY;
+	String ENTITY;
 	public static final String className = DatabaseUtils.class.getName();
 
 	final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
@@ -149,6 +149,7 @@ public class DatabaseUtils {
 	      }
 	      result.put("result", resultList);
 	      rs.close();
+	      conn.close();
 	   }catch(SQLException se){
 	      //Handle errors for JDBC
 	      DebugWrapper.logError("SQL Exception -- "+se, className);
@@ -260,7 +261,7 @@ public class DatabaseUtils {
 		PASS = (String) setupConfig.get("password");
 		DATABASE_NAME = (String) setupConfig.get("database-name");
 		HOST = (String) setupConfig.get("host");
-		ENTITY = entityName;
+		this.ENTITY = entityName;
 		
 		setDBUrl();
 		setSelectQuery(queryParams);

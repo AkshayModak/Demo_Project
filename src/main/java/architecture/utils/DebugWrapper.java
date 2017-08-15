@@ -19,8 +19,8 @@ public class DebugWrapper {
 	}
 	
 
-	public static void logError(String errMessage, String className) {
-		log(errMessage, Level.ERROR, className);
+	public static void logError(Object errMessage, String className) {
+		log(""+errMessage, Level.ERROR, className);
 	}
 	
 	public static void logInfo(String infoMessage, String className) {

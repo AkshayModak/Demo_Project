@@ -21,7 +21,7 @@
                 <div ng-repeat="cricketLeague in cricketLeagues">
                     <md-button class="dropdown" style="margin: 0; padding:0; width:100%;" ng-click="expandDropdown(expanded, $index)">{{ cricketLeague.country_description }}</md-button>
                     <ul class="list-unstyled" ng-class="expanded && dropdown_index == $parent.$index ? 'hide-sidenav-dropdown' : 'show-sidenav-dropdown'" ng-repeat="sportsLeagues in cricketLeague.sports_leagues">
-                        <li><md-button style="margin: 0; padding:0; width:100%;">{{ sportsLeagues.description }}</md-button></li>
+                        <li><md-button style="margin: 0; padding:0; width:100%;" ng-click="filterCricket(sportsLeagues.description)">{{ sportsLeagues.description }}</md-button></li>
                     </ul>
                 </div>
             </md-content>
@@ -49,7 +49,10 @@
                           </span>
                       </td>
                       <td>{{ cricket.team_one_geoId }} vs {{ cricket.team_two_geoId }}</td>
-                      <td>{{ cricket.stadium }}, {{ cricket.city }}</td>
+                      <td>
+                          {{ cricket.stadium }}, {{ cricket.city }}
+                          <div style="color:grey"><small>{{ cricket.series }}</small></div>
+                      </td>
                       <td>{{ cricket.match_from_date }} 
                           <span ng-if="cricket.match_to_date"> - </span>
                           {{ cricket.match_to_date }}

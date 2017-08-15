@@ -62,7 +62,7 @@ var cricketController = function($scope, APIService, ModalService, $http, $uibMo
     }
 
     getCricketLeagues = function() {
-    	APIService.doApiCall({
+        APIService.doApiCall({
             "req_name": "getCricketLeagues",
             "params": {}
         }).success(function(data) {
@@ -89,7 +89,15 @@ var cricketController = function($scope, APIService, ModalService, $http, $uibMo
             "req_name": "getIntlCricketToDisplay",
             "params": {}
         }).success(function(data) {
-            $scope.cricketList = data.result;
+            cricketList = data.result;
+            for (i = 0; i < cricketList.length; i++) {
+                if (i == 1) {
+                    cricketList[1].series = "Indian Premier League";
+                } else if (i == 2) {
+                    cricketList[2].series = "Big Bash League";
+                }
+            }
+            $scope.cricketList = cricketList;
         });
     }
     getCricketCountries();

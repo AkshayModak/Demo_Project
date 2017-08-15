@@ -1,4 +1,4 @@
-* {font-family: "Karma", sans-serif}
+* {font-family: 'Cinzel', serif}
 
 /* Bootstrap overrides */
 .row { margin: 0 !important;}
@@ -357,7 +357,7 @@ footer {
 
 .cricket-row:hover {
 	background-color:  #F5F5F5;
-	transform: scale(1.1);
+	transform: scale(1.05);
 }
 
 .sidenav-heading {
@@ -374,5 +374,6 @@ footer {
 
 .hide-sidenav-dropdown {
     height: auto;
+    margin: 1px;
     transition: all .1s ease-in-out;
 }

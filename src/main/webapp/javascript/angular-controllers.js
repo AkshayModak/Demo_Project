@@ -59,7 +59,6 @@ myApp.directive("scroll", function ($window) {
 
 var cricketController = function($scope, APIService, ModalService, $http, $uibModal, $stateParams) {
 
-	alert(window.innerWidth);
 	$scope.expanded = false;
 
     $scope.filterCricket = function(string) {

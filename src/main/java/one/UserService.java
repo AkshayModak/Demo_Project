@@ -206,4 +206,30 @@ public class UserService implements Serializable{
 		String result = cricketHelper.getCricketLeagues();
 		return result;
 	}
+
+	@POST
+	@Path("/getAllRawCricketLeagues")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getAllRawCricketLeagues() {
+		CricketHelper cricketHelper = new CricketHelper();
+		String result = cricketHelper.getAllRawCricketLeagues();
+		return result;
+	}
+
+	@POST
+	@Path("/addRemoveSportsLeague")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String addRemoveSportsLeague(@Context UriInfo uriInfo) {
+		GenericHelper genericHelper = new GenericHelper();
+		String sports_id = uriInfo.getQueryParameters().getFirst("sports_league_id");
+		String result = null;
+
+		if (DefaultObjects.isNotEmpty(sports_id)) {
+			result = genericHelper.removeSportsLeague(uriInfo.getQueryParameters());
+		} else {
+			result = genericHelper.addSportsLeague(uriInfo.getQueryParameters());
+		}
+
+		return result;
+	}
 }

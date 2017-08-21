@@ -11,6 +11,7 @@
 <script src="javascript/angular-controllers.js"></script>
 <script src="javascript/angular-services.js"></script>
 <script src="javascript/angular-directives.js"></script>
+<script src="javascript/angular-filters.js"></script>
 <script src="javascript/ng-infinite-scroll.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
@@ -24,75 +25,152 @@
 </head>
 <div ng-include="'final/innerNavbar.html'" style="margin-bottom: 150px;"></div>
 <body ng-controller="editCricketController" class="container-fluid">
+<div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type)" class="alert-fade" close="closeAlert($index)" dismiss-on-timeout="2000">{{alert.msg}}</div>
+
 <div class="row">
     <div class="col-xs-12">
-        <md-button class="md-raised md-primary" ng-click="addNew()">Create New</md-button>
+        <md-button class="md-raised md-primary" ng-click="addCricketSeries()">
+            <span ng-if="addNewSeries">
+                Use Existing Series
+            </span>
+            <span ng-if="!addNewSeries">
+                Create New Series
+            </span>
+        </md-button>
     </div>
 </div>
-<div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type)" class="alert-fade" close="closeAlert($index)" dismiss-on-timeout="2000">{{alert.msg}}</div>
+<form>
+        <table test1="" id="cricket-details" class="table table-condensed table-bordered">
+            <thead>
+                <tr class="cricket-head">
+                    <th style="color:white" class="col-xs-1">Remove</th>
+                    <th style="color:white" class="text-center col-xs-5">Series</th>
+                    <th style="color:white" class="col-xs-1">With</th>
+                    <th style="color:white" class="col-xs-1">Location</th>
+                    <th style="color:white" class="col-xs-1">Start Date</th>
+                    <th style="color:white" class="col-xs-1">End Date</th>
+                    <th class="col-xs-1"></th>
+                </tr>
+            </thead>
+            <tbody>
+                 <tr>
+                     <td><md-checkbox ng-model="deleteCricketLeague" aria-label="Checkbox 1"></md-checkbox></td>
+                     <td ng-if="!deleteCricketLeague">
+                       <md-input-container class="md-icon-float md-block">
+                         <input ng-model="$parent.cricketLeague.series" type="text">
+                       </md-input-container>
+                     </td>
+                     <td ng-if="deleteCricketLeague">
+                        <md-select ng-model="$parent.cricketLeague.series_id" placeholder="None">
+                            <md-option ng-repeat="series in seriesList" value="{{ series.sports_league_id }}">{{ series.description }}</md-option>
+                        </md-select>
+                     </td>
+                     <td>
+                        <md-select ng-model="cricketLeague.series_location" placeholder="None">
+                            <md-option ng-repeat="team in teams" value="{{ team.country_geo_id }}">{{ team.description }}</md-option>
+                        </md-select>
+                     </td>
+                     <td>
+                        <md-select ng-model="cricketLeague.country_with" placeholder="None">
+                            <md-option ng-repeat="team in teams" value="{{ team.country_geo_id }}">{{ team.description }}</md-option>
+                        </md-select>
+                     </td>
+                     <td>
+                        <md-datepicker ng-model="cricketLeague.series_from_date" md-placeholder="Enter date"></md-datepicker>
+                     </td>
+                     <td>
+                        <md-datepicker ng-model="cricketLeague.series_to_date" md-placeholder="Enter date"></md-datepicker>
+                     </td>
+                     <td>
+                        <md-button class="md-raised md-primary" ng-click="addRemoveCricketLeague(cricketLeague, deleteCricketLeague)">
+                            <span ng-if="deleteCricketLeague">
+                                Remove
+                            </span>
+                            <span ng-if="!deleteCricketLeague">
+                                Create
+                            </span>
+                        </md-button>
+                     </td>
+                 </tr>
+            </tbody>
+        </table>
+    </form>
+
+<div class="row">
+    <div class="col-xs-12">
+        <md-button class="md-raised md-primary" ng-click="addNew()">Create New Record</md-button>
+    </div>
+</div>
+
     <form>
         <table test1="" id="isrctable" class="table table-condensed table-bordered">
             <thead>
                 <tr class="cricket-head">
                     <th></th>
-                    <th style="color:white" class="text-center">Team One ID</th>
-                    <th style="color:white" class="text-center">Team Two ID</th>
-                    <th style="color:white" class="text-center">Cricket Stadium</th>
-                    <th style="color:white" class="text-center">City</th>
-                    <th style="color:white" class="text-center">Country</th>
-                    <th style="color:white" class="text-center">Match Number</th>
-                    <th style="color:white" class="text-center">Match Type</th>
-                    <th style="color:white" class="text-center">From Date</th>
-                    <th style="color:white" class="text-center">To Date</th>
-                    <th style="color:white" class="text-center">Time</th>
-                    <th style="color:white" class="text-center">Action</th>
+                    <th style="color:white" class="col-xs-1 text-center">Team One ID</th>
+                    <th style="color:white" class="col-xs-1 text-center">Team Two ID</th>
+                    <th style="color:white" class="col-xs-2 text-center">Cricket Stadium</th>
+                    <th style="color:white" class="col-xs-1 text-center">City</th>
+                    <th style="color:white" class="col-xs-1 text-center">Country</th>
+                    <th style="color:white" class="col-xs-1 text-center">Match Number</th>
+                    <th style="color:white" class="col-xs-1 text-center">Match Type</th>
+                    <th style="color:white" class="col-xs-1 text-center">Series</th>
+                    <th style="color:white" class="col-xs-1 text-center">From Date</th>
+                    <th style="color:white" class="col-xs-1 text-center">To Date</th>
+                    <th style="color:white" class="col-xs-1 text-center">Time</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
-                 <tr ng-repeat="cricket in cricketList">
+                 <tr ng-repeat="cricket in cricketList | reverse">
                      <td><md-checkbox ng-model="cricket.isDelete" aria-label="Checkbox 1"></md-checkbox></td>
-                     <td>
+                     <td class="col-xs-1">
                          <md-select ng-model="cricket.team_one_geoId" placeholder="Australia">
                             <md-option ng-repeat="team in teams" value="{{ team.country_geo_id }}">{{ team.description }}</md-option>
                          </md-select>
                      </td>
-                     <td>
+                     <td class="col-xs-1">
                          <md-select ng-model="cricket.team_two_geoId" placeholder="India">
                             <md-option ng-repeat="team in teams" value="{{ team.country_geo_id }}">{{ team.description }}</md-option>
                          </md-select>
                      </td>
-                     <td>
+                     <td class="col-xs-2">
                        <md-input-container class="md-icon-float md-block">
                          <input ng-model="cricket.stadium" type="text">
                        </md-input-container>
                      </td>
-                     <td>
+                     <td class="col-xs-1">
                        <md-input-container class="md-icon-float md-block">
                          <input ng-model="cricket.city" type="text">
                        </md-input-container>
                      </td>
-                     <td>
+                     <td class="col-xs-1">
                          <md-select ng-model="cricket.country_geoId" placeholder="India">
                             <md-option ng-repeat="team in teams" value="{{ team.country_geo_id }}">{{ team.description }}</md-option>
                          </md-select>
                      </td>
-                     <td>
+                     <td class="col-xs-1">
                        <md-input-container class="md-icon-float md-block">
                          <input ng-model="cricket.match_number" type="text">
                        </md-input-container>
                      </td>
-                     <td>
+                     <td class="col-xs-1">
                          <md-select ng-model="cricket.sports_child_type_id" placeholder="ODI">
                             <md-option ng-repeat="matchType in matchTypes" value="{{ matchType.sports_child_type_id }}">{{ matchType.description }}</md-option>
                          </md-select>
                      </td>
-                     <td>
+                     <td class="col-xs-1">
+                        <md-select ng-model="cricket.series_id" placeholder="None">
+                            <md-option ng-repeat="series in seriesList" value="{{ series.sports_league_id }}">{{ series.description }}</md-option>
+                        </md-select>
+                     </td>
+                     <td class="col-xs-1">
                        <md-datepicker ng-model="cricket.match_from_date" md-placeholder="Enter date"></md-datepicker>
                      </td>
-                     <td>
+                     <td class="col-xs-1">
                         <md-datepicker ng-hide="cricket.sports_child_type_id == 'ODI' || cricket.sports_child_type_id == 'T20'" ng-model="cricket.match_to_date" md-placeholder="Enter date"></md-datepicker>
                      </td>
-                     <td><div uib-timepicker ng-model="cricket.time" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian" show-spinners="false"></div></td>
+                     <td class="col-xs-1"><div uib-timepicker ng-model="cricket.time" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian" show-spinners="false"></div></td>
                      <td>
                        <ul class="list-inline">
                          <li ng-if="cricket.addBtn" style="padding: 0;">

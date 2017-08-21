@@ -17,10 +17,10 @@
                 <div ng-repeat= "movie in movies | filter: filterMovie">
                     <div class="movie-bar" style="background-color: {{ movie.movieColor }} !important; display: {{ movie.displayMovie }};">
                         <ul class="list-inline text-center">
-                            <li class="col-xs-3">{{ movie.movieName }}</li>
+                            <li class="col-xs-3 col-md-2">{{ movie.movieName }}</li>
                             <li class="col-xs-6">{{ movie.cast }}</li>
-                            <li class="col-xs-2">{{ movie.releaseDate }}</li>
-                            <li class="col-xs-1" ng-if="movie.trailer">
+                            <li class="col-xs-3">{{ movie.releaseDate }}</li>
+                            <li class="col-md-1" ng-if="movie.trailer">
                             <button type="submit" class="btn btn-link" ng-click="open(movie)"><i class="fa fa-video-camera" aria-hidden="true"></i></button></li>
                         </ul>
                     </div>
@@ -38,11 +38,15 @@
                 <div ng-repeat= "movie in movies | filter: filterMovie">
                     <div class="movie-bar" style="background-color: {{ movie.movieColor }} !important; display: {{ movie.displayMovie }};">
                         <ul class="list-inline text-center">
-                            <li class="col-xs-3">{{ movie.movieName }}</li>
+                            <li class="col-xs-3 col-md-2">{{ movie.movieName }}</li>
                             <li class="col-xs-6">{{ movie.cast }}</li>
-                            <li class="col-xs-2">{{ movie.releaseDate }}</li>
-                            <li class="col-xs-1" ng-if="movie.trailer">
-                            <button type="submit" class="btn btn-link" ng-click="open(movie)"><i class="fa fa-video-camera" aria-hidden="true"></i></button></li>
+                            <li class="col-xs-3">{{ movie.releaseDate }}</li>
+                            <li class="col-md-1" ng-if="movie.trailer">
+                            <ul class="list-inline">
+                                <li>
+                                    <button type="submit" class="btn btn-link" style="color: white !important;" ng-click="open(movie)"><i class="fa fa-video-camera" aria-hidden="true"></i></button></li>
+                                </li>
+                            </ul>
                         </ul>
                     </div>
                 </div>
@@ -53,36 +57,12 @@
   </md-toolbar>
   </md-content>
 </div>
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+<!--MODAL WINDOW-->
+<script type="text/ng-template" id="myModalContent.html">
+    <div class="modal-body">
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" ng-src="{{ trustSrc(movie.trailer) }}" frameborder="0" allowfullscreen></iframe>
         </div>
-	<!--MODAL WINDOW-->
-    <script type="text/ng-template" id="myModalContent.html">
-        <div class="modal-body">
-            <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" ng-src="{{ trustSrc(movie.trailer) }}" frameborder="0" allowfullscreen></iframe>
-            </div>
-        </div>
-    </script>
+    </div>
+</script>
 </div>

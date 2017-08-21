@@ -236,14 +236,28 @@ md-input-container { margin: 0 0 !important; }
 	margin-top: 50px;
 }
 
+@media screen and (max-width: 767px) {
+	.movie-bar {
+        font-size: initial;
+        height: 80px;
+        padding: 15px;
+        color: white;
+        margin: auto;
+        margin-bottom: 10px;
+        transition: padding 0.25s ease-in, height 0.25s ease-in;
+    }
+}
+
+@media screen and (min-width: 768px) {
 .movie-bar {
 	font-size: initial;
 	height: 60px; 
-	padding: 15px; 
+	padding: 10px;
 	color: white; 
 	margin: auto; 
 	margin-bottom: 10px;
 	transition: padding 0.25s ease-in, height 0.25s ease-in;
+}
 }
 
 .cricket-schedule-bar {
@@ -301,7 +315,7 @@ md-content {
 	background-color: white !important;
 }
 
-.movie-section { width: 90%; margin: auto !important; }
+.movie-section { width: 100%; margin: auto !important; }
 md-tabs.md-default-theme md-ink-bar, md-tabs md-ink-bar {
     color: black !important;
     background-color: black !important;
@@ -338,12 +352,27 @@ footer {
     box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
 }
 
-@media (min-width: 768px) {
-    .cricket-menubar { position: fixed; background-color: white; z-index: 999; }
+@media (min-width: 981px) {
+    .cricket-menubar {
+        position: fixed;
+        background-color: white;
+        z-index: 999;
+        background-color: white;
+        width: 100%;
+        padding-left: 25% !important;
+    }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 980px) {
     .cricket-menubar > li > a.btn { padding: 6px 6px !important; }
+    .cricket-menubar {
+        position: fixed;
+        background-color: white;
+        z-index: 999;
+        background-color: white;
+        width: 100%;
+        padding-left: 25% !important;
+    }
 }
 
 .cricket-head {
@@ -374,6 +403,15 @@ footer {
 
 .hide-sidenav-dropdown {
     height: auto;
-    margin: 1px;
     transition: all .1s ease-in-out;
+    margin: 0;
 }
+
+.hide-sidenav-dropdown > li > button:hover {
+	background-color: white !important;
+	color: black;
+}
+
+.facet {background-color: #2E353D !important; color: white;}
+
+.bg-white { background-color: #ffffff !important; color: black !important; }

@@ -59,6 +59,7 @@
         <column name="match_from_date" data-type="varchar" column-size="255"/>
         <column name="match_to_date" data-type="varchar" column-size="255"/>
         <column name="time" data-type="varchar" column-size="255"/>
+        <column name="sports_league_id" data-type="varchar" column-size="10" null="false"/>
     </table>
     <table name="sports_child_type">
         <column name="sports_child_type_id" data-type="varchar" column-size="15" null="false" primary-key="true"/>
@@ -91,10 +92,12 @@
         <column name="sports_league_id" data-type="varchar" column-size="10" null="false"/>
     </table>
     <table name="sports_league">
-        <column name="sports_league_id" data-type="varchar" column-size="10" null="false" primary-key="true"/>
+        <column name="sports_league_id" data-type="int" null="false" primary-key="true" auto-increment="true"/>
         <column name="country_geo_id" data-type="varchar" column-size="10" null="false"/>
         <column name="description" data-type="varchar" column-size="255" null="false"/>
         <column name="from_date" data-type="varchar" column-size="255"/>
         <column name="to_date" data-type="varchar" column-size="255"/>
+        <column name="sports_type_id" data-type="varchar" column-size="15" null="false"/>
+        <column name="year" data-type="varchar" column-size="255"/>
     </table>
 </entity-def>

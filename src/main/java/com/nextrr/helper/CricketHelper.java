@@ -30,6 +30,7 @@ public class CricketHelper {
 		String city = params.getFirst("city");
 		String time = params.getFirst("time");
 		String matchNumber = params.getFirst("matchNumber");
+		String sports_league_id = params.getFirst("sports_league");
 		
 		if (params.getFirst("fromDate") != null) {
 			String fromDate = params.getFirst("fromDate");
@@ -48,6 +49,7 @@ public class CricketHelper {
 		queryMap.put("city", city);
 		queryMap.put("time", time);
 		queryMap.put("country_geoId", country);
+		queryMap.put("sports_league_id", sports_league_id);
 		
 		DatabaseUtils du = new DatabaseUtils();
 		
@@ -59,16 +61,19 @@ public class CricketHelper {
 	public String getIntlCricket() {
 		DatabaseUtils dbUtils = new DatabaseUtils();
 		Map<String, Object> resultMap = dbUtils.getAllEntityData("cricket");
-		
-		resultMap.forEach((key,value)-> {
-			if("match_to_date".equals(key) || "match_from_date".equals(key)) {
-				resultMap.put(key, DefaultObjects.formatDate(value.toString()));
+		List<Map<String, Object>> resultList = (List<Map<String, Object>>) resultMap.get("result");
+
+		for (Map<String, Object> cricket : resultList) {
+			if(cricket.containsKey("match_from_date")) {
+				cricket.put("match_from_date", DefaultObjects.formatDate((String) cricket.get("match_from_date")));
 			}
-			if("time".equals(key)) {
-				resultMap.put(key, DefaultObjects.formatTime(value.toString()));
+			if(cricket.containsKey("match_to_date")) {
+				cricket.put("match_to_date", DefaultObjects.formatDate((String) cricket.get("match_to_date")));
 			}
-		});
-		
+			if (cricket.containsKey("sports_league_id")) {
+				cricket.put("series_id", cricket.get("sports_league_id"));
+			}
+		}
 		return new Gson().toJson(resultMap);
 	}
 	
@@ -79,6 +84,8 @@ public class CricketHelper {
 		DatabaseUtils dbUtils = new DatabaseUtils();
 		Map<String, Object> resultMap = dbUtils.getAllEntityData("cricket");
 		
+		List<Map<String, Object>> resultList = (List<Map<String, Object>>) resultMap.get("result");
+
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		resultMap.forEach((key,value)-> {
 			List<Map<String, Object>> valueList = (List<Map<String, Object>>) value;
@@ -120,6 +127,22 @@ public class CricketHelper {
 				if (valueList.get(i).get("match_to_date") != null) {
 					valueList.get(i).put("match_to_date", DefaultObjects.formatDate((String) valueList.get(i).get("match_to_date"), "CRICKET"));
 				}
+				if (valueList.get(i).get("sports_league_id") != null) {
+					valueList.get(i).put("series_id", valueList.get(i).get("sports_league_id"));
+					Map<String, Object> queryMap = new HashMap<String, Object>();
+					queryMap.put("sports_league_id", valueList.get(i).get("sports_league_id"));
+					if (!queryMap.isEmpty()) {
+						Boolean trueFalse = NextrrUtils.isPresentValue(queryMap, "sports_league_id");
+						if (trueFalse) {
+							Map<String, Object> sportsLeagueMap = dbUtils.getFirstEntityDataWithConditions("sports_league", queryMap);
+
+							if (sportsLeagueMap != null) {
+								valueList.get(i).put("series_description", sportsLeagueMap.get("description"));
+								valueList.get(i).put("year", sportsLeagueMap.get("year"));
+							}
+						}
+					}
+				}
 			}
 			resultMap.put(key, valueList);
 		});
@@ -155,6 +178,7 @@ public class CricketHelper {
 		String city = params.getFirst("city");
 		String time = params.getFirst("time");
 		String matchNumber = params.getFirst("matchNumber");
+		String sports_league_id = params.getFirst("sports_league");
 		
 		if (params.getFirst("fromDate") != null) {
 			String fromDate = params.getFirst("fromDate");
@@ -176,6 +200,7 @@ public class CricketHelper {
 		queryMap.put("city", city);
 		queryMap.put("time", time);
 		queryMap.put("country_geoId", country);
+		queryMap.put("sports_league_id", sports_league_id);
 		
 		DatabaseUtils du = new DatabaseUtils();
 		
@@ -226,5 +251,12 @@ public class CricketHelper {
 			}
 		}
 		return new Gson().toJson(resultList);
+	}
+
+	public String getAllRawCricketLeagues() {
+		DatabaseUtils dbUtils = new DatabaseUtils();
+		Map<String, Object> sportsLeagueMap = dbUtils.getAllEntityData("sports_league");
+
+		return new Gson().toJson(sportsLeagueMap);
 	}
 }

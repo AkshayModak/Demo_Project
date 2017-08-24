@@ -35,6 +35,9 @@
             </md-content>
         </md-sidenav>
       </div>
+      <md-switch ng-model="released" ng-change="showAllCricket(cricketList)">
+        <span class="font-bold">Upcoming Matches</span>
+      </md-switch>
       <div class="col-md-9 col-xs-12">
           <table class="table" style="width: 100% !important;">
               <thead>
@@ -47,7 +50,7 @@
                   </tr>
               </thead>
               <tbody>
-                  <tr class="cricket-row" ng-repeat="cricket in cricketList | filter: filterString">
+                  <tr class="cricket-row" ng-repeat="cricket in cricketList | filter: filterString" style="display: {{ cricket.displayCricket }}">
                       <td>
                           <span ng-if = "cricket.match_number != 0">
                               {{ cricket.match_number }} {{ cricket.sports_child_type_id }}
@@ -59,7 +62,7 @@
                       <td>{{ cricket.team_one_geoId }} vs {{ cricket.team_two_geoId }}</td>
                       <td>
                           {{ cricket.stadium }}, {{ cricket.city }}
-                          <div style="color:grey"><small>{{ cricket.series_description }}, {{ cricket.series_year }}</small></div>
+                          <div style="color:grey"><small>{{ cricket.series_description }}, {{ cricket.year }}</small></div>
                       </td>
                       <td>{{ cricket.match_from_date }} 
                           <span ng-if="cricket.match_to_date"> - </span>
@@ -72,3 +75,4 @@
       </div>
     </div>
 </div>
+<span ng-show="filteredCricket.length">{{ filteredCricket.length }}==safsdf==</span>

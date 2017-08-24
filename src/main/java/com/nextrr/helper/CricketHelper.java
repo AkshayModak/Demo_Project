@@ -94,6 +94,13 @@ public class CricketHelper {
 				if (valueList.get(i).get("match_number") != null && Integer.valueOf((String) valueList.get(i).get("match_number")) != 0) {
 					valueList.get(i).put("match_number", cricketMatchList[Integer.valueOf((String) valueList.get(i).get("match_number")) - 1]);
 				}
+
+				if (valueList.get(i).get("match_to_date") != null && !"N/A".equals((String) valueList.get(i).get("match_to_date"))) {
+					valueList.get(i).put("match_date", valueList.get(i).get("match_to_date"));
+				} else {
+					valueList.get(i).put("match_date", valueList.get(i).get("match_from_date"));
+				}
+
 				if (valueList.get(i).get("team_one_geoId") != null) {
 					paramMap.clear();
 					paramMap.put("country_geo_id", valueList.get(i).get("team_one_geoId"));

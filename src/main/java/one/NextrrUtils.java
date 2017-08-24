@@ -67,7 +67,26 @@ public class NextrrUtils {
 			return year;
 		} catch(ParseException pe) {
 			DebugWrapper.logError(pe, CLASS_NAME);
-			return "ERROR";
+			return "error";
 		}
+	}
+
+	public static Date getDateFromString(String date) {
+		try {
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+			Date parsedDate = df.parse(date);
+			return parsedDate;
+		} catch(ParseException pe) {
+			DebugWrapper.logError(pe, CLASS_NAME);
+			return null;
+		}
+	}
+
+	public static Boolean isDateLessThanToday(Date date) {
+		Date today = new Date();
+		if (date.before(today)) {
+			return true;
+		}
+		return false;
 	}
 }

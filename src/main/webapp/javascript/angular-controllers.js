@@ -69,20 +69,86 @@ var cricketController = function($scope, APIService, ModalService, $http, $uibMo
         $scope.filterString = string;
     }
 
+    $scope.showAllCricket = function() {
+        if ($scope.released) {
+            var today = new Date();
+            today.setHours(0,0,0,0);
+            cricketList = $scope.cricketList;
+            for (i=0; i < cricketList.length; i++) {
+                cricketList[i].displayCricket = "table-row";
+            }
+            $scope.cricketList = cricketList;
+            getCricketLeagues(false);
+        } else {
+            var today = new Date();
+            today.setHours(0,0,0,0);
+            cricketList = $scope.cricketList;
+            for (i=0; i < cricketList.length; i++) {
+                var matchDate = new Date(cricketList[i].match_date);
+                if (matchDate < today) {
+                    cricketList[i].displayCricket = "none";
+                } else {
+                    cricketList[i].displayCricket = "table-row";
+                }
+            }
+            $scope.cricketList = cricketList;
+            data = $scope.cricketLeagues;
+            for (i = 0; i < data.length; i++) {
+                if (data[i].sports_leagues != undefined) {
+                    for (j = 0; j < data[i].sports_leagues.length; j++) {
+                        leagueDate = new Date(data[i].sports_leagues[j].to_date);
+                        if (leagueDate < today) {
+                            data[i].sports_leagues.splice(j, 1);
+                        }
+                    }
+                }
+            }
+        }
+    }
     $scope.cricketList = [];
 
-    APIService.doApiCall({
-        "req_name": "getIntlCricketToDisplay",
-        "params": {}
-    }).success(function(data) {
-        $scope.cricketList = data.result;
-    });
+    getIntlCricketToDisplay = function() {
+        APIService.doApiCall({
+            "req_name": "getIntlCricketToDisplay",
+            "params": {}
+        }).success(function(data) {
+            cricketList = data.result;
+            var today = new Date();
+            today.setHours(0,0,0,0);
+            for (i=0; i < cricketList.length; i++) {
+                matchDate = new Date(cricketList[i].match_date);
+                if (matchDate < today) {
+                    cricketList[i].displayCricket = "none";
+                } else {
+                    cricketList[i].displayCricket = "table-row";
+                }
+            }
+            $scope.cricketList = cricketList;
+        });
+    }
+    getIntlCricketToDisplay();
 
-    getCricketLeagues = function() {
+    getCricketLeagues = function(_recent) {
         APIService.doApiCall({
             "req_name": "getCricketLeagues",
             "params": {}
         }).success(function(data) {
+            if (_recent) {
+                today = new Date();
+                for (i = 0; i < data.length; i++) {
+                    if (data[i].sports_leagues != undefined) {
+                        for (j = 0; j < data[i].sports_leagues.length; j++) {
+                            leagueDate = new Date(data[i].sports_leagues[j].to_date);
+                            if (leagueDate < today) {
+                                data[i].sports_leagues.splice(j, 1);
+                            }
+                        }
+                    }
+                    if (!(data[i].sports_leagues).length > 0) {
+                        data.splice(i, 1);
+                    }
+                }
+            }
             $scope.cricketLeagues = data;
         });
     }
@@ -107,7 +173,7 @@ var cricketController = function($scope, APIService, ModalService, $http, $uibMo
     }
 
     getCricketCountries();
-    getCricketLeagues();
+    getCricketLeagues(true);
 }
 
 var editCricketController = function($scope, APIService, $http, $uibModal, $stateParams) {

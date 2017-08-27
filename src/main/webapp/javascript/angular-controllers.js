@@ -102,6 +102,9 @@ var cricketController = function($scope, APIService, ModalService, $http, $uibMo
                         }
                     }
                 }
+                if (!(data[i].sports_leagues).length > 0) {
+                    data.splice(i, 1);
+                }
             }
         }
     }
@@ -135,6 +138,7 @@ var cricketController = function($scope, APIService, ModalService, $http, $uibMo
         }).success(function(data) {
             if (_recent) {
                 today = new Date();
+                today.setHours(0,0,0,0);
                 for (i = 0; i < data.length; i++) {
                     if (data[i].sports_leagues != undefined) {
                         for (j = 0; j < data[i].sports_leagues.length; j++) {
@@ -144,7 +148,7 @@ var cricketController = function($scope, APIService, ModalService, $http, $uibMo
                             }
                         }
                     }
-                    if (!(data[i].sports_leagues).length > 0) {
+                    if ((data[i].sports_leagues).length == 0) {
                         data.splice(i, 1);
                     }
                 }
@@ -214,6 +218,7 @@ var editCricketController = function($scope, APIService, $http, $uibModal, $stat
                 "params": {"sports_league_id" : cricketLeague.series_id, "sports_type_id" : "CRICKET"}
             }).success(function(data) {
                 getCricketSeries();
+                $scope.deleteCricketLeague = false;
             });
         } else {
             APIService.doApiCall({
@@ -222,6 +227,7 @@ var editCricketController = function($scope, APIService, $http, $uibModal, $stat
                     "series_from_date" : cricketLeague.series_from_date, "series_to_date" : cricketLeague.series_to_date, "country_with" : cricketLeague.country_with}
             }).success(function(data) {
                 getCricketSeries();
+                $scope.cricketLeague = "";
             });
         }
     }

@@ -333,7 +333,6 @@ md-tab-item.md-active:hover { background-color: #F0F0F0 !important; color: black
 md-icon { color: black !important; }
 
 footer {
-   position:fixed;
    left:0px;
    bottom:0px;
    height:30px;

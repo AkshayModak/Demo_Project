@@ -532,8 +532,9 @@ var formula1Controller = function($scope, APIService, $http) {
         	}
         	var raceDate = mainRaceDate.getDate();
         	var currentDate = new Date().getDate();
+            data[i].sortTime = mainRaceDate.getTime();
         	data[i].mainRace.date = raceDate + " " + monthNames[mainRaceDate.getMonth()];
-        	if (raceDate < currentDate) {
+            if (mainRaceDate.getTime() < new Date().getTime()) {
         		data[i].isFinished = true;
         	}
         }

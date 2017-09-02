@@ -126,7 +126,10 @@ public class Formula1Helper {
 		String raceType = params.get("raceType").get(0);
 		String formulaOneId = params.get("formulaOneId").get(0);
 		String time = params.get("time").get(0);
-		String name = params.get("name").get(0);
+		if (params.get("name") != null) {
+			String name = params.getFirst("name");
+			queryMap.put("name", name);
+		}
 		String imagePath = params.getFirst("imagePath");
 		
 		if (params.get("formulaOnePracticeId") != null) {
@@ -142,12 +145,14 @@ public class Formula1Helper {
 			queryMap.put("country", country);
 		}
 		
-		queryMap.put("name", name);
 		queryMap.put("formula_one_id", formulaOneId);
 		queryMap.put("time", time);
 		queryMap.put("date", date);
 		queryMap.put("race_type_id", raceType);
-		queryMap.put("imagePath", imagePath);
+
+		if (params.get("imagePath") != null) {
+			queryMap.put("imagePath", imagePath);
+		}
 		
 		DatabaseUtils du = new DatabaseUtils();
 		
@@ -168,7 +173,10 @@ public class Formula1Helper {
 		String date = params.get("date").get(0);
 		String raceType = params.get("raceType").get(0);
 		String time = params.get("time").get(0);
-		String name = params.get("name").get(0);
+		if (params.get("name") != null) {
+			String name = params.get("name").get(0);
+			queryMap.put("name", name);
+		}
 		String imagePath = params.getFirst("imagePath");
 		if (params.get("city") != null) {
 			String city = params.get("city").get(0);
@@ -178,11 +186,13 @@ public class Formula1Helper {
 			String country = params.get("country").get(0);
 			queryMap.put("country", country);
 		}
-		queryMap.put("name", name);
+
 		queryMap.put("time", time);
 		queryMap.put("date", date);
 		queryMap.put("race_type_id", raceType);
-		queryMap.put("imagePath", imagePath);
+		if (params.get("imagePath") != null) {
+			queryMap.put("imagePath", imagePath);
+		}
 		
 		DatabaseUtils du = new DatabaseUtils();
 		

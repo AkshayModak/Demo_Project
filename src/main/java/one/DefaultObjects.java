@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Date;
 import java.util.Map;
+import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -119,6 +120,7 @@ public class DefaultObjects {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
 		Date parsedTime = df.parse(time);
 		DateFormat formatter = new SimpleDateFormat("hh:mm a");
+		formatter.setTimeZone(TimeZone.getTimeZone("IST"));
 		formattedTime = formatter.format(parsedTime);
 		} catch(ParseException pe) {
 			System.out.println(pe);

@@ -4,7 +4,7 @@ apply plugin: 'war'
 apply plugin: 'com.bmuschko.tomcat'
 apply plugin: 'maven'
 
-sourceCompatibility = '1.8'
+sourceCompatibility = 1.8
 version = '1.0'
 jar {
     manifest {
@@ -44,7 +44,7 @@ dependencies {
     
     /** The ‘providedCompile’ line means don’t include this jar in the WEB-INF/lib directory, 
     since Tomcat7 will already have this. The rest will be placed in that directory. **/
-    def tomcatVersion = '8.0.42'
+    def tomcatVersion = '7.0.76'
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
            "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
@@ -57,7 +57,7 @@ buildscript {
     }
  
     dependencies {
-        classpath 'com.bmuschko:gradle-tomcat-plugin:2.2.2'
+        classpath 'com.bmuschko:gradle-tomcat-plugin:2.3'
     }
 }
 

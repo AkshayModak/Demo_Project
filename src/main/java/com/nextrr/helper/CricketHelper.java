@@ -67,7 +67,7 @@ public class CricketHelper {
 			if(cricket.containsKey("match_from_date")) {
 				cricket.put("match_from_date", DefaultObjects.formatDate((String) cricket.get("match_from_date")));
 			}
-			if(cricket.containsKey("match_to_date")) {
+			if(cricket.containsKey("match_to_date") && cricket.get("match_to_date") != null) {
 				cricket.put("match_to_date", DefaultObjects.formatDate((String) cricket.get("match_to_date")));
 			}
 			if (cricket.containsKey("sports_league_id")) {

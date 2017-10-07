@@ -21,6 +21,7 @@ import com.nextrr.helper.MoviesServices;
 import architecture.utils.DebugWrapper;
 
 import com.nextrr.helper.CricketHelper;
+import com.nextrr.helper.FantasyCricketHelper;
 import com.nextrr.helper.GenericHelper;
 import one.DatabaseUtils;
 
@@ -230,6 +231,25 @@ public class UserService implements Serializable{
 			result = genericHelper.addSportsLeague(uriInfo.getQueryParameters());
 		}
 
+		return result;
+	}
+
+	@POST
+	@Path("/getFantasyCricketPlayers")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getFantasyCricketPlayers() {
+		FantasyCricketHelper fcHelper = new FantasyCricketHelper();
+		String result = fcHelper.getAllPlayers();
+		return result;
+	}
+
+	@POST
+	@Path("/getFantasyCricketResult")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getFantasyCricketResult() {
+		FantasyCricketHelper fcHelper = new FantasyCricketHelper();
+		String result = fcHelper.playCricket();
+		fcHelper = null;
 		return result;
 	}
 }

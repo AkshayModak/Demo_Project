@@ -175,8 +175,6 @@ uib-accordion-group > .panel-heading {
   opacity: 0;
 }
 
-footer { height: 400px; background-color: grey;}
-
 md-select { margin: 7px 0 26px; }
 md-input-container { margin: 0 0 !important; }
 
@@ -332,12 +330,14 @@ md-tab-item.md-active:hover { background-color: #F0F0F0 !important; color: black
 
 md-icon { color: black !important; }
 
-footer {
-   left:0px;
-   bottom:0px;
-   height:30px;
-   width:100%;
-   background:#999;
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: #efefef;
+  text-align: center;
 }
 
 .cricket-flag-1 { 
@@ -414,4 +414,10 @@ footer {
 .facet {background-color: #2E353D !important; color: white;}
 
 .bg-white { background-color: #ffffff !important; color: black !important; }
-.font-bold {font-weight: bold;}
+
+.btn-primary {
+	color: #fff;
+	background-color: black;
+	border-color: black;
+	border-radius : 0;
+}

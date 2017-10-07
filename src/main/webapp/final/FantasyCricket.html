@@ -1,0 +1,350 @@
+<div style="padding-top:150px;" ng-include="'final/innerNavbar.html'"></div>
+
+<div class="container">
+	<div class="row" ng-if="ratingExceedAlert">
+		<div class="alert alert-danger" style="top: auto; position: absolute; width: min-content;">
+  			<strong>Danger!</strong> Your combined players ratings can't exceed 100
+		</div>
+	</div>
+	<div class="col-md-6" style="border-right: 1px solid #ddd;">
+		<uib-tabset active="active">
+		    <uib-tab index="0" heading="Batsmen">
+		    	<div style="max-height: 400px; overflow-y: scroll;">
+			    	<table class="table table-striped">
+		    			<thead>
+		    				<th>Name</th>
+		    				<th>Nationality</th>
+		    				<th>Rating</th>
+		    				<th></th>
+		    			</thead>
+		    			<tbody>
+		    				<tr ng-repeat="player in players | filter: {role: 'batsman'}" ng-class="{'success': player.pushed}">
+		    					<td>
+		    						<span><img src="images/fonts/batsman.svg" style="width: 12px; height: 12px;"/></span>
+		    						{{ player.firstName }} {{ player.lastName }}
+		    					</td>
+		    					<td>India</td>
+		    					<td>{{ player.rating }}</td>
+		    					<td>
+		    						<span ng-if="!player.pushed">
+		    							<button class="btn-link" ng-click="addToEleven(player)"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
+		    						</span>
+		    						<span ng-if="player.pushed">
+		    							<button class="btn-link" ng-click="removeFromEleven(player)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+		    						</span>
+		    					</td>
+		    				</tr>
+		    			</tbody>
+		    		</table>
+	    		</div>
+		    </uib-tab>
+    		<uib-tab index="1" heading="All-Rounders">
+      			<div style="max-height: 400px; overflow-y: scroll;">
+			    	<table class="table table-striped">
+		    			<thead>
+		    				<th>Name</th>
+		    				<th>Nationality</th>
+		    				<th>Rating</th>
+		    				<th></th>
+		    			</thead>
+		    			<tbody>
+		    				<tr ng-repeat="player in players | filter: {role: 'all-rounder'}" ng-class="{'success': player.pushed}">
+		    					<td>
+		    						<span><img src="images/fonts/batsman.svg" style="width: 12px; height: 12px;"/></span>
+		    						{{ player.firstName }} {{ player.lastName }}
+		    					</td>
+		    					<td>India</td>
+		    					<td>{{ player.rating }}</td>
+		    					<td>
+		    						<span ng-if="!player.pushed">
+		    							<button class="btn-link" ng-click="addToEleven(player)"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
+		    						</span>
+		    						<span ng-if="player.pushed">
+		    							<button class="btn-link" ng-click="removeFromEleven(player)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+		    						</span>
+		    					</td>
+		    				</tr>
+		    			</tbody>
+		    		</table>
+	    		</div>
+   			</uib-tab>
+    		<uib-tab index="2" heading="Wicket-Keepers">
+      			<div style="max-height: 400px; overflow-y: scroll;">
+			    	<table class="table table-striped">
+		    			<thead>
+		    				<th>Name</th>
+		    				<th>Nationality</th>
+		    				<th>Rating</th>
+		    				<th></th>
+		    			</thead>
+		    			<tbody>
+		    				<tr ng-repeat="player in players | filter: {role: 'wicketkeeper'}" ng-class="{'success': player.pushed}">
+		    					<td>
+		    						<span><img src="images/fonts/batsman.svg" style="width: 12px; height: 12px;"/></span>
+		    						{{ player.firstName }} {{ player.lastName }}
+		    					</td>
+		    					<td>India</td>
+		    					<td>{{ player.rating }}</td>
+		    					<td>
+		    						<span ng-if="!player.pushed">
+		    							<button class="btn-link" ng-click="addToEleven(player)"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
+		    						</span>
+		    						<span ng-if="player.pushed">
+		    							<button class="btn-link" ng-click="removeFromEleven(player)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+		    						</span>
+		    					</td>
+		    				</tr>
+		    			</tbody>
+		    		</table>
+	    		</div>
+   			</uib-tab>
+   			<uib-tab index="3" heading="Bowlers">
+      			<div style="max-height: 400px; overflow-y: scroll;">
+			    	<table class="table table-striped">
+		    			<thead>
+		    				<th>Name</th>
+		    				<th>Nationality</th>
+		    				<th>Rating</th>
+		    				<th></th>
+		    			</thead>
+		    			<tbody>
+		    				<tr ng-repeat="player in players | filter: {role: 'bowler'}" ng-class="{'success': player.pushed}">
+		    					<td>
+		    						<span><img src="images/fonts/batsman.svg" style="width: 12px; height: 12px;"/></span>
+		    						{{ player.firstName }} {{ player.lastName }}
+		    					</td>
+		    					<td>India</td>
+		    					<td>{{ player.bowlingRating }}</td>
+		    					<td>
+		    						<span ng-if="!player.pushed">
+		    							<button class="btn-link" ng-click="addToEleven(player)"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
+		    						</span>
+		    						<span ng-if="player.pushed">
+		    							<button class="btn-link" ng-click="removeFromEleven(player)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+		    						</span>
+		    					</td>
+		    				</tr>
+		    			</tbody>
+		    		</table>
+	    		</div>
+   			</uib-tab>
+		</uib-tabset>	
+	</div>
+	<div class="col-md-6">
+		<div class="col-xs-5">
+			<div class="row">
+				<div class="col-xs-12" style="padding: 10px; padding-right: 0;">
+					<strong>Demo Team XI</strong>
+				</div>
+			</div>
+			<div class="row" ng-repeat="selectedPlayer in userEleven">
+				<div class="col-xs-12" style="padding: 5px; padding-right: 0;">
+					{{ $index + 1 }}. {{ selectedPlayer.firstName }} {{ selectedPlayer.lastName }}
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-2">
+			<div class="row">
+				<div class="col-xs-12" style="padding: 5px; padding-right: 0;">
+					<strong>vs</strong>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-5">
+			<div class="col-xs-12" style="padding: 10px; padding-right: 0;">
+				<strong>India</strong>
+			</div>
+			<div class="row">
+				<div class="col-xs-12" style="padding: 5px; padding-right: 0;">
+					1. Ajinkya Rahane
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12" style="padding: 5px; padding-right: 0;">
+					2. Rohit Sharma
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12" style="padding: 5px; padding-right: 0;">
+					3. Virat Kohli (Captain)
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12" style="padding: 5px; padding-right: 0;">
+					4. Hardik Pandya
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12" style="padding: 5px; padding-right: 0;">
+					5. Kedar Jadhav
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12" style="padding: 5px; padding-right: 0;">
+					6. Mahendra Singh Dhoni (wk)
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12" style="padding: 5px; padding-right: 0;">
+					7. Manish Pandey
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12" style="padding: 5px; padding-right: 0;">
+					8. Buvneshwar Kumar
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12" style="padding: 5px; padding-right: 0;">
+					9. Kuldeep Yadav
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12" style="padding: 5px; padding-right: 0;">
+					10. Jasprit Bumrah
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12" style="padding: 5px; padding-right: 0;">
+					11. Yuzvendra Chahal
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-12">
+		<div class="col-xs-6">
+			<div class="col-xs-10">
+				<strong>Current Combined Rating : {{ rating }}</strong>
+			</div>
+			<div class="col-xs-2">
+				<button type="button" class="btn btn-primary" ng-click="playCricket(userEleven)">Let's Play!</button>
+			</div> 
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-6" style="margin-top: 50px;">
+			<table class="table table-striped table-bordered">
+				<thead>
+					<tr>
+						<th>Batsmen</th>
+						<th></th>
+						<th>Runs</th>
+						<th>Balls</th>
+						<th>4s</th>
+						<th>6s</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="battingDetails in team1">
+						<td>{{ battingDetails.batsmanInfo }}</td>
+						<td>{{ battingDetails.assistedBy }}</td>
+						<td>{{ battingDetails.runsScored }}</td>
+						<td>{{ battingDetails.ballsFaced }}</td>
+						<td>{{ battingDetails.foursHit }}</td>
+						<td>{{ battingDetails.sixesHit }}</td>
+					</tr>
+					<tr>
+						<td colspan="3">Total</td>
+						<td colspan="3">{{ team1Score }}</td>
+					</tr>
+					<tr>
+						<td colspan="6">
+							Fall Of Wickets: 
+							<span ng-repeat="fow in team1Fow">
+							{{fow.fow}}
+							</span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Bowling</th>
+						<th>Overs</th>
+						<th>Maidens</th>
+						<th>Runs</th>
+						<th>Wickets</th>
+						<th>Wide</th>
+						<th>No Ball</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="bowlerDetails in team1BowlerDetails">
+						<td>{{ bowlerDetails.name }}</td>
+						<td>{{ bowlerDetails.overs }}</td>
+						<td>0</td>
+						<td>{{ bowlerDetails.runsGiven }}</td>
+						<td>{{ bowlerDetails.wickets }}</td>
+						<td>{{ bowlerDetails.wides }}</td>
+						<td>{{ bowlerDetails.nobs }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-md-6" style="margin-top: 50px;">
+			<table class="table table-striped table-bordered">
+				<thead>
+					<tr>
+						<th>Batsmen</th>
+						<th></th>
+						<th>Runs</th>
+						<th>Balls</th>
+						<th>4s</th>
+						<th>6s</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="battingDetails in team2">
+						<td>{{ battingDetails.batsmanInfo }}</td>
+						<td>{{ battingDetails.assistedBy }}</td>
+						<td>{{ battingDetails.runsScored }}</td>
+						<td>{{ battingDetails.ballsFaced }}</td>
+						<td>{{ battingDetails.foursHit }}</td>
+						<td>{{ battingDetails.sixesHit }}</td>
+					</tr>
+					<tr>
+						<td colspan="3">Total</td>
+						<td colspan="3">{{ team2Score }}</td>
+					</tr>
+					<tr>
+						<td colspan="6">
+							Fall Of Wickets: 
+							<span ng-repeat="fow in team2Fow">
+							{{fow.fow}}
+							</span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Bowling</th>
+						<th>Overs</th>
+						<th>Maidens</th>
+						<th>Runs</th>
+						<th>Wickets</th>
+						<th>Wide</th>
+						<th>No Ball</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="bowlerDetails in team2BowlerDetails">
+						<td>{{ bowlerDetails.name }}</td>
+						<td>{{ bowlerDetails.overs }}</td>
+						<td>0</td>
+						<td>{{ bowlerDetails.runsGiven }}</td>
+						<td>{{ bowlerDetails.wickets }}</td>
+						<td>{{ bowlerDetails.wides }}</td>
+						<td>{{ bowlerDetails.nobs }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+
+
+</div>

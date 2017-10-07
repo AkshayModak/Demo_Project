@@ -2,12 +2,18 @@ package com.nextrr.helper;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import javax.ws.rs.core.MultivaluedMap;
 
 import com.google.gson.Gson;
+
+import one.NextrrUtils;
 
 public class FantasyCricketHelper implements Serializable {
 
@@ -43,9 +49,32 @@ public class FantasyCricketHelper implements Serializable {
 	Map<String, Object> team2WicketAssistedByMap = new HashMap<String, Object>();
 	
 	@SuppressWarnings("unchecked")
-	public String playCricket() {
+	public String playCricket(MultivaluedMap<String, String> params) {
 		setPlayerDetails();
-		setTeam2PlayerDetails();
+
+		List<Map<String, Object>> paramList = new ArrayList<Map<String, Object>>();
+
+		for (String value : params.get("userEleven")) {
+			value = value.substring(1, value.length()-1);           //remove curly brackets
+			String[] keyValuePairs = value.split(",");              //split the string to creat key-value pairs
+			Map<String, Object> map = new HashMap<String, Object>();
+
+			for(String pair : keyValuePairs)                        //iterate over the pairs
+			{
+			    String[] entry = pair.split(":");                   //split the pairs to get key and value
+			    entry[0] = entry[0].replaceAll("^\"|\"$", "");
+			    String objectValue = entry[1].replaceAll("^\"|\"$", "");
+			    if (NextrrUtils.isNumeric(objectValue)) {
+			        int intValue = Integer.valueOf(entry[1].replaceAll("^\"|\"$", ""));
+			        map.put(entry[0], intValue);
+			    } else {
+			        map.put(entry[0], objectValue);          //add them to the hashmap and trim whitespaces
+			    }
+			}
+			paramList.add(map);
+		}
+
+		setTeam2PlayerDetails(paramList);
 		playFirstInning();
 		playSecondInning();
 		
@@ -264,7 +293,7 @@ public class FantasyCricketHelper implements Serializable {
 						for (int a = 0; a < bowlerList.size(); a++) {
 							Map<String, Object> bowlerMap = bowlerList.get(a);
 							if (((int) currentBowler.get("position")) == ((int) bowlerMap.get("position"))) {
-								int bowlerRuns = (int) currentBowler.get("runsExhausted") + 0;
+								int bowlerRuns = (int) currentBowler.get("runsExhausted");
 								bowlerMap.put("runsExhausted", bowlerRuns);
 								bowlerList.set(a, bowlerMap);
 							}
@@ -417,8 +446,6 @@ public class FantasyCricketHelper implements Serializable {
 			team2BallsFaced = team2BallsFaced + 1;
 			if (j == 0) {
 				currentBowler = getBowler(team1PlayerDetails, j, lastBowler);
-				/*System.out.println("Here We Go!, First Ball of the Match");
-				System.out.println(getTeam2PlayerDetails(1).get("firstName") + " On strike.");*/
 			}
 			if (team2Wickets < 10) {
 				int run = getRun(getTeam2PlayerDetails(batsmanOnStrike), j, team2Wickets, currentBowler);
@@ -524,7 +551,7 @@ public class FantasyCricketHelper implements Serializable {
 						for (int a = 0; a < bowlerList.size(); a++) {
 							Map<String, Object> bowlerMap = bowlerList.get(a);
 							if (((int) currentBowler.get("position")) == ((int) bowlerMap.get("position"))) {
-								int bowlerRuns = (int) currentBowler.get("runsExhausted") + 0;
+								int bowlerRuns = (int) currentBowler.get("runsExhausted");
 								bowlerMap.put("runsExhausted", bowlerRuns);
 								bowlerList.set(a, bowlerMap);
 							}
@@ -814,9 +841,13 @@ public class FantasyCricketHelper implements Serializable {
 		team1PlayerDetails.add(playerDetailMap);
 	}
 	
-	void setTeam2PlayerDetails() {
+	void setTeam2PlayerDetails(List<Map<String, Object>> paramList) {
 
-		Map<String, Object> playerDetailMap = new HashMap<String, Object>();
+		for (Map<String, Object> paramMap : paramList) {
+			team2PlayerDetails.add(paramMap);
+		}
+
+		/*Map<String, Object> playerDetailMap = new HashMap<String, Object>();
 		playerDetailMap.put("position", 1);
 		playerDetailMap.put("rating", 9);
 		playerDetailMap.put("bowlingRating", 1);
@@ -929,7 +960,7 @@ public class FantasyCricketHelper implements Serializable {
 		playerDetailMap.put("firstName", "Josh");
 		playerDetailMap.put("lastName", "Hazelwood");
 		
-		team2PlayerDetails.add(playerDetailMap);
+		team2PlayerDetails.add(playerDetailMap);*/
 	}
 	
 	Map<String, Object> getPlayerDetails(int position) {

@@ -246,9 +246,9 @@ public class UserService implements Serializable{
 	@POST
 	@Path("/getFantasyCricketResult")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getFantasyCricketResult() {
+	public String getFantasyCricketResult(@Context UriInfo uriInfo) {
 		FantasyCricketHelper fcHelper = new FantasyCricketHelper();
-		String result = fcHelper.playCricket();
+		String result = fcHelper.playCricket(uriInfo.getQueryParameters());
 		fcHelper = null;
 		return result;
 	}

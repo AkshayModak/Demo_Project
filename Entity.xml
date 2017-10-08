@@ -100,4 +100,14 @@
         <column name="sports_type_id" data-type="varchar" column-size="15" null="false"/>
         <column name="year" data-type="varchar" column-size="255"/>
     </table>
+    <table name="fantasy_cricket">
+        <column name="fantasy_cricket_id" data-type="int" null="false" primary-key="true" auto-increment="true"/>
+        <column name="firstName" data-type="varchar" column-size="10" null="false"/>
+        <column name="lastName" data-type="varchar" column-size="10" null="false"/>
+        <column name="country_geo_id" data-type="varchar" column-size="10" null="false"/>
+        <column name="role" data-type="varchar" column-size="25" null="false"/>
+        <column name="position" data-type="int" null="false"/>
+        <column name="rating" data-type="int" null="false"/>
+        <column name="bowlingRating" data-type="int" null="false"/>
+    </table>
 </entity-def>

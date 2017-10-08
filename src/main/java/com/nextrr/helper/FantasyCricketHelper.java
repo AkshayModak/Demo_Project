@@ -13,6 +13,7 @@ import javax.ws.rs.core.MultivaluedMap;
 
 import com.google.gson.Gson;
 
+import one.DatabaseUtils;
 import one.NextrrUtils;
 
 public class FantasyCricketHelper implements Serializable {
@@ -72,6 +73,12 @@ public class FantasyCricketHelper implements Serializable {
 			    }
 			}
 			paramList.add(map);
+		}
+
+		int positionIndex = 0;
+		for (Map<String, Object> paramMap : paramList) {
+			paramMap.put("position", positionIndex);
+			positionIndex = positionIndex + 1;
 		}
 
 		setTeam2PlayerDetails(paramList);
@@ -180,7 +187,7 @@ public class FantasyCricketHelper implements Serializable {
 		createBatsmanFoursList(batsmanFoursList);
 		createBatsmanSixesList(batsmanSixesList);
 		List<Map<String, Object>> bowlerList = getBowlersFromPlayerList(team2PlayerDetails);
-		
+
 		team1PlayerDetailsDuringMatch.add(new HashMap<String, Object>());
 		team1PlayerDetailsDuringMatch.add(new HashMap<String, Object>());
 		
@@ -375,7 +382,6 @@ public class FantasyCricketHelper implements Serializable {
 					}
 				}
 				if (j%6 == 0) {
-					/*System.out.println("Over Finished -- "+(++secondInningOvers));*/
 					int temp = batsmanOnNonStrike;
 					batsmanOnNonStrike = batsmanOnStrike;
 					batsmanOnStrike = temp;
@@ -407,7 +413,6 @@ public class FantasyCricketHelper implements Serializable {
 			team1MatchInfoMap.put("batsmanOnStrike", getPlayerDetails(Integer.valueOf(batsmanOnStrike)));
 			team1MatchInfoMap.put("batsmanOnNonStrike", getPlayerDetails(Integer.valueOf(batsmanOnNonStrike)));
 		} else {
-			/*System.out.println(batsmanOnStrike);*/
 			team1MatchInfoMap.put("batsmanOnStrike", getPlayerDetails(Integer.valueOf(batsmanOnStrike)));
 		}
 		
@@ -633,7 +638,6 @@ public class FantasyCricketHelper implements Serializable {
 					}
 				}
 				if (j%6 == 0) {
-					/*System.out.println("Over Finished -- "+(++secondInningOvers));*/
 					int temp = batsmanOnNonStrike;
 					batsmanOnNonStrike = batsmanOnStrike;
 					batsmanOnStrike = temp;
@@ -668,7 +672,6 @@ public class FantasyCricketHelper implements Serializable {
 			team2MatchInfoMap.put("batsmanOnStrike", getTeam2PlayerDetails(Integer.valueOf(batsmanOnStrike)));
 			team2MatchInfoMap.put("batsmanOnNonStrike", getTeam2PlayerDetails(Integer.valueOf(batsmanOnNonStrike)));
 		} else {
-			/*System.out.println(batsmanOnStrike);*/
 			team2MatchInfoMap.put("batsmanOnStrike", getTeam2PlayerDetails(Integer.valueOf(batsmanOnStrike)));
 		}
 		
@@ -725,16 +728,18 @@ public class FantasyCricketHelper implements Serializable {
 	void setPlayerDetails() {
 
 		Map<String, Object> playerDetailMap = new HashMap<String, Object>();
+		playerDetailMap.put("fantasy_cricket_id", 1);
 		playerDetailMap.put("position", 1);
 		playerDetailMap.put("rating", 8);
 		playerDetailMap.put("bowlingRating", 1);
 		playerDetailMap.put("role", "batsman");
-		playerDetailMap.put("firstName", "Ajinka");
+		playerDetailMap.put("firstName", "Ajinkya");
 		playerDetailMap.put("lastName", "Rahane");
 		
 		team1PlayerDetails.add(playerDetailMap);
 		
 		playerDetailMap = new HashMap<String, Object>();
+		playerDetailMap.put("fantasy_cricket_id", 2);
 		playerDetailMap.put("position", 2);
 		playerDetailMap.put("rating", 9);
 		playerDetailMap.put("bowlingRating", 1);
@@ -745,6 +750,7 @@ public class FantasyCricketHelper implements Serializable {
 		team1PlayerDetails.add(playerDetailMap);
 		
 		playerDetailMap = new HashMap<String, Object>();
+		playerDetailMap.put("fantasy_cricket_id", 3);
 		playerDetailMap.put("position", 3);
 		playerDetailMap.put("rating", 10);
 		playerDetailMap.put("bowlingRating", 4);
@@ -755,6 +761,7 @@ public class FantasyCricketHelper implements Serializable {
 		team1PlayerDetails.add(playerDetailMap);
 		
 		playerDetailMap = new HashMap<String, Object>();
+		playerDetailMap.put("fantasy_cricket_id", 4);
 		playerDetailMap.put("position", 4);
 		playerDetailMap.put("rating", 8);
 		playerDetailMap.put("bowlingRating", 1);
@@ -765,6 +772,7 @@ public class FantasyCricketHelper implements Serializable {
 		team1PlayerDetails.add(playerDetailMap);
 		
 		playerDetailMap = new HashMap<String, Object>();
+		playerDetailMap.put("fantasy_cricket_id", 5);
 		playerDetailMap.put("position", 5);
 		playerDetailMap.put("rating", 10);
 		playerDetailMap.put("bowlingRating", 3);
@@ -775,6 +783,7 @@ public class FantasyCricketHelper implements Serializable {
 		team1PlayerDetails.add(playerDetailMap);
 		
 		playerDetailMap = new HashMap<String, Object>();
+		playerDetailMap.put("fantasy_cricket_id", 6);
 		playerDetailMap.put("position", 6);
 		playerDetailMap.put("rating",8);
 		playerDetailMap.put("bowlingRating", 5);
@@ -786,6 +795,7 @@ public class FantasyCricketHelper implements Serializable {
 		team1PlayerDetails.add(playerDetailMap);
 		
 		playerDetailMap = new HashMap<String, Object>();
+		playerDetailMap.put("fantasy_cricket_id", 7);
 		playerDetailMap.put("position", 7);
 		playerDetailMap.put("rating", 6);
 		playerDetailMap.put("bowlingRating", 8);
@@ -797,6 +807,7 @@ public class FantasyCricketHelper implements Serializable {
 		team1PlayerDetails.add(playerDetailMap);
 		
 		playerDetailMap = new HashMap<String, Object>();
+		playerDetailMap.put("fantasy_cricket_id", 8);
 		playerDetailMap.put("position", 8);
 		playerDetailMap.put("rating", 5);
 		playerDetailMap.put("bowlingRating", 8);
@@ -808,6 +819,7 @@ public class FantasyCricketHelper implements Serializable {
 		team1PlayerDetails.add(playerDetailMap);
 		
 		playerDetailMap = new HashMap<String, Object>();
+		playerDetailMap.put("fantasy_cricket_id", 9);
 		playerDetailMap.put("position", 9);
 		playerDetailMap.put("rating", 4);
 		playerDetailMap.put("bowlingRating", 8);
@@ -819,6 +831,7 @@ public class FantasyCricketHelper implements Serializable {
 		team1PlayerDetails.add(playerDetailMap);
 		
 		playerDetailMap = new HashMap<String, Object>();
+		playerDetailMap.put("fantasy_cricket_id", 10);
 		playerDetailMap.put("position", 10);
 		playerDetailMap.put("rating", 4);
 		playerDetailMap.put("bowlingRating", 8);
@@ -830,6 +843,7 @@ public class FantasyCricketHelper implements Serializable {
 		team1PlayerDetails.add(playerDetailMap);
 		
 		playerDetailMap = new HashMap<String, Object>();
+		playerDetailMap.put("fantasy_cricket_id", 11);
 		playerDetailMap.put("position", 11);
 		playerDetailMap.put("rating", 3);
 		playerDetailMap.put("bowlingRating", 8);
@@ -998,15 +1012,6 @@ public class FantasyCricketHelper implements Serializable {
 		}
 	}
 	
-	void createBowlerRunsExhaustedMap(List<Map<String, Integer>> bowlerRunsExhaustedList, List<Map<String, Object>> bowlerList) {
-		
-		for (Map<String, Object> bowlerMap : bowlerList) {
-			Map<String, Integer> tempMap = (Map<String, Integer>) new HashMap();
-			tempMap.put(String.valueOf(bowlerMap.get("position")), 0);
-			bowlerRunsExhaustedList.add(tempMap);
-		}
-	}
-	
 	void createBatsmanFoursList(List<Map<String, Integer>> batsmanFoursList) {
 		for (int index = 1; index <= 11; index++) {
 			Map<String, Integer> tempMap = (Map<String, Integer>) new HashMap();
@@ -1101,59 +1106,6 @@ public class FantasyCricketHelper implements Serializable {
 					continue;
 				}
 				return bowlerMap;
-				
-				/*if (lastBowler != -1 && currentBall > 60) {
-					if (bowlerMap.get("type").equals("fast-bowler")) {
-						if (!bowlerMap.get("position").equals(lastBowler)) {
-							if (bowlerMap.get("runsExhausted") == null) {
-								bowlerMap.put("runsExhausted", 0);
-							}
-							if (bowlerMap.get("wicketsTaken") == null) {
-								bowlerMap.put("wicketsTaken", 0);
-							}
-							if (bowlerMap.get("ballsBowled") == null) {
-								bowlerMap.put("ballsBowled", 0);
-							} else if ((int) bowlerMap.get("ballsBowled") < 60){
-								return bowlerMap;
-							} else if (((int) bowlerMap.get("ballsBowled")) > 60) {
-								continue;
-							}
-							return bowlerMap;
-						}
-					} else if (bowlerMap.get("type").equals("spinner")) {
-						if (!bowlerMap.get("position").equals(lastBowler)) {
-							if (bowlerMap.get("runsExhausted") == null) {
-								bowlerMap.put("runsExhausted", 0);
-							}
-							if (bowlerMap.get("wicketsTaken") == null) {
-								bowlerMap.put("wicketsTaken", 0);
-							}
-							if (bowlerMap.get("ballsBowled") == null) {
-								bowlerMap.put("ballsBowled", 0);
-							} else if ((int) bowlerMap.get("ballsBowled") < 60){
-								return bowlerMap;
-							} else if (((int) bowlerMap.get("ballsBowled")) > 60) {
-								continue;
-							}
-							return bowlerMap;
-						}
-					}
-				} else if (currentBall < 60) {
-					if (("fast-bowler").equals((String) bowlerMap.get("type"))) {
-						if (!bowlerMap.get("position").equals(lastBowler)) {
-							if (bowlerMap.get("runsExhausted") == null) {
-								bowlerMap.put("runsExhausted", 0);
-							}
-							if (bowlerMap.get("wicketsTaken") == null) {
-								bowlerMap.put("wicketsTaken", 0);
-							}
-							if (bowlerMap.get("ballsBowled") == null) {
-								bowlerMap.put("ballsBowled", 0);
-							}
-							return bowlerMap;
-						}
-					}
-				}*/
 			}
 		}
 		return currentBowlerMap;
@@ -1213,7 +1165,12 @@ public class FantasyCricketHelper implements Serializable {
 	
 	public String getAllPlayers() {
 		setPlayerDetails();
-		return new Gson().toJson(team1PlayerDetails);
+
+		DatabaseUtils dbUtils = new DatabaseUtils();
+		Map<String, Object> resultMap = dbUtils.getAllEntityData("fantasy_cricket");
+		List<Map<String, Object>> resultList = (List<Map<String, Object>>) resultMap.get("result");
+
+		return new Gson().toJson(resultList);
 	}
 	
 	private List getSecondInningDetails(Map<String, Object> team2MatchInfoMap) {
@@ -1286,5 +1243,4 @@ public class FantasyCricketHelper implements Serializable {
 		
 		return resultList;
 	}
-	
 }

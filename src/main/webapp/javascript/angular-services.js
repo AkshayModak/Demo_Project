@@ -6,6 +6,7 @@ myApp.factory('APIService', ['$http', function($http) {
 
 	var path = location.pathname;
 	var appName = path.split('/')[1];
+	$('#loadingDiv').show();
     return {
         doApiCall: function(obj){
             var xhr = $http({
@@ -30,6 +31,7 @@ myApp.factory('APIService', ['$http', function($http) {
             return xhr;
         }
     };
+    $('#loadingDiv').hide();
 }]);
 
 myApp.service('fileUploadService', function ($http, $q) {

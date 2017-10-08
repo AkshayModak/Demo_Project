@@ -421,3 +421,12 @@ md-icon { color: black !important; }
 	border-color: black;
 	border-radius : 0;
 }
+
+#loadingDiv{
+    top:50%;
+    left:50%;
+	position:absolute;
+	background-repeat:no-repeat;
+	background-position:center;
+	z-index:999;
+}

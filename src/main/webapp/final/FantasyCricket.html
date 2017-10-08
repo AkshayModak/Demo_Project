@@ -1,11 +1,16 @@
 <div style="padding-top:150px;" ng-include="'final/innerNavbar.html'"></div>
-
+<div class="row" ng-if="ratingExceedAlert">
+  <div class="alert alert-danger" style="top: auto; position: absolute; width: min-content;">
+    <strong>Danger!</strong> Your combined players ratings can't exceed 100
+  </div>
+</div>
+<div class="row" ng-if="userElevenError">
+  <div class="alert alert-danger" style="z-index:999;">
+    Need {{ playersRequired }} more player(s) to play a match.
+  </div>
+</div>
 <div class="container">
-	<div class="row" ng-if="ratingExceedAlert">
-		<div class="alert alert-danger" style="top: auto; position: absolute; width: min-content;">
-  			<strong>Danger!</strong> Your combined players ratings can't exceed 100
-		</div>
-	</div>
+	<div class="row">
 	<div class="col-md-6" style="border-right: 1px solid #ddd;">
 		<uib-tabset active="active">
 		    <uib-tab index="0" heading="Batsmen">
@@ -128,7 +133,7 @@
 		    		</table>
 	    		</div>
    			</uib-tab>
-		</uib-tabset>	
+		</uib-tabset>
 	</div>
 	<div class="col-md-6">
 		<div class="col-xs-5">
@@ -211,17 +216,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-xs-12">
-		<div class="col-xs-6">
-			<div class="col-xs-10">
-				<strong>Current Combined Rating : {{ rating }}</strong>
-			</div>
-			<div class="col-xs-2">
-				<button type="button" class="btn btn-primary" ng-click="playCricket(userEleven)">Let's Play!</button>
-			</div> 
-		</div>
 	</div>
-	
 	<div class="row">
 		<div class="col-md-6" style="margin-top: 50px;">
 			<table class="table table-striped table-bordered">
@@ -245,7 +240,7 @@
 						<td>{{ battingDetails.sixesHit }}</td>
 					</tr>
 					<tr>
-						<td colspan="3">Total</td>
+						<td colspan="3"><strong>Total</strong></td>
 						<td colspan="3">{{ team1Score }}</td>
 					</tr>
 					<tr>
@@ -345,6 +340,20 @@
 		</div>
 	</div>
 
+<div class="panel panel-default">
+       <div class="panel-body">
+           <div class="row">
+                <div class="col-lg-6">
+                    <div class="col-xs-10">
+                        <strong>Current Combined Rating : {{ rating }}</strong>
+                    </div>
+                    <div class="col-xs-2">
+                        <button type="button" class="btn btn-primary" ng-click="playCricket(userEleven)">Let's Play!</button>
+                    </div>
+                </div>
+            </div>
+       </div>
+    </div>
 
 
 </div>

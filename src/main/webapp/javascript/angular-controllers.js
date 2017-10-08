@@ -59,6 +59,7 @@ myApp.directive("scroll", function ($window) {
 
 var fantasyCricketController = function($scope, APIService, ModalService, $http, $uibModal, $stateParams) {
     getFantasyCricketPlayers = function() {
+        $scope.showSpinner = true;
         APIService.doApiCall({
             "req_name": "getFantasyCricketPlayers",
             "params": {}
@@ -68,6 +69,7 @@ var fantasyCricketController = function($scope, APIService, ModalService, $http,
             }
             $scope.players = data;
         });
+        $scope.showSpinner = false;
     }
 
     $scope.userEleven = [];
@@ -76,7 +78,7 @@ var fantasyCricketController = function($scope, APIService, ModalService, $http,
     $scope.ratingExceedAlert = false;
 
     $scope.addToEleven = function(item) {
-        $scope.rating = $scope.rating + item.rating;
+        $scope.rating = $scope.rating + parseInt(item.rating);
         if ($scope.rating <= 100) {
             item.pushed = true;
             $scope.userEleven.push(item);
@@ -101,22 +103,29 @@ var fantasyCricketController = function($scope, APIService, ModalService, $http,
     }
 
     $scope.playCricket = function(userEleven) {
-        APIService.doApiCall({
-            "req_name": "getFantasyCricketResult",
-            "params": {"userEleven" : userEleven}
-        }).success(function(data) {
-            $scope.team1 = data[0];
-            $scope.team1Fow = data[1];
-            $scope.team1BowlerDetails = data[2];
-            $scope.team1Score = data[3];
+        if (userEleven.length == 11) {
+            $scope.showSpinner = true;
+            APIService.doApiCall({
+                "req_name": "getFantasyCricketResult",
+                "params": {"userEleven" : userEleven}
+            }).success(function(data) {
+                $scope.team1 = data[0];
+                $scope.team1Fow = data[1];
+                $scope.team1BowlerDetails = data[2];
+                $scope.team1Score = data[3];
 
-            $scope.team2 = data[4];
-            $scope.team2Fow = data[5];
-            $scope.team2BowlerDetails = data[6];
-            $scope.team2Score = data[7];
-        });
+                $scope.team2 = data[4];
+                $scope.team2Fow = data[5];
+                $scope.team2BowlerDetails = data[6];
+                $scope.team2Score = data[7];
+            });
+            $scope.showSpinner = false;
+        } else {
+            $scope.userElevenError = true
+            $scope.playersRequired = 11 - userEleven.length;
+        }
     }
-	getFantasyCricketPlayers();
+    getFantasyCricketPlayers();
 }
 
 var cricketController = function($scope, APIService, ModalService, $http, $uibModal, $stateParams) {
@@ -756,8 +765,4 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
 		templateUrl: "templates/home.html",
 		controller: "homeController"
 	});
-	
-	$urlRouterProvider
-			.when("/movies", "/movies/hollywood")
-		    .otherwise("/home");
 });

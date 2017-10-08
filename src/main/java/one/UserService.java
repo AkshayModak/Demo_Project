@@ -15,10 +15,7 @@ import javax.ws.rs.QueryParam;
 import com.google.gson.Gson;
 
 import com.nextrr.helper.Formula1Helper;
-import com.nextrr.helper.MoviesHelper;
 import com.nextrr.helper.MoviesServices;
-
-import architecture.utils.DebugWrapper;
 
 import com.nextrr.helper.CricketHelper;
 import com.nextrr.helper.FantasyCricketHelper;
@@ -249,7 +246,24 @@ public class UserService implements Serializable{
 	public String getFantasyCricketResult(@Context UriInfo uriInfo) {
 		FantasyCricketHelper fcHelper = new FantasyCricketHelper();
 		String result = fcHelper.playCricket(uriInfo.getQueryParameters());
-		fcHelper = null;
+		return result;
+	}
+
+	@POST
+	@Path("/setFantasyCricketRecord")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String setFantasyCricketRecord(@Context UriInfo uriInfo) {
+		FantasyCricketHelper fcHelper = new FantasyCricketHelper();
+		String result = fcHelper.setFantasyCricketRecord(uriInfo.getQueryParameters());
+		return result;
+	}
+
+	@POST
+	@Path("/removeFantasyCricketRecord")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String removeFantasyCricketRecord(@Context UriInfo uriInfo) {
+		FantasyCricketHelper fcHelper = new FantasyCricketHelper();
+		String result = fcHelper.removeFantasyCricketRecord(uriInfo.getQueryParameters());
 		return result;
 	}
 }

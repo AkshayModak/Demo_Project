@@ -106,7 +106,6 @@
         <column name="lastName" data-type="varchar" column-size="10" null="false"/>
         <column name="country_geo_id" data-type="varchar" column-size="10" null="false"/>
         <column name="role" data-type="varchar" column-size="25" null="false"/>
-        <column name="position" data-type="int" null="false"/>
         <column name="rating" data-type="int" null="false"/>
         <column name="bowlingRating" data-type="int" null="false"/>
     </table>

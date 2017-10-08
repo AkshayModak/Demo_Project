@@ -14,6 +14,7 @@ import javax.ws.rs.core.MultivaluedMap;
 import com.google.gson.Gson;
 
 import one.DatabaseUtils;
+import one.DefaultObjects;
 import one.NextrrUtils;
 
 public class FantasyCricketHelper implements Serializable {
@@ -1243,4 +1244,40 @@ public class FantasyCricketHelper implements Serializable {
 		
 		return resultList;
 	}
+
+	public String setFantasyCricketRecord(MultivaluedMap<String, String> params) {
+        Map<String, Object> queryMap = new HashMap<String, Object>();
+
+        String firstName = params.getFirst("firstName");
+        String lastName = params.getFirst("lastName");
+        String battingRating = params.getFirst("battingRating");
+        String bowlingRating = params.getFirst("bowlingRating");
+        String role = params.getFirst("role");
+        String countryGeoId = params.getFirst("countryGeoId");
+
+        queryMap.put("firstName", firstName);
+        queryMap.put("lastName", lastName);
+        queryMap.put("rating", battingRating);
+        queryMap.put("bowlingRating", bowlingRating);
+        queryMap.put("role", role);
+        queryMap.put("country_geo_id", countryGeoId);
+
+        DatabaseUtils du = new DatabaseUtils();
+        du.runCreateQuery("fantasy_cricket", queryMap);
+
+        return new Gson().toJson(new ArrayList<String>().add("success"));
+    }
+
+	public String removeFantasyCricketRecord(MultivaluedMap<String, String> params) {
+		String fantasyCricketId = params.getFirst("fantasyCricketId");
+
+		if (DefaultObjects.isNotEmpty(fantasyCricketId)) {
+			DatabaseUtils du = new DatabaseUtils();
+			du.runDeleteQuery("fantasy_cricket", "fantasy_cricket_id", fantasyCricketId);
+		} else {
+			return new Gson().toJson(new ArrayList<String>().add("error"));
+		}
+
+		return new Gson().toJson(new ArrayList<String>().add("success"));
+    }
 }

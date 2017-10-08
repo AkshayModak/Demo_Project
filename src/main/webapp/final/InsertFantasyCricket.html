@@ -1,0 +1,113 @@
+<!doctype html>
+<html ng-app="myModule">
+<head>
+<title>Admin | Insert Fantasy Cricket</title>
+<base href="/Demo_Project/#home">
+<script src="javascript/angular.js"></script>
+<script src="javascript/angular-ui-router.js"></script>
+<script src="javascript/angular-animate.js"></script>
+<script src="javascript/angular-sanitize.js"></script>
+<script src="javascript/ui-bootstrap-tpls.js"></script>
+<script src="javascript/angular-controllers.js"></script>
+<script src="javascript/angular-services.js"></script>
+<script src="javascript/angular-directives.js"></script>
+<script src="javascript/ng-infinite-scroll.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+<script src="javascript/filter.js"></script>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Cinzel|Shadows+Into+Light" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<link href="css/style.css" rel="stylesheet">
+</head>
+<div ng-include="'final/innerNavbar.html'" style="margin-bottom: 150px;"></div>
+<body ng-controller="editFantasyCricketController" class="container-fluid">
+<div class="row">
+    <div class="col-xs-12">
+        <md-button class="md-raised md-primary" ng-click="addNew()">Create New</md-button>
+    </div>
+</div>
+<div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type)" class="alert-fade" close="closeAlert($index)" dismiss-on-timeout="2000">{{alert.msg}}</div>
+        <table id="isrctable" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>ID</th>
+                    <th>First Name*</th>
+                    <th>Last Name*</th>
+                    <th>Batting Rating*</th>
+                    <th>Bowling Rating*</th>
+                    <th>Role*</th>
+                    <th>Country*</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                 <tr ng-repeat="fc in fantasyCricket | orderBy: '-'">
+                     <td><md-checkbox ng-model="fc.result.isDelete" aria-label="Checkbox 1"></md-checkbox></td>
+                     <td class="text-center">
+                       <span ng-if="!fc.addBtn">{{ fc.fantasy_cricket_id }}</span>
+                     </td>
+                     <td>
+                       <md-input-container class="md-icon-float md-block">
+                         <input ng-model="fc.firstName" type="text"/>
+                       </md-input-container>
+                     </td>
+                     <td>
+                       <md-input-container class="md-icon-float md-block">
+                         <input ng-model="fc.lastName" type="text"/>
+                       </md-input-container>
+                     </td>
+                     <td>
+                       <md-input-container class="md-icon-float md-block">
+                         <input ng-model="fc.rating" type="text"/>
+                       </md-input-container>
+                     </td>
+                     <td>
+                       <md-input-container class="md-icon-float md-block">
+                         <input ng-model="fc.bowlingRating" type="text"/>
+                       </md-input-container>
+                     </td>
+                     <td>
+                        <md-select ng-model="fc.role" placeholder="Batsman">
+                            <md-option value="batsman">Batsman</md-option>
+                            <md-option value="wicketkeeper">Wicket Keeper</md-option>
+                            <md-option value="all-rounder-spinner">All Rounder (Spinner)</md-option>
+                            <md-option value="all-rounder-fast">All Rounder (Fast)</md-option>
+                            <md-option value="spinner">Spinner</md-option>
+                            <md-option value="bowler">Bowler</md-option>
+                        </md-select>
+                     </td>
+                     <td>
+                       <md-select ng-model="fc.countryGeoId" placeholder="India">
+                         <md-option ng-repeat="country in countries" value="{{ country.country_geo_id }}" ng-selected="fc.country_geo_id == country.country_geo_id">{{ country.description }}</md-option>
+                       </md-select>
+                    </td>
+                    <td>
+                       <ul class="list-inline">
+                         <li ng-if="fc.addBtn" style="padding: 0;">
+                           <button type="submit" class="btn btn-link" ng-click="createFantasyRecord(fc)">
+                             <i class="fa fa-plus" aria-hidden="true"></i>
+                           </button>
+                         </li>
+                         <li ng-if="!fc.addBtn" style="padding: 0;">
+                           <button type="submit" class="btn btn-link" ng-click="updateFantasyRecord(fc.result)">
+                             <i class="fa fa-refresh" aria-hidden="true"></i>
+                           </button>
+                         </li>
+                         <li ng-if="!fc.addBtn" style="padding: 0;">
+                           <button type="submit" class="btn btn-link" ng-click="removeFantasyRecords(fc.fantasy_cricket_id)">
+                             <i class="fa fa-times" aria-hidden="true"></i>
+                           </button>
+                         </li>
+                       </ul>
+                     </td>
+                 </tr>
+            </tbody>
+        </table>
+        <div id="bottom"></div>
+</body>
+</html>
+

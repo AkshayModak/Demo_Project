@@ -76,9 +76,45 @@ var fantasyCricketController = function($scope, APIService, ModalService, $http,
 
     $scope.rating = 0;
     $scope.ratingExceedAlert = false;
+    $scope.disableBatmen = false;
+    $scope.disableBowlers = false;
+    $scope.disableWicketkeepers = false;
+    $scope.disableAllRounders = false;
+
+    var totalBatsmen = 0;
+    var totalWicketkeepers = 0;
+    var totalBowlers = 0;
+    var totalAllRounders = 0;
 
     $scope.addToEleven = function(item) {
-        $scope.rating = $scope.rating + parseInt(item.rating);
+        if ("bowler" == item.role || "spinner" == item.role) {
+            $scope.rating = $scope.rating + parseInt(item.bowlingRating);
+            totalBowlers = totalBowlers + 1;
+        } else if ("batsman" == item.role) {
+            $scope.rating = $scope.rating + parseInt(item.rating);
+            totalBatsmen = totalBatsmen + 1;
+        } else if ("wicketkeeper" == item.role) {
+            $scope.rating = $scope.rating + parseInt(item.rating);
+            totalWicketkeepers = totalWicketkeepers + 1;
+        } else if ("all-rounder-spinner" == item.role || "all-rounder-fast" == item.role) {
+            $scope.rating = $scope.rating + parseInt(item.rating);
+            totalAllRounders = totalAllRounders + 1;
+        }
+
+        if (totalBatsmen >= 5) {
+             $scope.disableBatsmen = true;
+        }
+        if (totalBowlers >= 3) {
+            $scope.disableBowlers = true;
+        }
+        if (totalWicketkeepers >= 1) {
+            $scope.disableWicketkeepers = true;
+        }
+        if (totalAllRounders >= 2) {
+            $scope.disableAllRounders = true;
+        }
+        
+        console.log($scope.rating);
         if ($scope.rating <= 100) {
             item.pushed = true;
             $scope.userEleven.push(item);
@@ -88,7 +124,6 @@ var fantasyCricketController = function($scope, APIService, ModalService, $http,
             }
             $scope.ratingExceedAlert = false;
         } else {
-            $scope.rating = $scope.rating - item.rating;
             $scope.ratingExceedAlert = true;
         }
     }
@@ -96,12 +131,39 @@ var fantasyCricketController = function($scope, APIService, ModalService, $http,
     $scope.removeFromEleven = function(item) {
         item.pushed = false;
         $scope.showPlayBtn = false;
-        $scope.rating = $scope.rating - item.rating;
         $scope.ratingExceedAlert = false;
         var index = $scope.userEleven.indexOf(item);
         $scope.userEleven.splice(index, 1);
+
+        if ("bowler" == item.role || "spinner" == item.role) {
+            $scope.rating = $scope.rating - parseInt(item.bowlingRating);
+            totalBowlers = totalBowlers - 1;
+        } else if ("batsman" == item.role) {
+            $scope.rating = $scope.rating - parseInt(item.rating);
+            totalBatsmen = totalBatsmen - 1;
+        } else if ("wicketkeeper" == item.role) {
+            $scope.rating = $scope.rating - parseInt(item.rating);
+            totalWicketkeepers = totalWicketkeepers - 1;
+        } else if ("all-rounder-spinner" == item.role || "all-rounder-fast" == item.role) {
+            $scope.rating = $scope.rating - parseInt(item.rating);
+            totalAllRounders = totalAllRounders - 1;
+        }
+
+        if (totalBatsmen < 5) {
+             $scope.disableBatsmen = false;
+        }
+        if (totalBowlers < 3) {
+            $scope.disableBowlers = false;
+        }
+        if (totalWicketkeepers < 1) {
+            $scope.disableWicketkeepers = false;
+        }
+        if (totalAllRounders < 2) {
+            $scope.disableAllRounders = false;
+        }
     }
 
+    $scope.showScoreboard = false;
     $scope.playCricket = function(userEleven) {
         if (userEleven.length == 11) {
             $scope.showSpinner = true;
@@ -118,6 +180,8 @@ var fantasyCricketController = function($scope, APIService, ModalService, $http,
                 $scope.team2Fow = data[5];
                 $scope.team2BowlerDetails = data[6];
                 $scope.team2Score = data[7];
+                
+                $scope.showScoreboard = true;
             });
             $scope.showSpinner = false;
         } else {
@@ -125,7 +189,72 @@ var fantasyCricketController = function($scope, APIService, ModalService, $http,
             $scope.playersRequired = 11 - userEleven.length;
         }
     }
+
+    getCricketCountries = function() {
+        APIService.doApiCall({
+            "req_name": "getCountryAssoc",
+            "params": {"sports_type_id": "CRICKET", "format": "GSON"}
+        }).success(function(data) {
+            $scope.teams = data;
+        });
+    }
+
+    $scope.hideError = function() {
+    	$scope.userElevenError = false;
+    }
+    
+    getCricketCountries();
     getFantasyCricketPlayers();
+}
+
+var editFantasyCricketController = function($scope, APIService, $http, $uibModal, $stateParams) {
+
+    getCricketCountries = function() {
+        APIService.doApiCall({
+            "req_name": "getCricketCountries",
+            "params": {}
+        }).success(function(data) {
+            $scope.countries = data;
+        });
+    }
+
+    $scope.createFantasyRecord = function(playerDetails) {
+        console.log("===", playerDetails);
+        APIService.doApiCall({
+            "req_name": "setFantasyCricketRecord",
+            "params": {"firstName": playerDetails.firstName, "lastName": playerDetails.lastName, "battingRating": playerDetails.battingRating,
+                 "bowlingRating": playerDetails.bowlingRating, "role": playerDetails.role, "countryGeoId": playerDetails.countryGeoId}
+        }).success(function(data) {
+            $scope.countries = data;
+        });
+    }
+
+    $scope.getFantasyRecords = function() {
+        APIService.doApiCall({
+            "req_name": "getFantasyCricketPlayers",
+            "params": {}
+        }).success(function(data) {
+            $scope.fantasyCricket = data;
+        });
+    }
+
+    $scope.removeFantasyRecords = function(fantasyCricketId) {
+        APIService.doApiCall({
+            "req_name": "removeFantasyCricketRecord",
+            "params": {"fantasyCricketId": fantasyCricketId}
+        }).success(function(data) {
+        	$scope.getFantasyRecords();
+        });
+    }
+
+    getCricketCountries();
+    $scope.getFantasyRecords();
+    
+    $scope.fantasyCricket = [];
+
+    $scope.addNew = function(){
+        $scope.fantasyCricket.push({addBtn: true});
+    };
 }
 
 var cricketController = function($scope, APIService, ModalService, $http, $uibModal, $stateParams) {
@@ -733,8 +862,9 @@ myApp.controller("isrcorders", function($scope, $http, APIService, $filter) {
 myApp.controller("formula1Controller", formula1Controller);
 myApp.controller("moviesController", moviesController);
 myApp.controller("cricketController", cricketController);
-myApp.controller("fantasyCricketController", fantasyCricketController);
 myApp.controller("editCricketController", editCricketController);
+myApp.controller("fantasyCricketController", fantasyCricketController);
+myApp.controller("editFantasyCricketController", editFantasyCricketController);
 
 myApp.config(function($stateProvider, $urlRouterProvider) {
 	$stateProvider.state("home", {

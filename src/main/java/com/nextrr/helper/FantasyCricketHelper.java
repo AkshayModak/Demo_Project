@@ -54,6 +54,28 @@ public class FantasyCricketHelper implements Serializable {
 	public String playCricket(MultivaluedMap<String, String> params) {
 		setPlayerDetails();
 
+		String tossPreference = params.getFirst("tossPreference");
+
+		if (tossPreference == null) {
+			short randomNumber = NextrrUtils.getShortRandomNumber(Short.valueOf("0"), Short.valueOf("1"));
+			List<String> preferenceList = new ArrayList<String>();
+
+			if (1 == randomNumber) {
+				short innerRandomNumber = NextrrUtils.getShortRandomNumber(Short.valueOf("0"), Short.valueOf("1"));
+				String computerPreference = "computer";
+				if (1 == innerRandomNumber) {
+					computerPreference = computerPreference + "-bowl";
+				} else if (0 == innerRandomNumber) {
+					computerPreference = computerPreference + "-bat";
+				}
+				preferenceList.add(computerPreference);
+				return new Gson().toJson(preferenceList);
+			} else if (0 == randomNumber) {
+				preferenceList.add("user");
+				return new Gson().toJson(preferenceList);
+			}
+		}
+
 		List<Map<String, Object>> paramList = new ArrayList<Map<String, Object>>();
 
 		for (String value : params.get("userEleven")) {
@@ -96,17 +118,6 @@ public class FantasyCricketHelper implements Serializable {
 		List<Map<String, Object>> team1BatsmanFoursList = (List<Map<String, Object>>) team1MatchInfoMap.get("batsmanFoursList");
 		List<Map<String, Object>> team1BatsmanSixesList = (List<Map<String, Object>>) team1MatchInfoMap.get("batsmanSixesList");
 		List<Map<String, Object>> team1FallOfWicketDetails = (List<Map<String, Object>>) team1MatchInfoMap.get("fallOfWickets");
-
-		int team2Score = (int) team2MatchInfoMap.get("teamScore");
-		List<Map<String, Object>> team2BatsmanScoresList = (List<Map<String, Object>>) team2MatchInfoMap.get("batsmanScoresList");
-		List<Map<String, Object>> team2BowlerDetails = (List<Map<String, Object>>) team2MatchInfoMap.get("bowlerDetails");
-		int team2BallFaced = (int) team2MatchInfoMap.get("teamBallsFaced");
-		List<Map<String, Object>> team2BatsmanBallsFacedDetails = (List<Map<String, Object>>) team2MatchInfoMap.get("batsmanBallsFacedList");
-		Map<String, Object> team2BatsmanOnStrikeDetails = (Map<String, Object>) team2MatchInfoMap.get("batsmanOnStrike");
-		Map<String, Object> team2BatsmanOnNonStrikeDetails = (Map<String, Object>) team2MatchInfoMap.get("batsmanOnNonStrike");
-		List<Map<String, Object>> team2BatsmanFoursList = (List<Map<String, Object>>) team2MatchInfoMap.get("batsmanFoursList");
-		List<Map<String, Object>> team2BatsmanSixesList = (List<Map<String, Object>>) team2MatchInfoMap.get("batsmanSixesList");
-		List<Map<String, Object>> team2FallOfWicketDetails = (List<Map<String, Object>>) team2MatchInfoMap.get("fallOfWickets");
 
 		int index = 0;
 		List<Map<String, Object>> batsmanDetailsList = new ArrayList<Map<String, Object>>();
@@ -158,6 +169,7 @@ public class FantasyCricketHelper implements Serializable {
 		}
 		
 		List<Object> resultList = new ArrayList<Object>();
+		resultList.add(tossPreference);
 		resultList.add(batsmanDetailsList);
 		resultList.add(fallOfWicketList);
 		resultList.add(tempTeam1BowlerDetails);

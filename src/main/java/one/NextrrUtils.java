@@ -8,8 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.nextrr.helper.GenericHelper;
+import java.util.concurrent.ThreadLocalRandom;
 
 import architecture.utils.DebugWrapper;
 
@@ -92,5 +91,12 @@ public class NextrrUtils {
 
 	public static boolean isNumeric(String str) {
 	  return str.matches("-?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal.
+	}
+
+	public static short getShortRandomNumber(short min, short max) {
+		//nextInt is normally exclusive of the top value,
+		//so add 1 to make it inclusive
+		short randomNum = (short) ThreadLocalRandom.current().nextInt(min, max + 1);
+		return randomNum;
 	}
 }

@@ -73,6 +73,7 @@ var fantasyCricketController = function($scope, APIService, ModalService, $http,
     }
 
     $scope.userEleven = [];
+    $scope.userEleven.teamName = "Demo XI";
 
     $scope.rating = 0;
     $scope.ratingExceedAlert = false;
@@ -164,22 +165,36 @@ var fantasyCricketController = function($scope, APIService, ModalService, $http,
     }
 
     $scope.showScoreboard = false;
-    $scope.playCricket = function(userEleven) {
+    $scope.playCricket = function(userEleven, tossPreference) {
         if (userEleven.length == 11) {
             $scope.showSpinner = true;
             APIService.doApiCall({
                 "req_name": "getFantasyCricketResult",
-                "params": {"userEleven" : userEleven}
+                "params": {"userEleven" : userEleven, "tossPreference" : tossPreference}
             }).success(function(data) {
-                $scope.team1 = data[0];
-                $scope.team1Fow = data[1];
-                $scope.team1BowlerDetails = data[2];
-                $scope.team1Score = data[3];
+                $scope.tossPreference = data[0];
+                if ("user" == data) {
+                    $scope.tossPreference = true;
+                    $scope.tossMessage = userEleven.teamName + " Won the toss."
+                    $scope.wonBy = "user";
+                } else if ("computer-bat" == data) {
+                    $scope.tossPreference = true;
+                    $scope.tossMessage = "Computer has won the toss and elected to bat first";
+                    $scope.wonBy = "computer";
+                } else if ("computer-bowl" == data) {
+                    $scope.tossPreference = true;
+                    $scope.tossMessage = "Computer has won the toss and elected to bowl first";
+                    $scope.wonBy = "computer";
+                }
+                $scope.team1 = data[1];
+                $scope.team1Fow = data[2];
+                $scope.team1BowlerDetails = data[3];
+                $scope.team1Score = data[4];
 
-                $scope.team2 = data[4];
-                $scope.team2Fow = data[5];
-                $scope.team2BowlerDetails = data[6];
-                $scope.team2Score = data[7];
+                $scope.team2 = data[5];
+                $scope.team2Fow = data[6];
+                $scope.team2BowlerDetails = data[7];
+                $scope.team2Score = data[8];
                 
                 $scope.showScoreboard = true;
             });

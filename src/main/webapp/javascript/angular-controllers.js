@@ -165,12 +165,12 @@ var fantasyCricketController = function($scope, APIService, ModalService, $http,
     }
 
     $scope.showScoreboard = false;
-    $scope.playCricket = function(userEleven, tossPreference) {
+    $scope.playCricket = function(userEleven, computerPlayers,tossPreference) {
         if (userEleven.length == 11) {
             $scope.showSpinner = true;
             APIService.doApiCall({
                 "req_name": "getFantasyCricketResult",
-                "params": {"userEleven" : userEleven, "tossPreference" : tossPreference}
+                "params": {"userEleven" : userEleven,"computerPlayers" : computerPlayers, "tossPreference" : tossPreference}
             }).success(function(data) {
                 $scope.tossPreference = data[0];
                 if ("user" == data) {
@@ -217,7 +217,16 @@ var fantasyCricketController = function($scope, APIService, ModalService, $http,
     $scope.hideError = function() {
     	$scope.userElevenError = false;
     }
-    
+
+    $scope.setPlayAgainst = function(_team) {
+        APIService.doApiCall({
+            "req_name": "setPlayAgainst",
+            "params": {"playAgainst": _team}
+        }).success(function(data) {
+            $scope.computerPlayers = data;
+        });
+    }
+
     getCricketCountries();
     getFantasyCricketPlayers();
 }
@@ -239,7 +248,10 @@ var editFantasyCricketController = function($scope, APIService, $http, $uibModal
             "params": {"firstName": playerDetails.firstName, "lastName": playerDetails.lastName, "battingRating": playerDetails.rating,
                  "bowlingRating": playerDetails.bowlingRating, "role": playerDetails.role, "countryGeoId": playerDetails.countryGeoId}
         }).success(function(data) {
-            $scope.countries = data;
+            if ("success" == data) {
+                $scope.alerts = [{ type: 'success', msg: 'Nice! Record Created Successfully.' }];
+                $scope.getFantasyRecords();
+            }
         });
     }
 
@@ -880,7 +892,7 @@ myApp.controller("editCricketController", editCricketController);
 myApp.controller("fantasyCricketController", fantasyCricketController);
 myApp.controller("editFantasyCricketController", editFantasyCricketController);
 
-myApp.config(function($stateProvider, $urlRouterProvider) {
+myApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 	$stateProvider.state("home", {
 		url: "/home",
 		templateUrl: "final/CompOne.html",

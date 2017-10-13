@@ -11,15 +11,18 @@
     Need {{ playersRequired }} more player(s) to play a match.
   </div>
 </div>
-<div class="container" style="margin-top: 100px;">
-    <div class="row" style="margin-bottom: 100px !important;">
-	    <ul class="list-inline cricket-menubar">
+<div class="container" style="padding-top: 150px;">
+    <div class="row">
+        <div class="col-lg-12">
+	    <ul class="list-inline">
+	        <li><strong>Play Against: </strong></li>
 	        <li ng-repeat="team in teams">
-	            <a ng-click="filterCricket(team.description)" class="btn" ng-class="{'active': team.country_id == selectedTeam}" title="{{ team.description }}">
+	            <a ng-click="setPlayAgainst(team.country_id)" class="btn" ng-class="{'active': team.country_id == selectedTeam}" title="{{ team.description }}">
 	                <img ng-src="{{team.small_flag_path}}" style="width: 30px; height: 18px;"/>
 	            </a>
 	        </li>
 	    </ul>
+	    </div>
     </div>
 	<div class="row">
 	<div class="col-md-6" style="border-right: 1px solid #ddd;">
@@ -167,71 +170,23 @@
 			</div>
 		</div>
 		<div class="col-xs-5">
-			<div class="col-xs-12" style="padding: 10px; padding-right: 0;">
-				<strong>India</strong>
-			</div>
-			<div class="row">
-				<div class="col-xs-12" style="padding: 5px; padding-right: 0;">
-					1. Ajinkya Rahane
+		    <div class="row">
+				<div class="col-xs-12" style="padding: 10px; padding-right: 0;">
+					<strong>India</strong>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-xs-12" style="padding: 5px; padding-right: 0;">
-					2. Rohit Sharma
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12" style="padding: 5px; padding-right: 0;">
-					3. Virat Kohli (Captain)
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12" style="padding: 5px; padding-right: 0;">
-					4. Hardik Pandya
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12" style="padding: 5px; padding-right: 0;">
-					5. Kedar Jadhav
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12" style="padding: 5px; padding-right: 0;">
-					6. Mahendra Singh Dhoni (wk)
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12" style="padding: 5px; padding-right: 0;">
-					7. Manish Pandey
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12" style="padding: 5px; padding-right: 0;">
-					8. Buvneshwar Kumar
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12" style="padding: 5px; padding-right: 0;">
-					9. Kuldeep Yadav
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12" style="padding: 5px; padding-right: 0;">
-					10. Jasprit Bumrah
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12" style="padding: 5px; padding-right: 0;">
-					11. Yuzvendra Chahal
-				</div>
-			</div>
+			<div class="row" ng-repeat="computerPlayer in computerPlayers">
+                <div class="col-xs-12" style="padding: 5px; padding-right: 0;">
+                    {{ $index + 1 }}. {{ computerPlayer.firstName }} {{ computerPlayer.lastName }}
+                </div>
+            </div>
 		</div>
 	</div>
 	</div>
-	<div class="row" ng-if="showScoreboard">
+	<div class="row" ng-if="showScoreboard && team1">
 		<div class="col-md-6" style="margin-top: 50px;">
-			<table class="table table-striped table-bordered">
-				<thead>
+			<table class="table table-striped">
+				<thead class="black-header">
 					<tr>
 						<th>Batsmen</th>
 						<th></th>
@@ -265,7 +220,7 @@
 				</tbody>
 			</table>
 			<table class="table table-striped">
-				<thead style="background-color: black;">
+				<thead class="black-header">
 					<tr>
 						<th style="color: white;">Bowling</th>
 						<th style="color: white;">Overs</th>
@@ -290,8 +245,8 @@
 			</table>
 		</div>
 		<div class="col-md-6" style="margin-top: 50px;">
-			<table class="table table-striped table-bordered">
-				<thead>
+			<table class="table table-striped">
+				<thead class="black-header">
 					<tr>
 						<th>Batsmen</th>
 						<th></th>
@@ -325,7 +280,7 @@
 				</tbody>
 			</table>
 			<table class="table table-striped">
-				<thead>
+				<thead class="black-header">
 					<tr>
 						<th>Bowling</th>
 						<th>Overs</th>
@@ -358,7 +313,7 @@
                         <strong>Current Combined Rating : {{ rating }}</strong>
                     </div>
                     <div class="col-xs-2">
-                        <button type="button" class="btn btn-primary" ng-click="playCricket(userEleven)">Let's Play!</button>
+                        <button type="button" class="btn btn-primary" ng-click="playCricket(userEleven, computerPlayers)">Let's Play!</button>
                     </div>
                 </div>
            </div>
@@ -367,14 +322,17 @@
                     <div class="col-xs-6">
                         <strong>{{ tossMessage }}</strong>
                     </div>
-                    <div class="col-xs-3" ng-if="wonBy == 'user'">
-                        <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="playCricket(userEleven, 'bat')">Bat</button>
+                    <div class="col-xs-3" ng-if="wonBy == 'user' && !team1">
+                        <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="playCricket(userEleven, computerPlayers, 'bat')">Bat</button>
                     </div>
-                    <div class="col-xs-3" ng-if="wonBy == 'user'">
-                        <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="playCricket(userEleven, 'bowl')">Bowl</button>
+                    <div class="col-xs-3" ng-if="wonBy == 'user' && !team1">
+                        <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="playCricket(userEleven, computerPlayers, 'bowl')">Bowl</button>
                     </div>
-                    <div class="col-xs-2" ng-if="wonBy == 'computer'">
-                        <button type="button" class="btn btn-primary" ng-click="playCricket(userEleven, 'bat')">Let's Play!</button>
+                    <div class="col-xs-2" ng-if="wonBy == 'computer' && !team1">
+                        <button type="button" class="btn btn-primary" ng-click="playCricket(userEleven, computerPlayers, 'bat')">Let's Play!</button>
+                    </div>
+                    <div class="col-xs-2" ng-if="team1">
+                        <button type="button" class="btn btn-primary" ng-click="playCricket(userEleven, computerPlayers)">Let's Play Again!</button>
                     </div>
                 </div>
            </div>

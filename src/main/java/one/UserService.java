@@ -266,4 +266,13 @@ public class UserService implements Serializable{
 		String result = fcHelper.removeFantasyCricketRecord(uriInfo.getQueryParameters());
 		return result;
 	}
+
+	@POST
+	@Path("/setPlayAgainst")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String setPlayAgainst(@Context UriInfo uriInfo) {
+		FantasyCricketHelper fcHelper = new FantasyCricketHelper();
+		String result = fcHelper.setPlayAgainst(uriInfo.getQueryParameters());
+		return result;
+	}
 }

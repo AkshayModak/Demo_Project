@@ -19,7 +19,6 @@ import one.NextrrUtils;
 
 public class FantasyCricketHelper implements Serializable {
 
-	
 	List<Map<String, Object>> team1FallOfWickets = new ArrayList<Map<String, Object>>();
 	List<Map<String, Object>> team2FallOfWickets = new ArrayList<Map<String, Object>>();
 	
@@ -52,8 +51,6 @@ public class FantasyCricketHelper implements Serializable {
 	
 	@SuppressWarnings("unchecked")
 	public String playCricket(MultivaluedMap<String, String> params) {
-		setPlayerDetails();
-
 		String tossPreference = params.getFirst("tossPreference");
 
 		if (tossPreference == null) {
@@ -104,17 +101,44 @@ public class FantasyCricketHelper implements Serializable {
 			positionIndex = positionIndex + 1;
 		}
 
+		List<Map<String, Object>> computerTeamList = new ArrayList<Map<String, Object>>();
+
+		for (String value : params.get("computerPlayers")) {
+			value = value.substring(1, value.length()-1);           //remove curly brackets
+			String[] keyValuePairs = value.split(",");              //split the string to creat key-value pairs
+			Map<String, Object> map = new HashMap<String, Object>();
+
+			for(String pair : keyValuePairs)                        //iterate over the pairs
+			{
+			    String[] entry = pair.split(":");                   //split the pairs to get key and value
+			    entry[0] = entry[0].replaceAll("^\"|\"$", "");
+			    String objectValue = entry[1].replaceAll("^\"|\"$", "");
+			    if (NextrrUtils.isNumeric(objectValue)) {
+			        int intValue = Integer.valueOf(entry[1].replaceAll("^\"|\"$", ""));
+			        map.put(entry[0], intValue);
+			    } else {
+			        map.put(entry[0], objectValue);          //add them to the hashmap and trim whitespaces
+			    }
+			}
+			computerTeamList.add(map);
+		}
+
+		positionIndex = 0;
+		for (Map<String, Object> paramMap : computerTeamList) {
+			paramMap.put("position", positionIndex);
+			positionIndex = positionIndex + 1;
+		}
+
+		setComputerPlayerDetails(computerTeamList);
 		setTeam2PlayerDetails(paramList);
 		playFirstInning();
 		playSecondInning();
-		
+
 		int team1Score = (int) team1MatchInfoMap.get("teamScore");
 		List<Map<String, Object>> team1BatsmanScoresList = (List<Map<String, Object>>) team1MatchInfoMap.get("batsmanScoresList");
 		List<Map<String, Object>> team1BowlerDetails = (List<Map<String, Object>>) team1MatchInfoMap.get("bowlerDetails");
 		int team1BallFaced = (int) team1MatchInfoMap.get("teamBallsFaced");
 		List<Map<String, Object>> team1BatsmanBallsFacedDetails = (List<Map<String, Object>>) team1MatchInfoMap.get("batsmanBallsFacedList");
-		Map<String, Object> team1BatsmanOnStrikeDetails = (Map<String, Object>) team1MatchInfoMap.get("batsmanOnStrike");
-		Map<String, Object> team1BatsmanOnNonStrikeDetails = (Map<String, Object>) team1MatchInfoMap.get("batsmanOnNonStrike");
 		List<Map<String, Object>> team1BatsmanFoursList = (List<Map<String, Object>>) team1MatchInfoMap.get("batsmanFoursList");
 		List<Map<String, Object>> team1BatsmanSixesList = (List<Map<String, Object>>) team1MatchInfoMap.get("batsmanSixesList");
 		List<Map<String, Object>> team1FallOfWicketDetails = (List<Map<String, Object>>) team1MatchInfoMap.get("fallOfWickets");
@@ -738,256 +762,16 @@ public class FantasyCricketHelper implements Serializable {
 		return totalBalls.get(11);
 	}
 	
-	void setPlayerDetails() {
-
-		Map<String, Object> playerDetailMap = new HashMap<String, Object>();
-		playerDetailMap.put("fantasy_cricket_id", 1);
-		playerDetailMap.put("position", 1);
-		playerDetailMap.put("rating", 8);
-		playerDetailMap.put("bowlingRating", 1);
-		playerDetailMap.put("role", "batsman");
-		playerDetailMap.put("firstName", "Ajinkya");
-		playerDetailMap.put("lastName", "Rahane");
-		
-		team1PlayerDetails.add(playerDetailMap);
-		
-		playerDetailMap = new HashMap<String, Object>();
-		playerDetailMap.put("fantasy_cricket_id", 2);
-		playerDetailMap.put("position", 2);
-		playerDetailMap.put("rating", 9);
-		playerDetailMap.put("bowlingRating", 1);
-		playerDetailMap.put("role", "batsman");
-		playerDetailMap.put("firstName", "Shikhar");
-		playerDetailMap.put("lastName", "Dhawan");
-		
-		team1PlayerDetails.add(playerDetailMap);
-		
-		playerDetailMap = new HashMap<String, Object>();
-		playerDetailMap.put("fantasy_cricket_id", 3);
-		playerDetailMap.put("position", 3);
-		playerDetailMap.put("rating", 10);
-		playerDetailMap.put("bowlingRating", 4);
-		playerDetailMap.put("role", "batsman");
-		playerDetailMap.put("firstName", "Virat");
-		playerDetailMap.put("lastName", "Kohli");
-		
-		team1PlayerDetails.add(playerDetailMap);
-		
-		playerDetailMap = new HashMap<String, Object>();
-		playerDetailMap.put("fantasy_cricket_id", 4);
-		playerDetailMap.put("position", 4);
-		playerDetailMap.put("rating", 8);
-		playerDetailMap.put("bowlingRating", 1);
-		playerDetailMap.put("role", "batsman");
-		playerDetailMap.put("firstName", "Manish");
-		playerDetailMap.put("lastName", "Pandey");
-		
-		team1PlayerDetails.add(playerDetailMap);
-		
-		playerDetailMap = new HashMap<String, Object>();
-		playerDetailMap.put("fantasy_cricket_id", 5);
-		playerDetailMap.put("position", 5);
-		playerDetailMap.put("rating", 10);
-		playerDetailMap.put("bowlingRating", 3);
-		playerDetailMap.put("role", "wicketkeeper");
-		playerDetailMap.put("firstName", "Mahendra Singh");
-		playerDetailMap.put("lastName", "Dhoni");
-		
-		team1PlayerDetails.add(playerDetailMap);
-		
-		playerDetailMap = new HashMap<String, Object>();
-		playerDetailMap.put("fantasy_cricket_id", 6);
-		playerDetailMap.put("position", 6);
-		playerDetailMap.put("rating",8);
-		playerDetailMap.put("bowlingRating", 5);
-		playerDetailMap.put("role", "batsman");
-		playerDetailMap.put("type", "spinner");
-		playerDetailMap.put("firstName", "Kedar");
-		playerDetailMap.put("lastName", "Jadhav");
-		
-		team1PlayerDetails.add(playerDetailMap);
-		
-		playerDetailMap = new HashMap<String, Object>();
-		playerDetailMap.put("fantasy_cricket_id", 7);
-		playerDetailMap.put("position", 7);
-		playerDetailMap.put("rating", 6);
-		playerDetailMap.put("bowlingRating", 8);
-		playerDetailMap.put("role", "all-rounder-spinner");
-		playerDetailMap.put("type", "spinner");
-		playerDetailMap.put("firstName", "Ravindra");
-		playerDetailMap.put("lastName", "Jadeja");
-		
-		team1PlayerDetails.add(playerDetailMap);
-		
-		playerDetailMap = new HashMap<String, Object>();
-		playerDetailMap.put("fantasy_cricket_id", 8);
-		playerDetailMap.put("position", 8);
-		playerDetailMap.put("rating", 5);
-		playerDetailMap.put("bowlingRating", 8);
-		playerDetailMap.put("role", "all-rounder-spinner");
-		playerDetailMap.put("type", "spinner");
-		playerDetailMap.put("firstName", "Ravichandran");
-		playerDetailMap.put("lastName", "Ashwin");
-		
-		team1PlayerDetails.add(playerDetailMap);
-		
-		playerDetailMap = new HashMap<String, Object>();
-		playerDetailMap.put("fantasy_cricket_id", 9);
-		playerDetailMap.put("position", 9);
-		playerDetailMap.put("rating", 4);
-		playerDetailMap.put("bowlingRating", 8);
-		playerDetailMap.put("role", "bowler");
-		playerDetailMap.put("type", "fast-bowler");
-		playerDetailMap.put("firstName", "Jaspreet");
-		playerDetailMap.put("lastName", "Bumrah");
-		
-		team1PlayerDetails.add(playerDetailMap);
-		
-		playerDetailMap = new HashMap<String, Object>();
-		playerDetailMap.put("fantasy_cricket_id", 10);
-		playerDetailMap.put("position", 10);
-		playerDetailMap.put("rating", 4);
-		playerDetailMap.put("bowlingRating", 8);
-		playerDetailMap.put("role", "bowler");
-		playerDetailMap.put("type", "fast-bowler");
-		playerDetailMap.put("firstName", "Bhuvneshwar");
-		playerDetailMap.put("lastName", "Kumar");
-		
-		team1PlayerDetails.add(playerDetailMap);
-		
-		playerDetailMap = new HashMap<String, Object>();
-		playerDetailMap.put("fantasy_cricket_id", 11);
-		playerDetailMap.put("position", 11);
-		playerDetailMap.put("rating", 3);
-		playerDetailMap.put("bowlingRating", 8);
-		playerDetailMap.put("role", "bowler");
-		playerDetailMap.put("type", "fast-bowler");
-		playerDetailMap.put("firstName", "Umesh");
-		playerDetailMap.put("lastName", "Yadav");
-		
-		team1PlayerDetails.add(playerDetailMap);
-	}
-	
-	void setTeam2PlayerDetails(List<Map<String, Object>> paramList) {
-
+	private void setTeam2PlayerDetails(List<Map<String, Object>> paramList) {
 		for (Map<String, Object> paramMap : paramList) {
 			team2PlayerDetails.add(paramMap);
 		}
-
-		/*Map<String, Object> playerDetailMap = new HashMap<String, Object>();
-		playerDetailMap.put("position", 1);
-		playerDetailMap.put("rating", 9);
-		playerDetailMap.put("bowlingRating", 1);
-		playerDetailMap.put("role", "batsman");
-		playerDetailMap.put("firstName", "David");
-		playerDetailMap.put("lastName", "Warner");
-		
-		team2PlayerDetails.add(playerDetailMap);
-		
-		playerDetailMap = new HashMap<String, Object>();
-		playerDetailMap.put("position", 2);
-		playerDetailMap.put("rating", 7);
-		playerDetailMap.put("bowlingRating", 1);
-		playerDetailMap.put("role", "batsman");
-		playerDetailMap.put("firstName", "Matt");
-		playerDetailMap.put("lastName", "Rehshaw");
-		
-		team2PlayerDetails.add(playerDetailMap);
-		
-		playerDetailMap = new HashMap<String, Object>();
-		playerDetailMap.put("position", 3);
-		playerDetailMap.put("rating", 7);
-		playerDetailMap.put("bowlingRating", 1);
-		playerDetailMap.put("role", "batsman");
-		playerDetailMap.put("firstName", "Usman");
-		playerDetailMap.put("lastName", "Khwaja");
-		
-		team2PlayerDetails.add(playerDetailMap);
-		
-		playerDetailMap = new HashMap<String, Object>();
-		playerDetailMap.put("position", 4);
-		playerDetailMap.put("rating", 10);
-		playerDetailMap.put("bowlingRating", 3);
-		playerDetailMap.put("role", "batsman");
-		playerDetailMap.put("firstName", "Steve");
-		playerDetailMap.put("lastName", "Smith");
-		
-		team2PlayerDetails.add(playerDetailMap);
-		
-		playerDetailMap = new HashMap<String, Object>();
-		playerDetailMap.put("position", 5);
-		playerDetailMap.put("rating", 8);
-		playerDetailMap.put("bowlingRating", 6);
-		playerDetailMap.put("role", "all-rounder-fast");
-		playerDetailMap.put("firstName", "Peter");
-		playerDetailMap.put("lastName", "Handscomb");
-		
-		team2PlayerDetails.add(playerDetailMap);
-		
-		playerDetailMap = new HashMap<String, Object>();
-		playerDetailMap.put("position", 6);
-		playerDetailMap.put("rating", 8);
-		playerDetailMap.put("bowlingRating", 5);
-		playerDetailMap.put("role", "all-rounder-spinner");
-		playerDetailMap.put("type", "spinner");
-		playerDetailMap.put("firstName", "Glenn");
-		playerDetailMap.put("lastName", "Maxwell");
-		
-		team2PlayerDetails.add(playerDetailMap);
-		
-		playerDetailMap = new HashMap<String, Object>();
-		playerDetailMap.put("position", 7);
-		playerDetailMap.put("rating", 7);
-		playerDetailMap.put("bowlingRating", 1);
-		playerDetailMap.put("role", "wicketkeeper");
-		playerDetailMap.put("firstName", "Mathew");
-		playerDetailMap.put("lastName", "Wade");
-		
-		team2PlayerDetails.add(playerDetailMap);
-		
-		playerDetailMap = new HashMap<String, Object>();
-		playerDetailMap.put("position", 8);
-		playerDetailMap.put("rating", 6);
-		playerDetailMap.put("bowlingRating", 7);
-		playerDetailMap.put("role", "bowler");
-		playerDetailMap.put("type", "spinner");
-		playerDetailMap.put("firstName", "Ashton");
-		playerDetailMap.put("lastName", "Agar");
-		
-		team2PlayerDetails.add(playerDetailMap);
-		
-		playerDetailMap = new HashMap<String, Object>();
-		playerDetailMap.put("position", 9);
-		playerDetailMap.put("rating", 6);
-		playerDetailMap.put("bowlingRating", 8);
-		playerDetailMap.put("role", "bowler");
-		playerDetailMap.put("type", "fast-bowler");
-		playerDetailMap.put("firstName", "Patt");
-		playerDetailMap.put("lastName", "Cummins");
-		
-		team2PlayerDetails.add(playerDetailMap);
-		
-		playerDetailMap = new HashMap<String, Object>();
-		playerDetailMap.put("position", 10);
-		playerDetailMap.put("rating", 5);
-		playerDetailMap.put("bowlingRating", 7);
-		playerDetailMap.put("type", "spinner");
-		playerDetailMap.put("role", "bowler");
-		playerDetailMap.put("firstName", "Nathan");
-		playerDetailMap.put("lastName", "Lyon");
-		
-		team2PlayerDetails.add(playerDetailMap);
-		
-		playerDetailMap = new HashMap<String, Object>();
-		playerDetailMap.put("position", 11);
-		playerDetailMap.put("rating", 4);
-		playerDetailMap.put("bowlingRating", 8);
-		playerDetailMap.put("type", "fast-bowler");
-		playerDetailMap.put("role", "bowler");
-		playerDetailMap.put("firstName", "Josh");
-		playerDetailMap.put("lastName", "Hazelwood");
-		
-		team2PlayerDetails.add(playerDetailMap);*/
+	}
+	
+	private void setComputerPlayerDetails(List<Map<String, Object>> paramList) {
+		for (Map<String, Object> paramMap : paramList) {
+			team1PlayerDetails.add(paramMap);
+		}
 	}
 	
 	Map<String, Object> getPlayerDetails(int position) {
@@ -1177,8 +961,6 @@ public class FantasyCricketHelper implements Serializable {
 	}
 	
 	public String getAllPlayers() {
-		setPlayerDetails();
-
 		DatabaseUtils dbUtils = new DatabaseUtils();
 		Map<String, Object> resultMap = dbUtils.getAllEntityData("fantasy_cricket");
 		List<Map<String, Object>> resultList = (List<Map<String, Object>>) resultMap.get("result");
@@ -1193,8 +975,6 @@ public class FantasyCricketHelper implements Serializable {
 		List<Map<String, Object>> team2BowlerDetails = (List<Map<String, Object>>) team2MatchInfoMap.get("bowlerDetails");
 		int team2BallFaced = (int) team2MatchInfoMap.get("teamBallsFaced");
 		List<Map<String, Object>> team2BatsmanBallsFacedDetails = (List<Map<String, Object>>) team2MatchInfoMap.get("batsmanBallsFacedList");
-		Map<String, Object> team2BatsmanOnStrikeDetails = (Map<String, Object>) team2MatchInfoMap.get("batsmanOnStrike");
-		Map<String, Object> team2BatsmanOnNonStrikeDetails = (Map<String, Object>) team2MatchInfoMap.get("batsmanOnNonStrike");
 		List<Map<String, Object>> team2BatsmanFoursList = (List<Map<String, Object>>) team2MatchInfoMap.get("batsmanFoursList");
 		List<Map<String, Object>> team2BatsmanSixesList = (List<Map<String, Object>>) team2MatchInfoMap.get("batsmanSixesList");
 		List<Map<String, Object>> team2FallOfWicketDetails = (List<Map<String, Object>>) team2MatchInfoMap.get("fallOfWickets");
@@ -1277,7 +1057,7 @@ public class FantasyCricketHelper implements Serializable {
         DatabaseUtils du = new DatabaseUtils();
         du.runCreateQuery("fantasy_cricket", queryMap);
 
-        return new Gson().toJson(new ArrayList<String>().add("success"));
+        return new Gson().toJson("success");
     }
 
 	public String removeFantasyCricketRecord(MultivaluedMap<String, String> params) {
@@ -1292,4 +1072,19 @@ public class FantasyCricketHelper implements Serializable {
 
 		return new Gson().toJson(new ArrayList<String>().add("success"));
     }
+
+	public String setPlayAgainst(MultivaluedMap<String, String> params) {
+
+		DatabaseUtils dbUtils = new DatabaseUtils();
+		String playAgainst = params.getFirst("playAgainst");
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("country_geo_id", playAgainst);
+		Map<String, Object> fantasyCricketMap = dbUtils.getEntityDataWithConditions("fantasy_cricket", paramMap);
+
+		List<Map<String, Object>> resultList = (List<Map<String, Object>>) fantasyCricketMap.get("result");
+		if (resultList == null) {
+			return new Gson().toJson("error");
+		}
+		return new Gson().toJson(resultList);
+	}
 }

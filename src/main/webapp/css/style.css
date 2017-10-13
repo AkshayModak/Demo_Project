@@ -130,15 +130,11 @@ uib-accordion-group > .panel-heading {
 	width: 100% !important;
 }
 
-.table>thead {
-    color: white;
-}
-
 /* .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
    background-color: #181818;
 }
  */
-.table>thead>tr>th, .table>tbody>tr>td {
+.no-border>thead>tr>th, .no-border>tbody>tr>td {
     border: 0 !important;
     color: black;
     font-family: 'Cinzel', serif;
@@ -429,4 +425,12 @@ md-icon { color: black !important; }
 	background-repeat:no-repeat;
 	background-position:center;
 	z-index:999;
+}
+
+.black-header {
+	background-color: black;
+}
+
+.black-header > tr > th {
+	color : white;
 }

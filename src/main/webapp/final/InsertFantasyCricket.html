@@ -50,6 +50,7 @@
                      <td><md-checkbox ng-model="fc.result.isDelete" aria-label="Checkbox 1"></md-checkbox></td>
                      <td class="text-center">
                        <span ng-if="!fc.addBtn">{{ fc.fantasy_cricket_id }}</span>
+                       <input type="hidden" ng-model="fc.fantasy_cricket_id"/>
                      </td>
                      <td>
                        <md-input-container class="md-icon-float md-block">
@@ -99,7 +100,7 @@
                            </button>
                          </li>
                          <li ng-if="!fc.addBtn" style="padding: 0;">
-                           <button type="submit" class="btn btn-link" ng-click="updateFantasyRecord(fc.result)">
+                           <button type="submit" class="btn btn-link" ng-click="updateFantasyCricket(fc)">
                              <i class="fa fa-refresh" aria-hidden="true"></i>
                            </button>
                          </li>

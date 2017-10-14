@@ -1084,9 +1084,43 @@ public class FantasyCricketHelper implements Serializable {
 		Map<String, Object> fantasyCricketMap = dbUtils.getEntityDataWithConditions("fantasy_cricket", paramMap);
 
 		List<Map<String, Object>> resultList = (List<Map<String, Object>>) fantasyCricketMap.get("result");
+		resultList = NextrrUtils.sortCricketPlayingElevenMap(resultList);
+
 		if (resultList == null) {
 			return new Gson().toJson("error");
 		}
 		return new Gson().toJson(resultList);
+	}
+
+	public String updateFantasyCricket(MultivaluedMap<String, String> params) {
+
+        Map<String, Object> queryMap = new HashMap<String, Object>();
+
+        String fantasyCricketId = params.getFirst("fantasyCricketId");
+        String firstName = params.getFirst("firstName");
+        String lastName = params.getFirst("lastName");
+        String battingRating = params.getFirst("battingRating");
+        String bowlingRating = params.getFirst("bowlingRating");
+        String role = params.getFirst("role");
+        String countryGeoId = params.getFirst("countryGeoId");
+        String battingPosition = params.getFirst("battingPosition");
+
+        queryMap.put("fantasy_cricket_id", fantasyCricketId);
+        queryMap.put("firstName", firstName);
+        queryMap.put("lastName", lastName);
+        queryMap.put("rating", battingRating);
+        queryMap.put("bowlingRating", bowlingRating);
+        queryMap.put("role", role);
+        queryMap.put("country_geo_id", countryGeoId);
+        queryMap.put("battingPosition", battingPosition);
+
+        if (fantasyCricketId == null) {
+            return new Gson().toJson("error");
+        }
+
+        DatabaseUtils du = new DatabaseUtils();
+        du.runUpdateQuery("fantasy_cricket", queryMap, "fantasy_cricket_id");
+
+        return new Gson().toJson("success");
 	}
 }

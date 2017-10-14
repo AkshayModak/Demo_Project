@@ -3,11 +3,16 @@ package one;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.ThreadLocalRandom;
 
 import architecture.utils.DebugWrapper;
@@ -99,4 +104,20 @@ public class NextrrUtils {
 		short randomNum = (short) ThreadLocalRandom.current().nextInt(min, max + 1);
 		return randomNum;
 	}
+
+    public static List<Map<String, Object>> sortCricketPlayingElevenMap(List<Map<String, Object>> unsortedList) {
+
+        List<Map<String, Object>> sortedList = new ArrayList<Map<String, Object>>();
+        for (int i = 0; i < 11; i++) {
+            sortedList.add(new HashMap<String, Object>());
+        }
+
+        for (Map<String, Object> unsortedMap : unsortedList) {
+            int battingPosition = Integer.valueOf(String.valueOf(unsortedMap.get("battingPosition")));
+            if (battingPosition != 0) {
+                sortedList.set(battingPosition - 1, unsortedMap);
+            }
+        }
+        return sortedList;
+    }
 }

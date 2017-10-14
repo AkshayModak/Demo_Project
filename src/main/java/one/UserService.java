@@ -268,6 +268,15 @@ public class UserService implements Serializable{
 	}
 
 	@POST
+	@Path("/updateFantasyCricket")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String updateFantasyCricket(@Context UriInfo uriInfo) {
+		FantasyCricketHelper fcHelper = new FantasyCricketHelper();
+		String result = fcHelper.updateFantasyCricket(uriInfo.getQueryParameters());
+		return result;
+	}
+
+	@POST
 	@Path("/setPlayAgainst")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String setPlayAgainst(@Context UriInfo uriInfo) {

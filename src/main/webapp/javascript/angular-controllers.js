@@ -264,6 +264,19 @@ var editFantasyCricketController = function($scope, APIService, $http, $uibModal
         });
     }
 
+    $scope.updateFantasyCricket = function(playerDetails) {
+        APIService.doApiCall({
+            "req_name": "updateFantasyCricket",
+            "params": {"fantasyCricketId": playerDetails.fantasy_cricket_id,"firstName": playerDetails.firstName, "lastName": playerDetails.lastName, "battingRating": playerDetails.rating,
+                 "bowlingRating": playerDetails.bowlingRating, "role": playerDetails.role, "countryGeoId": playerDetails.countryGeoId, "battingPosition": playerDetails.battingPosition}
+        }).success(function(data) {
+            if ("success" == data) {
+                $scope.alerts = [{ type: 'success', msg: 'Nice! Record Updated Successfully.' }];
+                $scope.getFantasyRecords();
+            }
+        });
+    }
+
     $scope.removeFantasyRecords = function(fantasyCricketId) {
         APIService.doApiCall({
             "req_name": "removeFantasyCricketRecord",

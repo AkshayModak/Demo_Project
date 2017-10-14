@@ -107,6 +107,7 @@
         <column name="country_geo_id" data-type="varchar" column-size="10" null="false"/>
         <column name="role" data-type="varchar" column-size="25" null="false"/>
         <column name="rating" data-type="int" null="false"/>
+        <column name="battingPosition" data-type="int" column-size="11" null="false"/>
         <column name="bowlingRating" data-type="int" null="false"/>
     </table>
 </entity-def>

@@ -1046,6 +1046,7 @@ public class FantasyCricketHelper implements Serializable {
         String bowlingRating = params.getFirst("bowlingRating");
         String role = params.getFirst("role");
         String countryGeoId = params.getFirst("countryGeoId");
+        String battingPosition = params.getFirst("battingPosition");
 
         queryMap.put("firstName", firstName);
         queryMap.put("lastName", lastName);
@@ -1053,6 +1054,7 @@ public class FantasyCricketHelper implements Serializable {
         queryMap.put("bowlingRating", bowlingRating);
         queryMap.put("role", role);
         queryMap.put("country_geo_id", countryGeoId);
+        queryMap.put("battingPosition", battingPosition);
 
         DatabaseUtils du = new DatabaseUtils();
         du.runCreateQuery("fantasy_cricket", queryMap);

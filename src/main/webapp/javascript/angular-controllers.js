@@ -246,7 +246,7 @@ var editFantasyCricketController = function($scope, APIService, $http, $uibModal
         APIService.doApiCall({
             "req_name": "setFantasyCricketRecord",
             "params": {"firstName": playerDetails.firstName, "lastName": playerDetails.lastName, "battingRating": playerDetails.rating,
-                 "bowlingRating": playerDetails.bowlingRating, "role": playerDetails.role, "countryGeoId": playerDetails.countryGeoId}
+                 "bowlingRating": playerDetails.bowlingRating, "role": playerDetails.role, "countryGeoId": playerDetails.countryGeoId, "battingPosition": playerDetails.battingPosition}
         }).success(function(data) {
             if ("success" == data) {
                 $scope.alerts = [{ type: 'success', msg: 'Nice! Record Created Successfully.' }];

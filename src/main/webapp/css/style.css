@@ -1,7 +1,6 @@
 * {font-family: 'Cinzel', serif}
 
 /* Bootstrap overrides */
-.row { margin: 0 !important;}
 .thumbnail { padding: 0 !important; margin-bottom: 0 !important; border: 0 !important; }
 /* body { background-color: #131313 !important; } */
 
@@ -434,3 +433,10 @@ md-icon { color: black !important; }
 .black-header > tr > th {
 	color : white;
 }
+
+/* @media (max-width: 980px) {
+    .container {
+        margin: 0;
+        padding: 0;
+    }
+} */

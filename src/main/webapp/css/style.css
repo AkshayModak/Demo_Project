@@ -4,7 +4,7 @@
 .thumbnail { padding: 0 !important; margin-bottom: 0 !important; border: 0 !important; }
 /* body { background-color: #131313 !important; } */
 
-.navbar-default { background-color: transparent !important; } 
+/* .navbar-default { background-color: transparent !important; } */
 .transparent { background-color: white !important; }
 .navbar-default .navbar-nav>li>a { 
     color: black !important;
@@ -15,16 +15,6 @@
     color: white !important; 
     font-family: 'Cinzel', serif;
     text-align: center;
-}
-
-@media (min-width: 768px) {
-    .navbar .navbar-nav.inner-nav {
-        display: table-cell;
-        margin-left: 38%;
-    }
-    .navbar .navbar-collapse.inner-nav {
-        text-align: center;
-    }
 }
 
 .navbar.inner-nav { margin-bottom: 0 !important}
@@ -440,3 +430,19 @@ md-icon { color: black !important; }
         padding: 0;
     }
 } */
+
+.fantasy-rating-bar {
+	margin-top: 51px;
+	position: fixed;
+	width: 100%;
+	background-color: white;
+	z-index: 997;
+}
+
+.fantasy-rating-bar > div {
+	padding: 10px;
+}
+
+.padding-15 {
+    padding: 15px;
+}

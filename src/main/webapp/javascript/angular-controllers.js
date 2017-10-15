@@ -57,7 +57,7 @@ myApp.directive("scroll", function ($window) {
     };
 });
 
-var fantasyCricketController = function($scope, APIService, ModalService, $http, $uibModal, $stateParams) {
+var fantasyCricketController = function($scope, $rootScope, APIService, ModalService, $http, $uibModal, $stateParams) {
     getFantasyCricketPlayers = function() {
         $scope.showSpinner = true;
         APIService.doApiCall({
@@ -226,6 +226,8 @@ var fantasyCricketController = function($scope, APIService, ModalService, $http,
             $scope.computerPlayers = data;
         });
     }
+
+    $rootScope.pageTitle = "Fantasy Cricket | Nextrr"
 
     getCricketCountries();
     getFantasyCricketPlayers();

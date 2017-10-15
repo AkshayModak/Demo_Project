@@ -780,8 +780,9 @@ var formula1Controller = function($scope, APIService, $http) {
             data[i].sortTime = mainRaceDate.getTime();
         	data[i].mainRace.date = raceDate + " " + monthNames[mainRaceDate.getMonth()];
             if (mainRaceDate.getTime() < new Date().getTime()) {
-        		data[i].isFinished = true;
-        	}
+                data[i].isFinished = true;
+                $scope.nextEvent = data[i + 1];
+            }
         }
         $scope.formula1 = data;
     });

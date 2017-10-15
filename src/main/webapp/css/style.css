@@ -178,6 +178,7 @@ md-input-container { margin: 0 0 !important; }
     font-family: 'Cinzel', serif;
     font-size: 18px !important;
     font-weight: bold !important;
+    padding: 0 !important;
 }
 
 .list-inline>li.f1-practice {
@@ -445,4 +446,25 @@ md-icon { color: black !important; }
 
 .padding-15 {
     padding: 15px;
+}
+
+.padding-0 {
+    padding: 0;
+}
+
+h1 {
+  font-weight: bold;
+  display: inline-block;
+  padding-bottom: 5px;
+  position: relative;
+  font-size: 20px;
+}
+h1:before{
+    content: "";
+    position: absolute;
+    width: 50%;
+    height: 1px;
+    bottom: 0;
+    left: 0%;
+    border-bottom: 3px solid red;
 }

@@ -39,10 +39,10 @@
     <strong>Danger!</strong> Your combined players ratings can't exceed 100
   </div>
 </div>
-<div class="row" ng-if="userElevenError">
+<div class="row" ng-if="errorMessage">
   <div class="alert alert-danger alert-dismissible" style="z-index:999;">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="hideError()"><span aria-hidden="true">&times;</span></button>
-    Need {{ playersRequired }} more player(s) to play a match.
+    {{ errorMessage }}
   </div>
 </div>
 </div>

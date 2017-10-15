@@ -165,7 +165,11 @@ var fantasyCricketController = function($scope, $rootScope, APIService, ModalSer
     }
 
     $scope.showScoreboard = false;
-    $scope.playCricket = function(userEleven, computerPlayers,tossPreference) {
+    $scope.playCricket = function(userEleven, computerPlayers, tossPreference) {
+        if (computerPlayers == undefined || computerPlayers.length < 11) {
+            $scope.errorMessage = "Please select country to play against.";
+            return;
+        }
         if (userEleven.length == 11) {
             $scope.showSpinner = true;
             APIService.doApiCall({
@@ -200,8 +204,8 @@ var fantasyCricketController = function($scope, $rootScope, APIService, ModalSer
             });
             $scope.showSpinner = false;
         } else {
-            $scope.userElevenError = true
-            $scope.playersRequired = 11 - userEleven.length;
+            playersRequired = 11 - userEleven.length;
+            $scope.errorMessage = "Need " + playersRequired +" more player(s) to play a match.";
         }
     }
 
@@ -215,7 +219,7 @@ var fantasyCricketController = function($scope, $rootScope, APIService, ModalSer
     }
 
     $scope.hideError = function() {
-    	$scope.userElevenError = false;
+        $scope.errorMessage = false;
     }
 
     $scope.setPlayAgainst = function(_team) {

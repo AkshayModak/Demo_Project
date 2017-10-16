@@ -37,8 +37,9 @@ public class Formula1Helper {
 			String time = (String) DefaultObjects.formatTimeForFrontEnd((String) f1ScheduleMap.get("time"));
 			String raceType = (String) f1ScheduleMap.get("race_type_id");
 			String imagePath = (String) f1ScheduleMap.get("imagePath");
+			String circuitGuide = (String) f1ScheduleMap.get("circuitGuide");
 			
-			formula1Map.put("mainRace", f1First.getF1MainRace(id, name, city, country, date, time, raceType, imagePath));
+			formula1Map.put("mainRace", f1First.getF1MainRace(id, name, city, country, date, time, raceType, imagePath, circuitGuide));
 			
 			Map<String, Object> formula1Params = new HashMap<String, Object>();
 			formula1Params.put("formula_one_id", id);
@@ -86,8 +87,9 @@ public class Formula1Helper {
 			String time = (String) f1ScheduleMap.get("time");
 			String raceType = (String) f1ScheduleMap.get("race_type_id");
 			String imagePath = (String) f1ScheduleMap.get("imagePath");
+			String circuitGuide = (String) f1ScheduleMap.get("circuitGuide");
 			
-			formula1Map.put("result", f1First.getF1MainRace(formulaOneId, name, city, country, date, time, raceType, imagePath));
+			formula1Map.put("result", f1First.getF1MainRace(formulaOneId, name, city, country, date, time, raceType, imagePath, circuitGuide));
 			
 			formula1List.add(formula1Map);
 			Map<String, Object> formula1Params = new HashMap<String, Object>();
@@ -144,6 +146,10 @@ public class Formula1Helper {
 			String country = params.get("country").get(0);
 			queryMap.put("country", country);
 		}
+		if (params.get("circuitGuide") != null && "MAINRACE".equals(raceType)) {
+			String circuitGuide = params.getFirst("circuitGuide");
+			queryMap.put("circuitGuide", circuitGuide);
+		}
 		
 		queryMap.put("formula_one_id", formulaOneId);
 		queryMap.put("time", time);
@@ -185,6 +191,10 @@ public class Formula1Helper {
 		if (params.get("country") != null) {
 			String country = params.get("country").get(0);
 			queryMap.put("country", country);
+		}
+		if (params.get("circuitGuide") != null && "MAINRACE".equals(raceType)) {
+			String circuitGuide = params.getFirst("circuitGuide");
+			queryMap.put("circuitGuide", circuitGuide);
 		}
 
 		queryMap.put("time", time);

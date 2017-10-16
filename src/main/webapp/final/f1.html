@@ -4,7 +4,7 @@
     <h1>Upcoming Formula 1 Event:</h1>
     <div class="row" style="border-bottom: 2px solid #efefef; padding-bottom: 20px;">
       <div class="col-xs-12 col-lg-6">
-        <iframe width="100%" height="315" src="https://www.youtube.com/embed/7VVWmuBVp6c" frameborder="0" allowfullscreen></iframe>
+        <iframe width="100%" height="315" ng-src="{{trustCircuitGuide(nextEvent.mainRace.circuitGuide)}}" frameborder="0" allowfullscreen></iframe>
       </div>
       <div class="col-xs-12 col-lg-6">
         <md-card style="height: 315px; margin:0; width:100%;">
@@ -24,28 +24,28 @@
             <div class="f1-practice-block">
               <div class="text-center">
                 <ul class="list-inline">
-                  <li class="f1-practice">{{ nextEvent.FIRSTPRACTICE.name }}</li>
+                  <li class="f1-practice"><label>First Practice -- </label>{{ nextEvent.FIRSTPRACTICE.name }}</li>
                   <li class="f1-practice">{{ nextEvent.FIRSTPRACTICE.date }}</li>
                   <li class="f1-practice">{{ nextEvent.FIRSTPRACTICE.time | date:'HH:MM a' }}</li>
                 </ul>
               </div>
               <div class="text-center">
                 <ul class="list-inline">
-                  <li class="f1-practice">{{ nextEvent.SECONDPRACTICE.name }}</li>
+                  <li class="f1-practice"><label>Second Practice -- </label>{{ nextEvent.SECONDPRACTICE.name }}</li>
                   <li class="f1-practice">{{ nextEvent.SECONDPRACTICE.date }}</li>
                   <li class="f1-practice">{{ nextEvent.SECONDPRACTICE.time }}</li>
                 </ul>
               </div>
               <div class="text-center">
                 <ul class="list-inline">
-                  <li class="f1-practice">{{ nextEvent.THIRDPRACTICE.name }}</li>
+                  <li class="f1-practice"><label>Third Practice -- </label>{{ nextEvent.THIRDPRACTICE.name }}</li>
                   <li class="f1-practice">{{ nextEvent.THIRDPRACTICE.date }}</li>
                   <li class="f1-practice">{{ nextEvent.THIRDPRACTICE.time }}</li>
                 </ul>
               </div>
               <div class="text-center">
                 <ul class="list-inline">
-                  <li class="f1-practice">{{ nextEvent.QUALIFYING.name }}</li>
+                  <li class="f1-practice"><label>Qualification -- </label>{{ nextEvent.QUALIFYING.name }}</li>
                   <li class="f1-practice">{{ nextEvent.QUALIFYING.date }}</li>
                   <li class="f1-practice">{{ nextEvent.QUALIFYING.time }}</li>
                 </ul>

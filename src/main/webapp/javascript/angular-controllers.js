@@ -759,7 +759,7 @@ myApp.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, movie
 	$scope.movie = movie;
 });
 
-var formula1Controller = function($scope, APIService, $http) {
+var formula1Controller = function($scope, APIService, $http, $sce) {
 
     APIService.doApiCall({
         "req_name": "getFormula1Schedule",
@@ -782,6 +782,11 @@ var formula1Controller = function($scope, APIService, $http) {
             if (mainRaceDate.getTime() < new Date().getTime()) {
                 data[i].isFinished = true;
                 $scope.nextEvent = data[i + 1];
+                $scope.nextEvent.mainRace.circuitGuide = "https://www.youtube.com/embed/" + data[i + 1].mainRace.circuitGuide;
+                console.log($scope.nextEvent.circuitGuide);
+                $scope.trustCircuitGuide = function(circuitGuide) {
+                    return $sce.trustAsResourceUrl(circuitGuide);
+                }
             }
         }
         $scope.formula1 = data;
@@ -814,7 +819,7 @@ myApp.controller("isrcorders", function($scope, $http, APIService, $filter) {
             "req_name": "updateF1Practice",
             "params": {"time":f1.time,"date":f1.date, "raceType": f1.type,
             	"formulaOneId":f1.id, "formulaOnePracticeId":f1.practiceId, "name":f1.name, "country": f1.country,
-                "city":f1.city, "imagePath": f1.imagePath}
+                "city":f1.city, "imagePath": f1.imagePath, "circuitGuide": f1.circuitGuide}
         }).success(function(data) {
         	if (data != null || data != "") {
             	$scope.alerts = [{ type: 'success', msg: 'Nice! Record Updated Successfully.' }];
@@ -830,7 +835,7 @@ myApp.controller("isrcorders", function($scope, $http, APIService, $filter) {
     $scope.createF1=function(f1){
         APIService.doApiCall({
             "req_name": "setF1Schedule",
-            "params": {"time":f1.time,"date":f1.date, "raceType": f1.type, "name":f1.name, "country": f1.country, "city":f1.city, "formula1Id": f1.id, "imagePath": f1.imagePath}
+            "params": {"time":f1.time,"date":f1.date, "raceType": f1.type, "name":f1.name, "country": f1.country, "city":f1.city, "formula1Id": f1.id, "imagePath": f1.imagePath, "circuitGuide": f1.circuitGuide}
         }).success(function(data) {
         	if (data != null || data != "") {
             	$scope.alerts = [{ type: 'success', msg: 'Nice! Record Updated Successfully.' }];

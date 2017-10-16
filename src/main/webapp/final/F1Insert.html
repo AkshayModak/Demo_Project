@@ -44,6 +44,7 @@
                     <th>Date</th>
                     <th>Race Type</th>
                     <th>Image Path</th>
+                    <th>Circuit Guide</th>
                     <th>Action</th>
 				</tr>
 			</thead>
@@ -94,6 +95,11 @@
 					       <input ng-disabled="f1.result.type != 'MAINRACE'" ng-model="f1.result.imagePath" type="text"/>
 					   </md-input-container>
 					</td>
+                    <td>
+                       <md-input-container class="md-icon-float md-block">
+                           <input ng-disabled="f1.result.type != 'MAINRACE'" ng-model="f1.result.circuitGuide" type="text"/>
+                       </md-input-container>
+                    </td>
                      <td>
                        <ul class="list-inline">
                          <li ng-if="f1.addBtn" style="padding: 0;">

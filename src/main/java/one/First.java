@@ -72,7 +72,7 @@ public class First implements Serializable {
 		return movieImageAndIdMap;
 	}
 	
-	public Map<String, Object> getF1MainRace(String id, String name, String city, String country, String date, String time, String raceType, String imagePath) {
+	public Map<String, Object> getF1MainRace(String id, String name, String city, String country, String date, String time, String raceType, String imagePath, String circuitGuide) {
 		
 		Map<String, Object> raceMap = new HashMap<String, Object>();
 		
@@ -84,6 +84,7 @@ public class First implements Serializable {
 		raceMap.put("time", time);
 		raceMap.put("type", raceType);
 		raceMap.put("imagePath", imagePath);
+		raceMap.put("circuitGuide", circuitGuide);
 		
 		return raceMap;
 	}

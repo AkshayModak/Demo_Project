@@ -1,72 +1,13 @@
-<div class="container" style="padding-top: 100px;">
+<div style="padding-top: 100px;">
   <div ng-cloak class="movie-section">
-  <md-content>
-  <md-switch ng-model="released" ng-change="showAllMovies(movies)">
-        Released Movies
-  </md-switch>
-  <md-toolbar class="md-hue-2">
-    <md-tabs md-dynamic-height md-border-bottom md-selected="selectedType">
-      <md-tab label="Hollywood" ui-sref="movies({ movieType: 'hollywood' })">
-        <div ui-view>
-            <md-content class="md-padding">
-                <md-input-container class="md-block">
-                    <input ng-model="filterMovie" type="text">
-                    <md-icon md-font-icon="fa fa-search"></md-icon>
-                </md-input-container>
-                <div ng-repeat= "movie in movies | filter: filterMovie">
-                    <div class="movie-bar" style="background-color: {{ movie.movieColor }} !important; display: {{ movie.displayMovie }};">
-                        <ul class="list-inline text-center">
-                            <li class="col-xs-3 col-md-2">{{ movie.movieName }}</li>
-                            <li class="col-xs-6">{{ movie.cast }}</li>
-                            <li class="col-xs-3">{{ movie.releaseDate }}</li>
-                            <li class="col-md-1" ng-if="movie.trailer">
-                            <button type="submit" class="btn btn-link" ng-click="open(movie)"><i class="fa fa-video-camera" aria-hidden="true"></i></button></li>
-                        </ul>
-                    </div>
-                </div>
-            </md-content>
-        </div>
-      </md-tab>
-      <md-tab label="Bollywood" ui-sref="movies({ movieType: 'bollywood' })">
-        <div ui-view="bollywood">
-            <md-content class="md-padding">
-                <md-input-container class="md-block">
-                    <input ng-model="filterMovie" type="text">
-                    <md-icon md-font-icon="fa fa-search"></md-icon>
-                </md-input-container>
-                <div ng-repeat= "movie in movies | filter: filterMovie">
-                    <div class="movie-bar" style="background-color: {{ movie.movieColor }} !important; display: {{ movie.displayMovie }};">
-                        <ul class="list-inline text-center">
-                            <li class="col-xs-3 col-md-2">{{ movie.movieName }}</li>
-                            <li class="col-xs-6">{{ movie.cast }}</li>
-                            <li class="col-xs-3">{{ movie.releaseDate }}</li>
-                            <li class="col-md-1" ng-if="movie.trailer">
-                            <ul class="list-inline">
-                                <li>
-                                    <button type="submit" class="btn btn-link" style="color: white !important;" ng-click="open(movie)"><i class="fa fa-video-camera" aria-hidden="true"></i></button></li>
-                                </li>
-                            </ul>
-                        </ul>
-                    </div>
-                </div>
-            </md-content>
-        </div>
-      </md-tab>
-    </md-tabs>
-  </md-toolbar>
-  </md-content>
-</div>
-<!--MODAL WINDOW-->
-<script type="text/ng-template" id="myModalContent.html">
-    <div modal-movable>
-        <div class="modal-header">
-            {{ movie.movieName }}
-        </div>
-        <div class="modal-body">
-            <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" ng-src="{{ trustSrc(movie.trailer) }}" frameborder="0" allowfullscreen></iframe>
-            </div>
-        </div>
-    </div>
-</script>
+    <md-content>
+      <div class="container">
+        <md-switch ng-model="released" ng-change="showAllMovies(movies)">
+          Released Movies
+        </md-switch>
+      </div>
+      <div class="hidden-xs hidden-sm" ng-include="'final/desktop/desktopMovies.html'"></div>
+      <div class="visible-xs visible-sm" ng-include="'final/mobile/mobileMovies.html'"></div>
+    </md-content>
+  </div>
 </div>

@@ -231,7 +231,7 @@ var fantasyCricketController = function($scope, $rootScope, APIService, ModalSer
         });
     }
 
-    $rootScope.pageTitle = "Fantasy Cricket | Nextrr"
+    $rootScope.pageTitle = "Fantasy Cricket | Nextrr";
 
     getCricketCountries();
     getFantasyCricketPlayers();
@@ -581,31 +581,13 @@ var editCricketController = function($scope, APIService, $http, $uibModal, $stat
     };
 }
 
-var moviesController = function($scope, APIService, ModalService, $http, $uibModal, $stateParams) {
+var moviesController = function($scope, APIService, ModalService, $http, $uibModal, $stateParams, $rootScope) {
 	
 	var movieType = $stateParams.movieType;
 	if ("hollywood" === movieType) {
 		$scope.selectedType = 0;
 	} else {
 		$scope.selectedType = 1;
-	}
-	
-	$scope.showAllMovies = function(movies) {
-		var today = new Date();
-		today.setHours(0,0,0,0);
-		if ($scope.released) {
-			for (i = 0; i < movies.length; i++) {
-				movies[i].displayMovie = "block";
-			}
-		} else {
-			for (i = 0; i < movies.length; i++) {
-				var releaseDate = new Date(movies[i].releaseDate);
-				if (releaseDate < today) {
-					movies[i].displayMovie = "none";
-				}
-			}
-		}
-		
 	}
 	
 	var getMovies = function() {
@@ -633,8 +615,7 @@ var moviesController = function($scope, APIService, ModalService, $http, $uibMod
             $scope.movies = data;
         });
     }
-    
-    
+
     if ("hollywood" === movieType) {
     	getMovies();
 	} else {
@@ -654,6 +635,25 @@ var moviesController = function($scope, APIService, ModalService, $http, $uibMod
             }
         });
     };
+
+	$scope.showAllMovies = function(movies) {
+		var today = new Date();
+		today.setHours(0,0,0,0);
+		if ($scope.released) {
+			for (i = 0; i < movies.length; i++) {
+				movies[i].displayMovie = "block";
+			}
+		} else {
+			for (i = 0; i < movies.length; i++) {
+				var releaseDate = new Date(movies[i].releaseDate);
+				if (releaseDate < today) {
+					movies[i].displayMovie = "none";
+				}
+			}
+		}
+	}
+
+    $rootScope.pageTitle = "Movies | Nextrr";
 };
 
 var editMoviesController = function($scope, APIService, $http) {
@@ -759,7 +759,7 @@ myApp.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, movie
 	$scope.movie = movie;
 });
 
-var formula1Controller = function($scope, APIService, $http, $sce) {
+var formula1Controller = function($scope, APIService, $http, $sce, $rootScope) {
 
     APIService.doApiCall({
         "req_name": "getFormula1Schedule",
@@ -791,6 +791,8 @@ var formula1Controller = function($scope, APIService, $http, $sce) {
         }
         $scope.formula1 = data;
     });
+
+    $rootScope.pageTitle = "Formula 1 Schedule | Nextrr";
 }
 
 myApp.controller("isrcorders", function($scope, $http, APIService, $filter) {

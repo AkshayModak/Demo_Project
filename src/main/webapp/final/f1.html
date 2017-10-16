@@ -13,8 +13,7 @@
             <md-card-title-text>
               <span class="md-headline" style="font-size: 20px;">
                 <ul class="list-inline">
-                  <li class="f1-heading">{{ nextEvent.mainRace.name }},</li>
-                  <li class="f1-heading">{{ nextEvent.mainRace.country }}</li>
+                  <li class="f1-heading">{{ nextEvent.mainRace.name }}, {{ nextEvent.mainRace.city }}, {{ nextEvent.mainRace.country }}</li>
                 </ul>
               </span>
               <span class="f1-date-time">On {{ nextEvent.mainRace.date }} at {{ nextEvent.mainRace.time | date:'HH:MM a' }}</span>
@@ -68,8 +67,7 @@
         <md-card-title>
           <md-card-title-text>
             <span class="md-headline" style="font-size: 20px;">
-              <div class="f1-heading">{{ f1.mainRace.name }},</div>
-              <div class="f1-heading">{{ f1.mainRace.country }}</div>
+              <div class="f1-heading">{{ f1.mainRace.name }}, {{ f1.mainRace.city }}, {{ f1.mainRace.country }}</div>
             </span>
             <span class="f1-date-time">On {{ f1.mainRace.date }} at {{ f1.mainRace.time | date:'HH:MM a' }}</span>
             <span ng-if="f1.isFinished" class="label label-danger">Event Finished</span>

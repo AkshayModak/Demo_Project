@@ -210,7 +210,7 @@ md-input-container { margin: 0 0 !important; }
   vertical-align: center;
 }
 
-.collapse > div.panel-body { padding: 0; }
+.collapse > div.panel-body { padding: 0 !important; }
 
 .animate-hide.ng-hide {
   opacity:0;
@@ -221,27 +221,45 @@ md-input-container { margin: 0 0 !important; }
 }
 
 @media screen and (max-width: 767px) {
-	.movie-bar {
+    .movie-bar {
         font-size: initial;
-        height: 80px;
-        padding: 15px;
+        width: 100%;
+        color: white;
+        border-radius: 0 !important;
+    }
+
+    .movie-bar > ul > li {
+        vertical-align: middle;
+        text-align: center;
+    }
+    .movie-bar > div > h4 > a { text-decoration: none; }
+    .movie-bar > div > div.panel-body { padding: 15px !important; border-bottom: 1px solid white; }
+    .movie-bar > ul > li > .btn { color : white !important; }
+}
+
+@media screen and (min-width: 1200px) {
+    .movie-bar {
+        font-size: initial;
+        height: 60px;
+        padding: 10px;
         color: white;
         margin: auto;
         margin-bottom: 10px;
         transition: padding 0.25s ease-in, height 0.25s ease-in;
     }
-}
 
-@media screen and (min-width: 768px) {
-.movie-bar {
-	font-size: initial;
-	height: 60px; 
-	padding: 10px;
-	color: white; 
-	margin: auto; 
-	margin-bottom: 10px;
-	transition: padding 0.25s ease-in, height 0.25s ease-in;
-}
+    .movie-bar:hover {
+      box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+      height: 80px;
+      padding: 25px;
+    }
+
+    .movie-bar > ul > li {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .movie-bar > ul > li > .btn { color : white !important; }
 }
 
 .cricket-schedule-bar {
@@ -276,18 +294,6 @@ md-tab-data{
   z-index: 20;
 }
 
-.movie-bar:hover {
-      box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
-      height: 80px;
-      padding: 25px;
-}
-
-.movie-bar > ul > li {
-	vertical-align: middle;
-	text-align: center;
-}
-
-.movie-bar > ul > li > .btn { color : white !important; }
 .modal-body { padding: 0 !important; }
 .modal-content { border-radius : 0 !important; }
 
@@ -309,7 +315,8 @@ md-tabs.md-default-theme md-ink-bar, md-tabs md-ink-bar {
     background-color: white !important;
 } */
 
-md-toolbar > md-tabs > md-tabs-wrapper { background-color: black !important; color: white;}
+md-toolbar > md-tabs > md-tabs-wrapper { background-color: black !important; color: white; font-weight: bold;}
+md-tab-item {font-weight: bold;}
 md-tab-item:hover { background-color: #F0F0F0 !important; color: black !important; }
 md-tab-item.md-active { background-color: white !important; color: black !important; }
 md-tab-item.md-active:hover { background-color: #F0F0F0 !important; color: black !important; }
@@ -449,7 +456,7 @@ md-icon { color: black !important; }
 }
 
 .padding-0 {
-    padding: 0;
+    padding: 0 !important;
 }
 
 h1 {
@@ -467,4 +474,29 @@ h1:before{
     bottom: 0;
     left: 0%;
     border-bottom: 3px solid red;
+}
+
+.accordion-nextrr {
+    background-color: #1abc9c;
+    color: #fafafa;
+    font-size: 1em;
+    line-height: 1.5em;
+}
+
+uib-accordion > div > div > div > div.panel-body {
+    /* background-color: #1abc9c; */
+    color: #fafafa;
+    font-size: 1em;
+    line-height: 1.5em;
+    border-top: 0 !important;
+}
+
+.divider:after {
+  content: '';
+  width: 0;
+  height: 100%;
+  position: absolute;
+  border: 1px solid white;
+  top: 0;
+  right: 0;
 }

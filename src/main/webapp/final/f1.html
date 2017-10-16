@@ -62,9 +62,9 @@
     <!-- Formula 1 All Events -->
     <h1 style="padding-top: 20px;">Formula 1 Events:</h1>
     <div class="row">
-    <span ng-repeat="f1 in formula1 | orderBy: '-sortTime'" class="col-xs-12 col-md-4 f1-cards">
-      <md-card style="height: 375px;">
-        <img ng-src="{{f1.mainRace.imagePath}}" class="md-card-image" alt="Washed Out" style="width: 300px; height: 200px;">
+    <span ng-repeat="f1 in formula1 | orderBy: '-sortTime'" class="col-xs-12 col-md-4">
+      <md-card style="height: 375px; margin:0; margin-bottom:20px; width:100%;">
+        <img ng-src="{{f1.mainRace.imagePath}}" class="md-card-image" alt="Washed Out" style="width: 100%; height: 200px;">
         <md-card-title>
           <md-card-title-text>
             <span class="md-headline" style="font-size: 20px;">
@@ -75,7 +75,7 @@
             <span ng-if="f1.isFinished" class="label label-danger">Event Finished</span>
           </md-card-title-text>
         </md-card-title>
-        <md-card-content ng-show="f1.expanded" class="animate-hide">
+        <md-card-content ng-show="f1.expanded" class="animate-hide" style="width:100%;">
           <div class="f1-practice-block">
             <div class="text-center">
               <ul class="list-inline">

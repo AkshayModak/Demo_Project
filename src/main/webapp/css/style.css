@@ -114,11 +114,6 @@ a.cards > .image-title:hover {
     transform: translateY(-50%);
 }
 
-div.CompThree {
-    min-height: 400px;
-    background-color: white;
-}
-
 div.CompFour {
     height: 200px;
     background-color: #222222;
@@ -253,6 +248,11 @@ md-input-container { margin: 0 0 !important; }
         background-image: url(../images/carouselImages/comp-one.jpg);
     }
 
+    div.CompThree {
+        min-height: 400px;
+        background-color: white;
+    }
+
     .movie-bar {
         font-size: initial;
         width: 100%;
@@ -295,6 +295,47 @@ md-input-container { margin: 0 0 !important; }
     .carousel-styles {
         height: 350px;
         width: 100%; 
+    }
+
+    .primary-white-section > h1:before {
+        color: black;
+        border: 0;
+        display: block;
+        position: absolute;
+        margin-left: 25%;
+        width: 40%;
+        border-bottom: 1px solid red;
+    }
+
+    .primary-white-section > h1 {
+        padding-top: 5%;
+        color: black;
+        text-align: center;
+        display: block;
+        font-size: 38px;
+    }
+
+    .primary-white-section > button {
+        color: black;
+        text-align: center;
+        border: 1px solid black;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        border-radius : 5px;
+        margin-left: 32%;
+        background-color: white;
+    }
+
+    .primary-white-section > button:hover {
+        color: black;
+        background-color: white;
+        border: 2px solid black;
+    }
+
+    .primary-white-section > p {
+        color: black;
+        text-align: center;
+        padding-bottom: 20px;
     }
 
     .black-section {
@@ -385,6 +426,11 @@ md-input-container { margin: 0 0 !important; }
         background-image: url(../images/carouselImages/comp-one.jpg);
     }
 
+    div.CompThree {
+        min-height: 400px;
+        background-color: white;
+    }
+
     .movie-bar {
         font-size: initial;
         height: 60px;
@@ -411,11 +457,6 @@ md-input-container { margin: 0 0 !important; }
     }
     .movie-bar > ul > li > .btn { color : white !important; }
 
-    .container-fluid {
-        padding-right: 175px;
-        padding-left: 175px;
-    }
-
     .carousel-styles {
         height: 950px;
         width: 100%; 
@@ -439,6 +480,46 @@ md-input-container { margin: 0 0 !important; }
 
     .home-title > h1 > p{
         font-size: 20px;
+    }
+
+    .primary-white-section {
+        padding-top: 10px;
+        padding-left: 65px; 
+        padding-right: 65px;
+        text-align: center;
+    }
+
+    .primary-white-section > h1:before {
+        color: black;
+        border: 0;
+        display: block;
+        position: absolute;
+        margin-left: 45%;
+        width: 10%;
+        border-bottom: 1px solid red;
+    }
+
+    .primary-white-section > h1 {
+        padding-top: 5%;
+        color: black;
+        text-align: center;
+        display: block;
+        font-size: 38px;
+    }
+
+    .primary-white-section > button {
+        color: black;
+        text-align: center;
+        border: 1px solid black;
+        padding: 10px;
+        border-radius : 5px;
+        background-color: white;
+    }
+
+    .primary-white-section > button:hover {
+        color: black;
+        background-color: white;
+        border: 2px solid black;
     }
 
     .black-section {
@@ -603,13 +684,20 @@ md-tab-item.md-active:hover { background-color: #F0F0F0 !important; color: black
 md-icon { color: black !important; }
 
 .footer {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 1rem;
-  background-color: #efefef;
+    padding-top: 10px;
+  color: white;
+  background-color: black;
   text-align: center;
+}
+
+.footer > div > div > a:hover {
+    text-decoration: none;
+    color: grey;
+    cursor: pointer;
+}
+
+.footer > div > div > a {
+    color: white;
 }
 
 .cricket-flag-1 { 

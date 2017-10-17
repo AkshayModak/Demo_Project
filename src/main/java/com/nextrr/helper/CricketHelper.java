@@ -91,6 +91,7 @@ public class CricketHelper {
 			List<Map<String, Object>> valueList = (List<Map<String, Object>>) value;
 			
 			for (int i = 0; i < valueList.size(); i++) {
+
 				if (valueList.get(i).get("match_number") != null && Integer.valueOf((String) valueList.get(i).get("match_number")) != 0) {
 					valueList.get(i).put("match_number", cricketMatchList[Integer.valueOf((String) valueList.get(i).get("match_number")) - 1]);
 				}
@@ -106,6 +107,7 @@ public class CricketHelper {
 					paramMap.put("country_geo_id", valueList.get(i).get("team_one_geoId"));
 					Map<String, Object> countryGeoResult = dbUtils.getFirstEntityDataWithConditions("country_geo",paramMap);
 					valueList.get(i).put("team_one_geoId", countryGeoResult.get("description"));
+					valueList.get(i).put("team_one_flag", countryGeoResult.get("flag_image_path"));
 				} 
 				
 				if (valueList.get(i).get("team_two_geoId") != null) {
@@ -113,6 +115,7 @@ public class CricketHelper {
 					paramMap.put("country_geo_id", valueList.get(i).get("team_two_geoId"));
 					Map<String, Object> countryGeoResult = dbUtils.getFirstEntityDataWithConditions("country_geo",paramMap);
 					valueList.get(i).put("team_two_geoId", countryGeoResult.get("description"));
+					valueList.get(i).put("team_two_flag", countryGeoResult.get("flag_image_path"));
 				}
 				
 				if (valueList.get(i).get("sports_child_type_id") != null) {

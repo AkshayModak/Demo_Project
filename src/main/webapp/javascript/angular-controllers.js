@@ -320,7 +320,7 @@ var cricketController = function($scope, APIService, ModalService, $http, $uibMo
             today.setHours(0,0,0,0);
             cricketList = $scope.cricketList;
             for (i=0; i < cricketList.length; i++) {
-                cricketList[i].displayCricket = "table-row";
+                cricketList[i].displayCricket = "table-row-block";
             }
             $scope.cricketList = cricketList;
             getCricketLeagues(false);
@@ -331,9 +331,9 @@ var cricketController = function($scope, APIService, ModalService, $http, $uibMo
             for (i=0; i < cricketList.length; i++) {
                 var matchDate = new Date(cricketList[i].match_date);
                 if (matchDate < today) {
-                    cricketList[i].displayCricket = "none";
+                    cricketList[i].displayCricket = "display-none";
                 } else {
-                    cricketList[i].displayCricket = "table-row";
+                    cricketList[i].displayCricket = "table-row-block";
                 }
             }
             $scope.cricketList = cricketList;
@@ -361,14 +361,17 @@ var cricketController = function($scope, APIService, ModalService, $http, $uibMo
             "params": {}
         }).success(function(data) {
             cricketList = data.result;
+            var colors = ['#1a237e', '#880e4f', '#4a148c', '#004d40', '#6d4c41', '#455a64'];
             var today = new Date();
             today.setHours(0,0,0,0);
             for (i=0; i < cricketList.length; i++) {
+                var randomColor = getRandomInt(0, 4);
+                cricketList[i].barColor = colors[randomColor];
                 matchDate = new Date(cricketList[i].match_date);
                 if (matchDate < today) {
-                    cricketList[i].displayCricket = "none";
+                    cricketList[i].displayCricket = "display-none";
                 } else {
-                    cricketList[i].displayCricket = "table-row";
+                    cricketList[i].displayCricket = "table-row-block";
                 }
             }
             $scope.cricketList = cricketList;

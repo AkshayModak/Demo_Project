@@ -81,6 +81,7 @@
     <table name="country_geo">
         <column name="country_geo_id" data-type="varchar" column-size="15" null="false" primary-key="true"/>
         <column name="description" data-type="varchar" column-size="55" null="false"/>
+        <column name="flag_image_path" data-type="varchar" column-size="255" null="true"/>
     </table>
     <table name="validation">
         <column name="validation_id" data-type="int" null="false" primary-key="true" auto-increment="true"/>

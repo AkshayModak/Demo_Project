@@ -1,0 +1,35 @@
+<div class="col-md-9 col-xs-12">
+    <table class="table" style="width: 100% !important;">
+        <thead>
+            <tr class="cricket-head">
+                <th style="color:white">Match</th>
+                <th style="color:white">Between</th>
+                <th style="color:white">Location</th>
+                <th style="color:white">Date</th>
+                <th style="color:white">Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="cricket-row" ng-class="cricket.displayCricket" ng-repeat="cricket in cricketList | filter: filterString">
+                <td>
+                    <span ng-if = "cricket.match_number != 0">
+                        {{ cricket.match_number }} {{ cricket.sports_child_type_id }}
+                    </span>
+                    <span ng-if = "cricket.match_number == 0">
+                        N/A
+                    </span>
+                </td>
+                <td>{{ cricket.team_one_geoId }} vs {{ cricket.team_two_geoId }}</td>
+                <td>
+                    {{ cricket.stadium }}, {{ cricket.city }}
+                    <div style="color:grey"><small>{{ cricket.series_description }}, {{ cricket.year }}</small></div>
+                </td>
+                <td>{{ cricket.match_from_date }} 
+                    <span ng-if="cricket.match_to_date"> - </span>
+                    {{ cricket.match_to_date }}
+                </td>
+                <td>{{ cricket.time }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

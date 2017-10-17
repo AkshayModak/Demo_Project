@@ -1,5 +1,5 @@
 <div ng-controller="cricketController">
-  <div class="container" style="margin-top: 55px; width: 100% !important; padding: 0 !important;">
+  <div class="visible-md visible-lg container" style="margin-top: 55px; width: 100% !important; padding: 0 !important;">
     <ul class="list-inline cricket-menubar">
       <li ng-repeat="team in teams">
           <a ng-click="filterCricket(team.description)" class="btn" ng-class="{'active': team.country_id == selectedTeam}" title="{{ team.description }}">
@@ -8,15 +8,25 @@
       </li>
     </ul>
   </div>
+  <div class="hidden-md hidden-lg container" style="margin-top: 55px; width: 100% !important;">
+    <h1>Sort By Team</h1>
+    <div class="row cricket-menubar">
+      <div class="col-xs-2 padding-0" ng-repeat="team in teams">
+          <a ng-click="filterCricket(team.description)" class="btn" ng-class="{'active': team.country_id == selectedTeam}" title="{{ team.description }}">
+              <img ng-src="{{team.small_flag_path}}" style="width: 30px; height: 18px;"/>
+          </a>
+      </div>
+    </div>
+  </div>
   <div class="container-fluid" style="margin-top: 100px;">
       <div class="col-xs-3 col-xs-visible">
         <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" md-whiteframe="4">
             <md-toolbar class="md-theme-indigo">
-                <h1 class="md-toolbar-tools sidenav-heading">
+                <h2 class="md-toolbar-tools sidenav-heading">
                 <i class="fa fa-filter" style="color: white; padding: 5px;" aria-hidden="true"></i>
                 Filters
                     <md-button ng-if="filterString" class="md-raised" style="margin-left:auto; margin-right:0;" ng-click="filterCricket('')">Clear</md-button>
-                </h1>
+                </h2>
             </md-toolbar>
             <md-content class="facet">
                 <div ng-repeat="cricketLeague in cricketLeagues" style="border-bottom: 1px solid currentColor;">
@@ -37,41 +47,7 @@
       <md-switch ng-model="released" ng-change="showAllCricket(cricketList)">
         <span class="font-bold">Upcoming Matches</span>
       </md-switch>
-      <div class="col-md-9 col-xs-12">
-          <table class="table" style="width: 100% !important;">
-              <thead>
-                  <tr class="cricket-head">
-                      <th style="color:white">Match</th>
-                      <th style="color:white">Between</th>
-                      <th style="color:white">Location</th>
-                      <th style="color:white">Date</th>
-                      <th style="color:white">Time</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr class="cricket-row" ng-repeat="cricket in cricketList | filter: filterString" style="display: {{ cricket.displayCricket }}">
-                      <td>
-                          <span ng-if = "cricket.match_number != 0">
-                              {{ cricket.match_number }} {{ cricket.sports_child_type_id }}
-                          </span>
-                          <span ng-if = "cricket.match_number == 0">
-                              N/A
-                          </span>
-                      </td>
-                      <td>{{ cricket.team_one_geoId }} vs {{ cricket.team_two_geoId }}</td>
-                      <td>
-                          {{ cricket.stadium }}, {{ cricket.city }}
-                          <div style="color:grey"><small>{{ cricket.series_description }}, {{ cricket.year }}</small></div>
-                      </td>
-                      <td>{{ cricket.match_from_date }} 
-                          <span ng-if="cricket.match_to_date"> - </span>
-                          {{ cricket.match_to_date }}
-                      </td>
-                      <td>{{ cricket.time }}</td>
-                  </tr>
-              </tbody>
-          </table>
-      </div>
+      <div class="hidden-xs hidden-sm" ng-include="'final/desktop/desktopCricket.html'"></div>
     </div>
+    <div class="visible-xs visible-sm" ng-include="'final/mobile/mobileCricket.html'"></div>
 </div>
-<span ng-show="filteredCricket.length">{{ filteredCricket.length }}==safsdf==</span>

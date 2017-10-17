@@ -167,33 +167,6 @@
         </div>
     </div>
 </div>
-<div class="row">
-     <div class="col-xs-12">
-         <div class="col-xs-8" ng-if="!tossPreference">
-             <strong>Current Combined Rating : {{ rating }}</strong>
-         </div>
-         <div class="col-xs-4" ng-if="!tossPreference">
-             <button type="button" class="btn btn-primary" ng-click="playCricket(userEleven, computerPlayers)">Let's Play!</button>
-         </div>
-     </div>
-     <div class="col-xs-12" ng-if="tossPreference">
-         <div class="col-xs-6">
-             <strong>{{ tossMessage }}</strong>
-         </div>
-         <div class="col-xs-3" ng-if="wonBy == 'user' && !team1">
-             <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="playCricket(userEleven, computerPlayers, 'bat')">Bat</button>
-         </div>
-         <div class="col-xs-3" ng-if="wonBy == 'user' && !team1">
-             <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="playCricket(userEleven, computerPlayers, 'bowl')">Bowl</button>
-         </div>
-         <div class="col-xs-2" ng-if="wonBy == 'computer' && !team1">
-             <button type="button" class="btn btn-primary" ng-click="playCricket(userEleven, computerPlayers, 'bat')">Let's Play!</button>
-         </div>
-         <div class="col-xs-2" ng-if="team1">
-             <button type="button" class="btn btn-primary" ng-click="playCricket(userEleven, computerPlayers)">Let's Play Again!</button>
-         </div>
-     </div>
-</div>
 <div class="row" ng-if="showScoreboard && team1">
     <div class="col-md-6" style="margin-top: 50px;">
         <table class="table table-striped">

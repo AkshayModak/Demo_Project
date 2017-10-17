@@ -17,6 +17,11 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+var homeController = function($scope, $rootScope) {
+    $rootScope.home = true;
+    $rootScope.pageTitle = "Home | Nextrr";
+}
+
 myApp.controller('navbarController', function ($scope) {
 		if (window.innerWidth < 768) {
 			$scope.isNavCollapsed = true;
@@ -302,7 +307,7 @@ var editFantasyCricketController = function($scope, APIService, $http, $uibModal
     };
 }
 
-var cricketController = function($scope, APIService, ModalService, $http, $uibModal, $stateParams) {
+var cricketController = function($scope, APIService, ModalService, $http, $uibModal, $stateParams, $rootScope) {
 
 	$scope.expanded = false;
 
@@ -426,6 +431,8 @@ var cricketController = function($scope, APIService, ModalService, $http, $uibMo
 
     getCricketCountries();
     getCricketLeagues(true);
+
+    $rootScope.pageTitle = "Cricket | Nextrr";
 }
 
 var editCricketController = function($scope, APIService, $http, $uibModal, $stateParams) {
@@ -921,6 +928,7 @@ myApp.controller("cricketController", cricketController);
 myApp.controller("editCricketController", editCricketController);
 myApp.controller("fantasyCricketController", fantasyCricketController);
 myApp.controller("editFantasyCricketController", editFantasyCricketController);
+myApp.controller("homeController", homeController);
 
 myApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 	$stateProvider.state("home", {

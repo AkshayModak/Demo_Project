@@ -1,8 +1,8 @@
-* {font-family: 'Cinzel', serif}
+* {font-family: 'Cinzel', serif;}
 
 /* Bootstrap overrides */
 .thumbnail { padding: 0 !important; margin-bottom: 0 !important; border: 0 !important; opacity: .5;}
-/* body { background-color: #131313 !important; } */
+body, html { background-color: #f2f1f2; }
 
 .navbar-default { background-color: black !important; border-bottom: 0;}
 .transparent { background-color: white !important; }
@@ -16,7 +16,6 @@
     border-top: 3px solid white; 
     color: white !important; 
     font-family: 'Cinzel', serif;
-    text-align: center;
     margin-top: 0;
 }
 
@@ -25,7 +24,6 @@
     background-color: black; 
     color: white !important; 
     font-family: 'Cinzel', serif;
-    text-align: center;
 }
 
 .navbar-default .navbar-nav > li.active > a:focus { 
@@ -33,7 +31,6 @@
     background-color: black; 
     color: white !important; 
     font-family: 'Cinzel', serif;
-    text-align: center;
 }
 
 .navbar-default .navbar-nav>li.active>a:hover { 
@@ -41,7 +38,6 @@
     border-bottom: 3px solid red; 
     color: white !important; 
     font-family: 'Cinzel', serif;
-    text-align: center;
     margin-top: 0;
     background-color: black;
 }
@@ -684,10 +680,13 @@ md-tab-item.md-active:hover { background-color: #F0F0F0 !important; color: black
 md-icon { color: black !important; }
 
 .footer {
-    padding-top: 10px;
-  color: white;
-  background-color: black;
-  text-align: center;
+    padding: 20px;
+    color: white;
+    background-color: black;
+    text-align: center;
+    bottom: 0;
+    top: 100%;
+    position: sticky;
 }
 
 .footer > div > div > a:hover {
@@ -885,3 +884,67 @@ uib-accordion > div > div > div > div.panel-body {
     background-image: url("../images/carouselImages/f1-carousel2.jpg");
     background-size: cover;
 }
+
+.cricket-bar-active {
+    background-color: #efefef;
+}
+
+h2 {
+  font-weight: bold;
+  display: inline-block;
+  padding-bottom: 5px;
+  position: relative;
+  font-family: 'Roboto', sans-serif;
+}
+h2:before{
+    content: "";
+    position: absolute;
+    width: 50%;
+    height: 1px;
+    bottom: 0;
+    left: 0%;
+    border-bottom: 3px solid red;
+}
+
+div.disclaimer > div.row {
+    padding: 40px;
+    padding-top: 100px;
+    background-color: white;
+    font-family: 'Roboto', sans-serif;
+}
+
+div.disclaimer > div.row > h1 {
+    font-size: 60px;
+    display:block;
+    font-family: 'Roboto', sans-serif;
+}
+
+div.disclaimer > div.row > p {
+    font-size: 20px;
+    display:block;
+    font-family: 'Roboto', sans-serif;
+}
+
+div.disclaimer > div.row li {
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif;
+}
+
+div.disclaimer > div.row > form > div > label {
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif;
+}
+
+div.disclaimer > div.row > p > a {
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif;
+}
+
+div.disclaimer > div.row > h1:before {
+    font-size: 60px;
+    display:block;
+    border-bottom: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.help-block { color: blue; font-family: 'Roboto', sans-serif; }

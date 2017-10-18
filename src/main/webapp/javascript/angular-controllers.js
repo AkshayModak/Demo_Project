@@ -22,14 +22,10 @@ var homeController = function($scope, $rootScope) {
     $rootScope.pageTitle = "Home | Nextrr";
 }
 
-myApp.controller('navbarController', function ($scope) {
-		if (window.innerWidth < 768) {
-			$scope.isNavCollapsed = true;
-		} else {
-			$scope.isNavCollapsed = false;
-		}
-	  $scope.isCollapsed = true;
-	  $scope.isCollapsedHorizontal = true;
+myApp.controller('navbarController', function ($scope, $rootScope) {
+    $rootScope.isNavCollapsed = true;
+    $scope.isCollapsed = true;
+    $scope.isCollapsedHorizontal = true;
 });
 
 function format_time(date_obj) {
@@ -63,6 +59,7 @@ myApp.directive("scroll", function ($window) {
 });
 
 var fantasyCricketController = function($scope, $rootScope, APIService, ModalService, $http, $uibModal, $stateParams) {
+
     getFantasyCricketPlayers = function() {
         $scope.showSpinner = true;
         APIService.doApiCall({
@@ -170,7 +167,7 @@ var fantasyCricketController = function($scope, $rootScope, APIService, ModalSer
     }
 
     $scope.showScoreboard = false;
-    $scope.playCricket = function(userEleven, computerPlayers, tossPreference) {
+    $scope.playCricket = function(userEleven, computerPlayers, playingAgainst, tossPreference) {
         if (computerPlayers == undefined || computerPlayers.length < 11) {
             $scope.errorMessage = "Please select country to play against.";
             return;
@@ -188,11 +185,11 @@ var fantasyCricketController = function($scope, $rootScope, APIService, ModalSer
                     $scope.wonBy = "user";
                 } else if ("computer-bat" == data) {
                     $scope.tossPreference = true;
-                    $scope.tossMessage = "Computer has won the toss and elected to bat first";
+                    $scope.tossMessage = playingAgainst + " has won the toss and elected to bat first";
                     $scope.wonBy = "computer";
                 } else if ("computer-bowl" == data) {
                     $scope.tossPreference = true;
-                    $scope.tossMessage = "Computer has won the toss and elected to bowl first";
+                    $scope.tossMessage = playingAgainst + " has won the toss and elected to bowl first";
                     $scope.wonBy = "computer";
                 }
                 $scope.team1 = data[1];
@@ -227,11 +224,12 @@ var fantasyCricketController = function($scope, $rootScope, APIService, ModalSer
         $scope.errorMessage = false;
     }
 
-    $scope.setPlayAgainst = function(_team) {
+    $scope.setPlayAgainst = function(_team, _teamName) {
         APIService.doApiCall({
             "req_name": "setPlayAgainst",
             "params": {"playAgainst": _team}
         }).success(function(data) {
+            $scope.playingAgainst = _teamName;
             $scope.computerPlayers = data;
         });
     }
@@ -317,6 +315,7 @@ var cricketController = function($scope, APIService, ModalService, $http, $uibMo
             $scope.dropdown_index = -1;
         }
         $scope.filterString = string;
+        $scope.selectedTeam = string;
     }
 
     $scope.showAllCricket = function() {
@@ -954,6 +953,15 @@ myApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 		url: "/fantasy-Cricket",
 		templateUrl: "final/FantasyCricket.html",
 		controller: "fantasyCricketController"
+	}).state("disclaimer", {
+		url: "/disclaimer",
+		templateUrl: "final/disclaimer.html",
+	}).state("credits", {
+		url: "/credits",
+		templateUrl: "final/credits.html",
+	}).state("contact-us", {
+		url: "/contact-us",
+		templateUrl: "final/contact-us.html",
 	}).state("otherwise", {
 		url: "/otherwise",
 		templateUrl: "templates/home.html",

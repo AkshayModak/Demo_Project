@@ -2,7 +2,7 @@
   <div class="visible-md visible-lg container" style="margin-top: 55px; width: 100% !important; padding: 0 !important;">
     <ul class="list-inline cricket-menubar">
       <li ng-repeat="team in teams">
-          <a ng-click="filterCricket(team.description)" class="btn" ng-class="{'active': team.country_id == selectedTeam}" title="{{ team.description }}">
+          <a ng-click="filterCricket(team.description)" class="btn" ng-class="{'cricket-bar-active': team.description == selectedTeam}" title="{{ team.description }}">
               <img ng-src="{{team.small_flag_path}}" style="width: 30px; height: 18px;"/>
           </a>
       </li>
@@ -12,13 +12,13 @@
     <h1>Sort By Team</h1>
     <div class="row cricket-menubar">
       <div class="col-xs-2 padding-0" ng-repeat="team in teams">
-          <a ng-click="filterCricket(team.description)" class="btn" ng-class="{'active': team.country_id == selectedTeam}" title="{{ team.description }}">
+          <a ng-click="filterCricket(team.description)" class="btn" ng-class="{'active': team.description == selectedTeam}" title="{{ team.description }}">
               <img ng-src="{{team.small_flag_path}}" style="width: 30px; height: 18px;"/>
           </a>
       </div>
     </div>
   </div>
-  <div class="container-fluid" style="margin-top: 100px;">
+  <div class="container-fluid" style="padding-top: 150px; margin-bottom: 50px;">
       <div class="col-xs-3 col-xs-visible">
         <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" md-whiteframe="4">
             <md-toolbar class="md-theme-indigo">

@@ -2,7 +2,7 @@
     <div class="panel-heading">Play Against</div>
     <div class="panel-body">
         <div class="col-xs-3" ng-repeat="team in teams">
-            <a ng-click="setPlayAgainst(team.country_id)" class="btn" ng-class="{'active': team.country_id == selectedTeam}" title="{{ team.description }}">
+            <a ng-click="setPlayAgainst(team.country_id, team.description)" class="btn" ng-class="{'cricket-bar-active': team.description == playingAgainst}" title="{{ team.description }}">
                 <img ng-src="{{team.small_flag_path}}" style="width: 30px; height: 18px;"/>
             </a>
         </div>
@@ -156,7 +156,7 @@
         <div class="col-xs-5">
             <div class="row">
                 <div class="col-xs-12">
-                    <strong>India</strong>
+                    <strong>{{ playingAgainst }}</strong>
                 </div>
             </div>
             <div class="row" ng-repeat="computerPlayer in computerPlayers">

@@ -29,7 +29,7 @@
         <md-button class="md-raised md-primary" ng-click="addNew()">Create New</md-button>
     </div>
 </div>
-<div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type)" class="alert-fade" close="closeAlert($index)" dismiss-on-timeout="2000">{{alert.msg}}</div>
+<div style="z-index:999;" uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type)" class="alert-fade" close="closeAlert($index)" dismiss-on-timeout="2000">{{alert.msg}}</div>
     <form>
         <table test1="" id="movie-table" class="table table-condensed table-bordered">
             <thead>
@@ -58,7 +58,7 @@
                      </td>
 					<td class="col-xs-5">
 					    <div class="chips-container" flex>
-					       <md-chips ng-model="movie.cast" md-max-chips="5"></md-chips>
+					       <md-chips ng-model="movie.cast" md-transform-chip="addMultipleChips($chip, 'movies', movies.length)"></md-chips>
 					    </div>
 					</td>
                     <td>

@@ -665,7 +665,7 @@ var moviesController = function($scope, APIService, ModalService, $http, $uibMod
     $rootScope.pageTitle = "Movies | Nextrr";
 };
 
-var editMoviesController = function($scope, APIService, $http) {
+var editMoviesController = function($scope, APIService, $http, $mdConstant) {
 	
 	var getMoviesToEdit = function() {
         APIService.doApiCall({
@@ -715,7 +715,24 @@ var editMoviesController = function($scope, APIService, $http) {
     		$scope.alerts = [{ type: 'danger', msg: 'No Row Selected' }];
     	}
     }
-    
+
+    $scope.closeAlert = function() {
+        $scope.alerts = "";
+    }
+
+    $scope.seperatorKeys = [$mdConstant.KEY_CODE.ENTER, $mdConstant.KEY_CODE.COMMA];
+    $scope.addMultipleChips = function (chip, model, index) {
+        var seperatedString = angular.copy(chip);
+        seperatedString = seperatedString.toString();
+        var chipsArray = seperatedString.split(', ');
+        console.log(chipsArray);
+        angular.forEach(chipsArray, function (chipToAdd) {
+            /*$scope[model][index].cast.push(chipToAdd);*/
+            $scope[model][index - 1].cast.push(chipToAdd);
+        });
+        return null;
+    };
+
     $scope.updateMovie=function(movie){
         APIService.doApiCall({
             "req_name": "updateMovie",

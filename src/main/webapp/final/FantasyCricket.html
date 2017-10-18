@@ -33,20 +33,20 @@
   </div>
 </div>
 <div class="container">
-<div class="row" ng-if="ratingExceedAlert">
-  <div class="alert alert-danger alert-dismissible" style="top: auto; position: absolute; width: min-content;">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <strong>Danger!</strong> Your combined players ratings can't exceed 100
+  <div class="row" ng-if="ratingExceedAlert">
+    <div class="alert alert-danger alert-dismissible" style="top: auto; position: absolute; width: min-content;">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <strong>Danger!</strong> Your combined players ratings can't exceed 100
+    </div>
+  </div>
+  <div class="row" ng-if="errorMessage">
+    <div class="alert alert-danger alert-dismissible" style="z-index:999;">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="hideError()"><span aria-hidden="true">&times;</span></button>
+      {{ errorMessage }}
+    </div>
   </div>
 </div>
-<div class="row" ng-if="errorMessage">
-  <div class="alert alert-danger alert-dismissible" style="z-index:999;">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="hideError()"><span aria-hidden="true">&times;</span></button>
-    {{ errorMessage }}
-  </div>
-</div>
-</div>
-<div class="container" style="padding-top: 150px; margin-bottom: 50px;">
+<div class="container" style="padding-top: 150px; padding-bottom: 50px;">
     <div class="hidden-xs hidden-sm" ng-include="'final/desktop/FantasyCricketDesktop.html'"></div>
     <div class="visible-xs visible-sm" ng-include="'final/mobile/FantasyCricketMobile.html'"></div>
 </div>

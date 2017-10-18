@@ -1,9 +1,7 @@
-<div class="container">
-      <md-content style="padding: 10px; margin-top: 100px;">
-        <md-switch ng-model="released" ng-change="showAllMovies(movies)">
-          Released Movies
-        </md-switch>
-        <div class="hidden-xs hidden-sm" ng-include="'final/desktop/desktopMovies.html'"></div>
-        <div class="visible-xs visible-sm" ng-include="'final/mobile/mobileMovies.html'"></div>
-      </md-content>
+<div class="container" style="padding-top: 100px;">
+  <md-switch ng-model="released" ng-change="showAllMovies(movies)">
+    Released Movies
+  </md-switch>
 </div>
+<div class="container hidden-xs hidden-sm" ng-include="'final/desktop/desktopMovies.html'"></div>
+<div class="visible-xs visible-sm" ng-include="'final/mobile/mobileMovies.html'"></div>

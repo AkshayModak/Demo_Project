@@ -23,12 +23,12 @@
                             <th></th>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="player in players | filter: {role: 'batsman'}" ng-class="{'success': player.pushed}">
+                            <tr ng-repeat="player in players | filter: {role: 'batsman'} | orderBy: 'rating'" ng-class="{'success': player.pushed}">
                                 <td>
                                     <span><img src="images/fonts/batsman.svg" style="width: 12px; height: 12px;"/></span>
                                     {{ player.firstName }} {{ player.lastName }}
                                 </td>
-                                <td>India</td>
+                                <td>{{ player.countryName }}</td>
                                 <td>{{ player.rating }}</td>
                                 <td>
                                     <span ng-if="!player.pushed && !disableBatsmen">
@@ -58,7 +58,7 @@
                                     <span><img src="images/fonts/batsman.svg" style="width: 12px; height: 12px;"/></span>
                                     {{ player.firstName }} {{ player.lastName }}
                                 </td>
-                                <td>India</td>
+                                <td>{{ player.countryName }}</td>
                                 <td>{{ player.rating }}</td>
                                 <td>
                                     <span ng-if="!player.pushed && !disableAllRounders">
@@ -88,7 +88,7 @@
                                     <span><img src="images/fonts/batsman.svg" style="width: 12px; height: 12px;"/></span>
                                     {{ player.firstName }} {{ player.lastName }}
                                 </td>
-                                <td>India</td>
+                                <td>{{ player.countryName }}</td>
                                 <td>{{ player.rating }}</td>
                                 <td>
                                     <span ng-if="!player.pushed && !disableWicketkeepers">
@@ -118,7 +118,7 @@
                                     <span><img src="images/fonts/batsman.svg" style="width: 12px; height: 12px;"/></span>
                                     {{ player.firstName }} {{ player.lastName }}
                                 </td>
-                                <td>India</td>
+                                <td>{{ player.countryName }}</td>
                                 <td>{{ player.bowlingRating }}</td>
                                 <td>
                                     <span ng-if="!player.pushed && !disableBowlers">

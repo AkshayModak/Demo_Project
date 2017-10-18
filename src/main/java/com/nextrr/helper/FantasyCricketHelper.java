@@ -864,14 +864,14 @@ public class FantasyCricketHelper implements Serializable {
 	
 	List<Map<String, Object>> getBowlersFromPlayerList(List<Map<String, Object>> playerList) {
 		List<Map<String, Object>> bowlerList = new ArrayList<Map<String, Object>>();
-		
+
 		playerList.forEach((player) -> {
 			String role = (String) player.get("role");
-			if ("bowler".equals(role) || "all-rounder-spinner".equals(role) || "all-rounder-fast".equals(role)) {
+			if ("bowler".equals(role) || "all-rounder-spinner".equals(role) || "all-rounder-fast".equals(role) || "spinner".equals(role)) {
 				bowlerList.add(player);
 			}
 		});
-		
+
 		return bowlerList;
 	}
 	
@@ -909,7 +909,6 @@ public class FantasyCricketHelper implements Serializable {
 	}
 	
 	String getBowlerAssistedBy(List<Map<String, Object>> playerDetails, Map<String, Object> bowler) {
-		
 		List<Map<String, Object>> assistedByList = new ArrayList<Map<String, Object>>();
 		
 		for (Map<String, Object> fielderDetail : playerDetails) {
@@ -964,8 +963,14 @@ public class FantasyCricketHelper implements Serializable {
 		DatabaseUtils dbUtils = new DatabaseUtils();
 		Map<String, Object> resultMap = dbUtils.getAllEntityData("fantasy_cricket");
 		List<Map<String, Object>> resultList = (List<Map<String, Object>>) resultMap.get("result");
+		List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
 
-		return new Gson().toJson(resultList);
+		for (Map<String, Object> resultListMap : resultList) {
+			resultListMap.put("countryName", NextrrUtils.getDescription("country_geo", "country_geo_id", (String) resultListMap.get("country_geo_id")));
+			result.add(resultListMap);
+		}
+
+		return new Gson().toJson(result);
 	}
 	
 	private List getSecondInningDetails(Map<String, Object> team2MatchInfoMap) {

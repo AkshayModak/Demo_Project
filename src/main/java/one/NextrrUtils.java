@@ -120,4 +120,14 @@ public class NextrrUtils {
         }
         return sortedList;
     }
+
+    public static String getDescription(String entityName, String primaryKey, String primaryKeyValue) {
+        DatabaseUtils dbUtils = new DatabaseUtils();
+        Map<String, Object> queryParams = new HashMap<String, Object>();
+        queryParams.put(primaryKey, primaryKeyValue);
+        Map<String, Object> resultMap = dbUtils.getEntityDataWithConditions(entityName, queryParams);
+        List<Map<String, Object>> resultList = (List<Map<String, Object>>) resultMap.get("result");
+
+        return (String) resultList.get(0).get("description");
+    }
 }

@@ -429,7 +429,7 @@ md-input-container { margin: 0 0 !important; }
 
     .movie-bar {
         font-size: initial;
-        height: 60px;
+        height: 80px;
         padding: 10px;
         color: white;
         margin: auto;
@@ -439,7 +439,7 @@ md-input-container { margin: 0 0 !important; }
 
     .movie-bar:hover {
       box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
-      height: 80px;
+      height: 120px;
       padding: 25px;
     }
 

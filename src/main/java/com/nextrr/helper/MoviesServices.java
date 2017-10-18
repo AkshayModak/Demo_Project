@@ -9,6 +9,7 @@ import javax.ws.rs.core.MultivaluedMap;
 
 import com.google.gson.Gson;
 
+import architecture.utils.DebugWrapper;
 import one.DatabaseUtils;
 import one.DefaultObjects;
 import one.First;
@@ -121,7 +122,9 @@ public class MoviesServices {
 		queryMap.put("movie_name", movieName);
 		queryMap.put("movie_id", movieId);
 		queryMap.put("cast", cast);
-		queryMap.put("trailer_link", trailer);
+		if (trailer != null) {
+			queryMap.put("trailer_link", trailer);
+		}
 		queryMap.put("release_date", releaseDate);
 		queryMap.put("movie_type_id", movieType);
 		

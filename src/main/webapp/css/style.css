@@ -1,4 +1,4 @@
-* {font-family: 'Cinzel', serif;}
+* {font-family: 'Roboto Condensed', sans-serif;}
 
 /* Bootstrap overrides */
 .thumbnail { padding: 0 !important; margin-bottom: 0 !important; border: 0 !important; opacity: .5;}
@@ -284,7 +284,7 @@ md-input-container { margin: 0 0 !important; }
         font-size: 20px;
     }
 
-    .table-row-block {
+    .display-block {
         display: block;
     }
 
@@ -762,6 +762,7 @@ md-icon { color: black !important; }
 }
 
 .facet {background-color: #2E353D !important; color: white;}
+md-sidenav { width: 100% !important; }
 
 .bg-white { background-color: #ffffff !important; color: black !important; }
 

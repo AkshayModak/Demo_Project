@@ -1,4 +1,4 @@
-<div ng-controller="cricketController" style="background-color: white; height: 100%;">
+<div ng-controller="cricketController" style="height: 100%;">
   <div class="visible-md visible-lg container" style="margin-top: 55px; width: 100% !important; padding: 0 !important;">
     <ul class="list-inline cricket-menubar">
       <li ng-repeat="team in teams">
@@ -18,8 +18,13 @@
       </div>
     </div>
   </div>
-  <div class="container-fluid hidden-xs hidden-sm" style="padding-top: 150px; margin-bottom: 50px;">
-      <div class="col-xs-3 col-xs-visible">
+  <div class="container" style="padding-top: 150px; ">
+        <md-switch ng-model="released" ng-change="showAllCricket(cricketList)">
+            <span class="font-bold">All Matches</span>
+        </md-switch>
+  </div>
+  <div class="container hidden-xs hidden-sm" style="margin-bottom: 50px;">
+      <div class="col-md-3">
         <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" md-whiteframe="4">
             <md-toolbar class="md-theme-indigo">
                 <h3 class="md-toolbar-tools sidenav-heading">
@@ -44,13 +49,10 @@
             </md-content>
         </md-sidenav>
       </div>
-      <md-switch ng-model="released" ng-change="showAllCricket(cricketList)">
-        <span class="font-bold">All Matches</span>
-      </md-switch>
-      <div class="hidden-xs hidden-sm" ng-include="'final/desktop/desktopCricket.html'"></div>
+      <div class="col-md-9 hidden-xs hidden-sm" ng-include="'final/desktop/desktopCricket.html'"></div>
     </div>
-    <md-switch class="visible-xs visible-sm" ng-model="released" ng-change="showAllCricket(cricketList)">
+    <!-- <md-switch class="visible-xs visible-sm" ng-model="released" ng-change="showAllCricket(cricketList)">
         <span class="font-bold">All Matches</span>
-    </md-switch>
+    </md-switch> -->
     <div class="visible-xs visible-sm" ng-include="'final/mobile/mobileCricket.html'"></div>
 </div>

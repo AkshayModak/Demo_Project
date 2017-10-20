@@ -324,7 +324,7 @@ var cricketController = function($scope, APIService, ModalService, $http, $uibMo
             today.setHours(0,0,0,0);
             cricketList = $scope.cricketList;
             for (i=0; i < cricketList.length; i++) {
-                cricketList[i].displayCricket = "table-row-block";
+                cricketList[i].displayCricket = "display-block";
             }
             $scope.cricketList = cricketList;
             getCricketLeagues(false);
@@ -337,7 +337,7 @@ var cricketController = function($scope, APIService, ModalService, $http, $uibMo
                 if (matchDate < today) {
                     cricketList[i].displayCricket = "display-none";
                 } else {
-                    cricketList[i].displayCricket = "table-row-block";
+                    cricketList[i].displayCricket = "display-block";
                 }
             }
             $scope.cricketList = cricketList;
@@ -375,7 +375,7 @@ var cricketController = function($scope, APIService, ModalService, $http, $uibMo
                 if (matchDate < today) {
                     cricketList[i].displayCricket = "display-none";
                 } else {
-                    cricketList[i].displayCricket = "table-row-block";
+                    cricketList[i].displayCricket = "display-block";
                 }
             }
             $scope.cricketList = cricketList;

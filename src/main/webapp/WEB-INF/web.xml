@@ -21,6 +21,10 @@
       <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
       <param-value>true</param-value>
     </init-param>
+    <init-param>
+      <param-name>admin.AdminServices</param-name>
+      <param-value>true</param-value>
+    </init-param>
   </servlet>
   <servlet>
     <servlet-name>FirstServlet</servlet-name>
@@ -37,6 +41,7 @@
   <servlet-mapping>
     <servlet-name>Jersey RESTful Application</servlet-name>
     <url-pattern>/rest/*</url-pattern>
+    <url-pattern>/admin/rest/*</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>FirstServlet</servlet-name>

@@ -2,34 +2,49 @@ package one;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
+import javax.inject.Singleton;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriInfo;
+import javax.servlet.http.HttpServletRequest;
+
+
+import org.glassfish.jersey.server.ResourceConfig;
+
 import javax.ws.rs.QueryParam;
 import com.google.gson.Gson;
 
 import com.nextrr.helper.Formula1Helper;
 import com.nextrr.helper.MoviesServices;
 
+import admin.AdminServices;
+
+import com.nextrr.helper.ContentHelper;
 import com.nextrr.helper.CricketHelper;
 import com.nextrr.helper.FantasyCricketHelper;
 import com.nextrr.helper.GenericHelper;
 import one.DatabaseUtils;
 
 @Path("/UserService")
-public class UserService implements Serializable{
+public class UserService extends ResourceConfig implements Serializable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	public final String className = UserService.class.getName();
 
+	public UserService(@Context HttpServletRequest requestContext,@Context SecurityContext context) {
+		recordVisit(requestContext, context);
+	}
+	
 	/* Generic User Services*/
 	@POST
 	@Path("/getCountryAssoc")
@@ -283,5 +298,20 @@ public class UserService implements Serializable{
 		FantasyCricketHelper fcHelper = new FantasyCricketHelper();
 		String result = fcHelper.setPlayAgainst(uriInfo.getQueryParameters());
 		return result;
+	}
+	
+	@POST
+	@Path("/setMessage")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String setMessage(@Context UriInfo uriInfo) {
+		ContentHelper contentHelper = new ContentHelper();
+		String result = contentHelper.setMessage(uriInfo.getQueryParameters());
+		return result;
+	}
+	
+	
+	private void recordVisit(@Context HttpServletRequest requestContext, @Context SecurityContext context) {
+		Visit visit = new Visit();
+		visit.setVisit(requestContext);
 	}
 }

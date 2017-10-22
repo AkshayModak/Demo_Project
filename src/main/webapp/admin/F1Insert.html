@@ -1,37 +1,11 @@
-<!doctype html>
-<html ng-app="myModule">
-<head>
-<title>My Angular App</title>
-<base href="/Demo_Project/#home">
-<script src="javascript/angular.js"></script>
-<script src="javascript/angular-ui-router.js"></script>
-<script src="javascript/angular-animate.js"></script>
-<script src="javascript/angular-sanitize.js"></script>
-<script src="javascript/ui-bootstrap-tpls.js"></script>
-<script src="javascript/angular-controllers.js"></script>
-<script src="javascript/angular-services.js"></script>
-<script src="javascript/angular-directives.js"></script>
-<script src="javascript/ng-infinite-scroll.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
-<script src="javascript/filter.js"></script>
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
-<link href="https://fonts.googleapis.com/css?family=Cinzel|Shadows+Into+Light" rel="stylesheet">
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-<link href="css/style.css" rel="stylesheet">
-</head>
-<div ng-include="'final/innerNavbar.html'" style="margin-bottom: 150px;"></div>
-<body ng-controller="isrcorders" class="container-fluid">
 <div class="row">
     <div class="col-xs-12">
         <md-button class="md-raised md-primary" ng-click="addNew()">Create New</md-button>
     </div>
 </div>
 <div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type)" class="alert-fade" close="closeAlert($index)" dismiss-on-timeout="2000">{{alert.msg}}</div>
-	<form>
-		<table test1="" id="isrctable" class="table table-condensed table-bordered">
+    <form>
+        <table test1="" id="isrctable" class="table table-condensed table-bordered">
 			<thead>
 				<tr>
 				    <th></th>
@@ -123,6 +97,4 @@
             </tbody>
 		</table>
 	</form>
-</body>
-</html>
 

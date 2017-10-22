@@ -1,5 +1,6 @@
 <div class="container disclaimer">
     <div class="row">
+        <div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type)" style="z-index: 999; font-size: 18px;" class="alert-fade" close="closeAlert($index)" dismiss-on-timeout="5000">{{alert.msg}}</div>
         <h1>About Us</h1>
         <p>Hey there,</p>
         <p>My name's Akshay. I'm the one who designed and developed this website. I have started it as a side-project and not running it for any financial profit though I like to experiment with new technologies on it and try to improve it.</p>
@@ -22,14 +23,14 @@
         <form>
             <div class="form-group">
                 <label for="email">Email address:</label>
-                <input name="email" type="email" class="form-control" id="email" required>
-                <span class="help-block">Need it to revert you back</span>
+                <input name="email" type="email" ng-model="contact.email" class="form-control" id="email" required>
             </div>
             <div class="form-group">
                 <label for="pwd">Message:</label>
-                <textarea name="message" class="form-control" id="message" required></textarea>
+                <textarea name="message" ng-model="contact.message" maxlength="1000" class="form-control" id="message" required></textarea>
+                <span class="help-block">{{1000 - contact.message.length}} characters left</span>
             </div>
-            <button type="submit" class="btn btn-default">Submit</button>
+            <button type="submit" class="btn btn-default" ng-click="setMessage(contact)">Submit</button>
         </form>
     </div>
 </div>

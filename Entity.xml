@@ -112,4 +112,19 @@
         <column name="battingPosition" data-type="int" null="false"/>
         <column name="bowlingRating" data-type="int" null="false"/>
     </table>
+    <table name="visit">
+        <column name="visitId" data-type="int" null="false" primary-key="true" auto-increment="true"/>
+        <column name="userIp" data-type="varchar" column-size="20" null="false"/>
+        <column name="userCity" data-type="varchar" column-size="55" null="false"/>
+        <column name="userCountry" data-type="varchar" column-size="55" null="false"/>
+        <column name="requestDate" data-type="varchar" column-size="25" null="false"/>
+        <column name="requestUri" data-type="varchar" column-size="255" null="false"/>
+        <column name="requestTime" data-type="varchar" column-size="55" null="false"/>
+    </table>
+    <table name="user_message">
+        <column name="user_message_id" data-type="int" null="false" primary-key="true" auto-increment="true"/>
+        <column name="userEmail" data-type="varchar" column-size="100" null="false"/>
+        <column name="message" data-type="varchar" column-size="1000" null="false"/>
+        <column name="messageDateTime" data-type="varchar" column-size="55" null="false"/>
+    </table>
 </entity-def>

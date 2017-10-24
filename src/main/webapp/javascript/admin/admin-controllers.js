@@ -18,24 +18,38 @@ var navbarController = function ($scope, $rootScope) {
 }
 
 var editMoviesController = function($scope, APIService, $http, $mdConstant) {
-	
-	var getMoviesToEdit = function() {
+
+    var getMoviesToEdit = function() {
         APIService.doApiCall({
             "req_name": "getMoviesToEdit",
             "params": {},
         }).success(function(data) {
-        	if (data != undefined && data != null) {
-        		for (i = 0; i < data.movieList.length; i++) {
-                	data.movieList[i].releaseDate = new Date(data.movieList[i].releaseDate);
+            if (data != undefined && data != null) {
+                for (i = 0; i < data.movieList.length; i++) {
+                    data.movieList[i].releaseDate = new Date(data.movieList[i].releaseDate);
                 }
-        	}
-        	
-        	$scope.movieTypes = data.movieTypes.result;
+            }
+
+            $scope.movieTypes = data.movieTypes.result;
             $scope.movies = data.movieList;
+
+            //Pagination logic for movies.
+            $scope.filteredTodos = []
+            $scope.currentPage = 1
+            $scope.numPerPage = 10
+            $scope.maxSize = 5;
+
+            $scope.numPages = function () {
+                return Math.ceil($scope.movies.length / $scope.numPerPage);
+            };
+            $scope.$watch('currentPage + numPerPage', function() {
+                var begin = (($scope.currentPage - 1) * $scope.numPerPage) , end = begin + $scope.numPerPage;
+                $scope.filteredMovies = $scope.movies.slice(begin, end);
+            });
         });
     }
     getMoviesToEdit();
-    
+
     $scope.setMovie=function(movie){
         APIService.doApiCall({
             "req_name": "setMovie",
@@ -218,8 +232,23 @@ var editCricketController = function($scope, APIService, $http, $uibModal, $stat
                 data.result[i].time = new Date(data.result[i].time);
             }
             $scope.cricketList = data.result;
+
+            //Pagination Code for Cricket
+            $scope.filteredTodos = []
+            $scope.currentPage = 1
+            $scope.numPerPage = 10
+            $scope.maxSize = 5;
+
+            $scope.numPages = function () {
+                return Math.ceil($scope.cricketList.length / $scope.numPerPage);
+            };
+            $scope.$watch('currentPage + numPerPage', function() {
+                var begin = (($scope.currentPage - 1) * $scope.numPerPage) , end = begin + $scope.numPerPage;
+                $scope.filteredCricketList = $scope.cricketList.slice(begin, end);
+            });
         });
     }
+    getIntlCricket();
 
     $scope.createCricket=function(cricket){
         APIService.doApiCall({
@@ -274,8 +303,6 @@ var editCricketController = function($scope, APIService, $http, $uibModal, $stat
         }
     }
 
-    getIntlCricket();
-
     $scope.addNew = function(){
         $scope.cricketList.push({addBtn: true});
     };
@@ -292,11 +319,25 @@ var editF1Controller = function($scope, $http, APIService, $filter) {
             "params": {},
         }).success(function(data) {
             for (i = 0; i < data.formula1List.length; i++) {
-            	data.formula1List[i].result.date = new Date(data.formula1List[i].result.date);
-            	data.formula1List[i].result.image = "";
+                data.formula1List[i].result.date = new Date(data.formula1List[i].result.date);
+                data.formula1List[i].result.image = "";
             }
             $scope.formula1 = data.formula1List;
             $scope.raceTypes = data.raceTypes;
+
+            //Code for pagination on Create Formula 1 Screen
+            $scope.filteredTodos = []
+            $scope.currentPage = 1
+            $scope.numPerPage = 10
+            $scope.maxSize = 5;
+
+            $scope.numPages = function () {
+                return Math.ceil($scope.formula1.length / $scope.numPerPage);
+            };
+            $scope.$watch('currentPage + numPerPage', function() {
+                var begin = (($scope.currentPage - 1) * $scope.numPerPage) , end = begin + $scope.numPerPage;
+                $scope.filteredformula1 = $scope.formula1.slice(begin, end);
+            });
         });
     }
 
@@ -424,6 +465,20 @@ var editFantasyCricketController = function($scope, APIService, $http, $uibModal
             "params": {}
         }).success(function(data) {
             $scope.fantasyCricket = data;
+
+            //Pagination Logic for fantasy Cricket.
+            $scope.filteredTodos = []
+            $scope.currentPage = 1
+            $scope.numPerPage = 10
+            $scope.maxSize = 5;
+
+            $scope.numPages = function () {
+                return Math.ceil($scope.fantasyCricket.length / $scope.numPerPage);
+            };
+            $scope.$watch('currentPage + numPerPage', function() {
+                var begin = (($scope.currentPage - 1) * $scope.numPerPage) , end = begin + $scope.numPerPage;
+                $scope.filteredFantasyCricket = $scope.fantasyCricket.slice(begin, end);
+            });
         });
     }
 

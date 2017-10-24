@@ -1,11 +1,17 @@
 <div class="row">
-    <div class="col-xs-12">
+    <div class="col-xs-12 col-md-6">
         <md-button class="md-raised md-primary" ng-click="addNew()">Create New</md-button>
+    </div>
+    <div class="col-xs-12 col-md-6">
+        <ul uib-pagination ng-model="currentPage" class="pull-right"
+      total-items="formula1.length"
+      max-size="maxSize"
+      boundary-links="true"></ul>
     </div>
 </div>
 <div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type)" class="alert-fade" close="closeAlert($index)" dismiss-on-timeout="2000">{{alert.msg}}</div>
     <form>
-        <table test1="" id="isrctable" class="table table-condensed table-bordered">
+        <table id="isrctable" class="table table-condensed table-bordered">
 			<thead>
 				<tr>
 				    <th></th>
@@ -23,7 +29,7 @@
 				</tr>
 			</thead>
 			<tbody>
-			     <tr ng-repeat="f1 in formula1 | orderBy : '-result.id'">
+			     <tr ng-repeat="f1 in filteredformula1 | orderBy : '-result.id'">
 			         <td><md-checkbox ng-model="f1.result.isDelete" aria-label="Checkbox 1"></md-checkbox></td>
 			         <td class="text-center">
 			           <span ng-if="!f1.addBtn">{{ f1.result.id }}</span>

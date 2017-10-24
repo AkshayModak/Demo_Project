@@ -1,6 +1,12 @@
 <div class="row">
-    <div class="col-xs-12">
+    <div class="col-xs-12 col-md-6">
         <md-button class="md-raised md-primary" ng-click="addNew()">Create New</md-button>
+    </div>
+    <div class="col-xs-12 col-md-6">
+        <ul uib-pagination ng-model="currentPage" class="pull-right"
+      total-items="movies.length"
+      max-size="maxSize"
+      boundary-links="true"></ul>
     </div>
 </div>
 <div style="z-index:999;" uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type)" class="alert-fade" close="closeAlert($index)" dismiss-on-timeout="2000">{{alert.msg}}</div>
@@ -18,7 +24,7 @@
                 </tr>
             </thead>
             <tbody>
-                 <tr ng-repeat="movie in movies | orderBy : '-movieId'" style="line-height: 50px;">
+                 <tr ng-repeat="movie in filteredMovies | orderBy : '-movieId'" style="line-height: 50px;">
                      <td class="text-center"><md-checkbox ng-model="movie.isDelete" aria-label="Checkbox 1"></md-checkbox></td>
                      <td class="text-center col-xs-1">
                         <md-input-container class="md-icon-float md-block">

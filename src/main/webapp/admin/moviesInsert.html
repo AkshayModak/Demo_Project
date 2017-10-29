@@ -27,7 +27,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="movie in filteredMovies | orderBy : '-movieId'"
+      <tr ng-repeat="movie in filteredMovies"
         style="line-height: 50px;">
         <td class="text-center"><md-checkbox
             ng-model="movie.isDelete" aria-label="Checkbox 1"></md-checkbox></td>

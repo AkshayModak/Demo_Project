@@ -53,7 +53,7 @@ public class AdminServices extends ResourceConfig implements Serializable {
 
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -1);
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
         String yesterdaysResult = dbHelper.getVisitsByDate(dateFormat.format(cal.getTime()));
 

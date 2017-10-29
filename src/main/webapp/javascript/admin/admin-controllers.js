@@ -130,7 +130,7 @@ var editMoviesController = function($scope, APIService, $http, $mdConstant) {
                             }
 
                             $scope.movieTypes = data.movieTypes.result;
-                            $scope.movies = data.movieList;
+                            $scope.movies = data.movieList.reverse();
 
                             // Pagination logic for movies.
                             $scope.filteredTodos = []
@@ -275,7 +275,7 @@ var editMoviesController = function($scope, APIService, $http, $mdConstant) {
     $scope.ismeridian = true;
 
     $scope.addNew = function() {
-        $scope.movies.push({
+        $scope.filteredMovies.push({
             addBtn : true,
             cast : []
         });
@@ -834,8 +834,6 @@ function getPagination(scopeVariable, $scope) {
     $scope.maxSize = 5;
 
     var filteredScopeVariable = "filtered" + capitalizeFirstLetter(scopeVariable);
-    console.log(filteredScopeVariable);
-    console.log(scopeVariable);
 
     $scope.numPages = function() {
         return Math.ceil($scope[scopeVariable].length

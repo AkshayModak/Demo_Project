@@ -1,6 +1,7 @@
 package admin;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -12,6 +13,7 @@ import java.util.Set;
 import com.google.gson.Gson;
 
 import one.DatabaseUtils;
+import one.NextrrUtils;
 
 public class DashboardHelper {
 
@@ -109,5 +111,77 @@ public class DashboardHelper {
         Map<String, Object> result = dbUtils.getEntityDataWithConditions("visit", queryParams);
 
         return new Gson().toJson(result);
+    }
+
+    @SuppressWarnings("unchecked")
+    public String getModulesDetails() {
+
+        DatabaseUtils dbUtils = new DatabaseUtils();
+        Map<String, Object> entityParams = new HashMap<String, Object>();
+        Map<String, Object> moviesResult = dbUtils.getAllEntityData("movies");
+        List<Map<String, Object>> moviesList = (List<Map<String, Object>>) moviesResult.get("result");
+
+        Map<String, Object> moviesMap = new HashMap<String, Object>();
+        moviesMap.put("totalRecords", moviesList.size());
+        moviesMap.put("released", 0);
+        moviesMap.put("upcoming", 0);
+
+        for (Map<String, Object> movie : moviesList) {
+            Date releaseDate = NextrrUtils.getDateFromString((String) movie.get("release_date"));
+
+            if (NextrrUtils.isDateLessThanToday(releaseDate)) {
+                int incrementReleased = (int) moviesMap.get("released") + 1;
+                moviesMap.put("released", incrementReleased);
+            } else {
+                int incrementUpcoming = (int) moviesMap.get("upcoming") + 1;
+                moviesMap.put("upcoming", incrementUpcoming);
+            }
+        }
+
+        Map<String, Object> cricketResults = dbUtils.getAllEntityData("cricket");
+        List<Map<String, Object>> cricketList = (List<Map<String, Object>>) cricketResults.get("result");
+        Map<String, Object> cricketMap = new HashMap<String, Object>();
+        cricketMap.put("totalRecords", cricketList.size());
+
+        entityParams.put("sports_type_id", "CRICKET");
+        Map<String, Object> cricketSeries = dbUtils.getEntityDataWithConditions("sports_league", entityParams);
+        List<Map<String, Object>> cricketSeriesList = (List<Map<String, Object>>) cricketSeries.get("result");
+        cricketMap.put("totalLeagues", cricketSeriesList.size());
+
+        Map<String, Object> formula1Results = dbUtils.getAllEntityData("formula_one");
+        List<Map<String, Object>> f1List = (List<Map<String, Object>>) formula1Results.get("result");
+        Map<String, Object> f1Map = new HashMap<String, Object>();
+        f1Map.put("totalRecords", f1List.size());
+        f1Map.put("finished", 0);
+
+        for (Map<String, Object> f1 : f1List) {
+            Date finishDate = NextrrUtils.getDateFromString((String) f1.get("date"));
+
+            if (NextrrUtils.isDateLessThanToday(finishDate)) {
+                int incrementFinish = (int) f1Map.get("finished") + 1;
+                f1Map.put("finished", incrementFinish);
+            }
+        }
+
+        Map<String, Object> fantasyCricketResults = dbUtils.getAllEntityData("fantasy_cricket");
+        List<Map<String, Object>> fcList = (List<Map<String, Object>>) fantasyCricketResults.get("result");
+        Map<String, Object> fcMap = new HashMap<String, Object>();
+        fcMap.put("totalRecords", fcList.size());
+
+        List<String> fcCountries = new ArrayList<String>();
+        for (Map<String, Object> fc : fcList) {
+            fcCountries.add((String) fc.get("country_geo_id"));
+        }
+        Set<String> fcSet = new HashSet<String>(fcCountries);
+        List<String> fcCountriesList = new ArrayList<String>(fcSet);
+        fcMap.put("totalCountries", fcCountriesList.size());
+
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("movies", moviesMap);
+        resultMap.put("cricket", cricketMap);
+        resultMap.put("f1", f1Map);
+        resultMap.put("fantasyCricket", fcMap);
+
+        return new Gson().toJson(resultMap);
     }
 }

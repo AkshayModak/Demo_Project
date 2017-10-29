@@ -2,31 +2,33 @@
   <div class="row">
     <div class="col-xs-12 col-md-3">
       <div class="dashboard-mini-cards">
-        <h3>Today's Visits</h3>
-        <label>Yesterday's Visits: {{ yesterdaysVisits }}</label>
-        <h1>{{ todaysVisits }}</h1>
+        <h3>Cricket</h3>
+        <label>Leagues: <span>{{ cricket.totalLeagues }}</span></label>
+        <h1>{{ cricket.totalRecords }}</h1>
       </div>
     </div>
     <div class="col-xs-12 col-md-3">
       <div class="dashboard-mini-cards">
-        <h3>Average Time Spent By Users</h3>
+        <h3>Movies</h3>
+        <label>Released: <span>{{ movies.released }}</span></label>
+        <label>Upcoming: <span>{{ movies.upcoming }}</span></label>
         <h1>
-          17.<span>1 MIN</span>
+          {{ movies.totalRecords }}
         </h1>
       </div>
     </div>
     <div class="col-xs-12 col-md-3">
       <div class="dashboard-mini-cards">
-        <h3>Country Visits</h3>
-        <canvas id="doughnut" class="chart chart-doughnut"
-          chart-colors="donutColors" chart-data="donutData"
-          chart-labels="donutLabels">
-        </canvas>
+        <h3>Formula One</h3>
+        <label>Finished: <span>{{ f1.finished }}</span></label>
+        <h1>{{ f1.totalRecords }}</h1>
       </div>
     </div>
     <div class="col-xs-12 col-md-3">
       <div class="dashboard-mini-cards">
-        <h3>Average Unique Users Per Day</h3>
+        <h3>Fantasy Cricket</h3>
+        <label>Countries: <span>{{ fc.totalCountries }}</span></label>
+        <h1>{{ fc.totalRecords }}</h1>
       </div>
     </div>
   </div>
@@ -43,9 +45,10 @@
     </div>
     <div class="col-xs-12 col-md-6">
       <div class="dashboard-medium-cards">
-        <h1>Detailed Visit Graphs</h1>
-        <canvas id="base" class="chart-horizontal-bar"
-          chart-data="HBdata" chart-labels="HBlabels">
+        <h1>Visits By Countries</h1>
+        <canvas id="doughnut" class="chart chart-doughnut" responsive="true"
+          chart-colors="donutColors" chart-data="donutData"
+          chart-labels="donutLabels">
         </canvas>
       </div>
     </div>
@@ -96,7 +99,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="visitAnalysis in visitsAnalysis">
+            <tr ng-repeat="visitAnalysis in filteredVisitsAnalysis">
               <td><input type="checkbox" name="disableIP" /></td>
               <td>{{ visitAnalysis.ipAddress }}</td>
               <td>{{ visitAnalysis.country }}</td>
@@ -106,8 +109,9 @@
             </tr>
           </tbody>
         </table>
-        <ul uib-pagination total-items="totalItems"
-          ng-model="currentPage" ng-change="pageChanged()"></ul>
+        <ul uib-pagination ng-model="currentPage" class="pull-right"
+          total-items="visitsAnalysis.length" max-size="maxSize"
+          boundary-links="true"></ul>
       </div>
     </div>
   </div>

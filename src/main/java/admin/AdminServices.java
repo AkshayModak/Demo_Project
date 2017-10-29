@@ -78,4 +78,12 @@ public class AdminServices extends ResourceConfig implements Serializable {
         String result = dbHelper.getVisitsByCountries();
         return result;
     }
+
+    @POST
+    @Path("/getModulesDetails")
+    public String getModulesDetails() {
+        DashboardHelper dbHelper = new DashboardHelper();
+        String result = dbHelper.getModulesDetails();
+        return result;
+    }
 }

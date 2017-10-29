@@ -9,12 +9,12 @@ var myApp = angular.module("myModule", [ "ui.router", 'chart.js', 'ngAnimate',
  * ChartJsProvider.setOptions('bubble', { tooltips: { enabled: false } }); });
  */
 
-var dashboardController = function($scope, $rootScope, $uibModal, APIService) {
+var dashboardController = function($scope, $rootScope, $uibModal, AdminAPIService) {
     $rootScope.home = true;
     $rootScope.pageTitle = "Dashboard | Nextrr";
 
     getVisits = function() {
-        APIService
+        AdminAPIService
                 .doApiCall({
                     "req_name" : "getVisits",
                     "params" : {}
@@ -31,20 +31,21 @@ var dashboardController = function($scope, $rootScope, $uibModal, APIService) {
     }
 
     getTodayAndYesterdayVisits = function() {
-        APIService
+        AdminAPIService
                 .doApiCall({
                     "req_name" : "getTodayAndYesterdayVisits",
                     "params" : {}
                 })
                 .success(
                         function(data) {
-                            $scope.todaysVisits = data.todaysVisits;
-                            $scope.yesterdaysVisits = data.yesterdaysVisits;
+                            $scope.labels = [ "Yesterday", "Today"];
+                            $scope.data = [data.yesterdaysVisits, data.todaysVisits];
+
                         });
     }
 
     getVisitsByCountries = function() {
-        APIService
+        AdminAPIService
                 .doApiCall({
                     "req_name" : "getVisitsByCountries",
                     "params" : {}
@@ -56,50 +57,30 @@ var dashboardController = function($scope, $rootScope, $uibModal, APIService) {
                         });
     }
 
+    getModulesDetails = function() {
+        AdminAPIService
+                .doApiCall({
+                    "req_name" : "getModulesDetails",
+                    "params" : {}
+                })
+                .success(
+                        function(data) {
+                            $scope.movies = data.movies;
+                            $scope.cricket = data.cricket;
+                            $scope.f1 = data.f1;
+                            $scope.fc = data.fantasyCricket;
+                        });
+    }
+
+    getModulesDetails();
     getTodayAndYesterdayVisits();
     getVisitsByCountries();
     getVisits();
 
     // reference -- http://jtblin.github.io/angular-chart.js/
-    $scope.colors = [ "rgba(159,204,0,0.5)", "rgba(250,109,33,0.7)",
-            "rgba(154,154,154,0.5)" ];
-    $scope.labels = [ "Green", "Orange", "Grey" ];
-    $scope.data = [ 300, 500, 100 ];
-
-    $scope.data = [ [ 65, 59, 80, 81, 56, 55, 40 ],
-            [ 28, 48, 40, 19, 86, 27, 90 ] ];
-    $scope.onClick = function(points, evt) {
-        console.log(points, evt);
-    };
-    $scope.datasetOverride = [ {
-        yAxisID : 'y-axis-1'
-    }, {
-        yAxisID : 'y-axis-2'
-    } ];
-    $scope.options = {
-        scales : {
-            yAxes : [ {
-                id : 'y-axis-1',
-                type : 'linear',
-                display : true,
-                position : 'left'
-            }, {
-                id : 'y-axis-2',
-                type : 'linear',
-                display : true,
-                position : 'right'
-            } ]
-        }
-    };
 
     $scope.modalParams = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.';
     $scope.limitLetters = '470';
-
-    $scope.HBlabels = [ '2006', '2007', '2008', '2009', '2010', '2011', '2012' ];
-    $scope.HBseries = [ 'Series A', 'Series B' ];
-
-    $scope.HBdata = [ [ 65, 59, 80, 81, 56, 55, 40 ],
-            [ 28, 48, 40, 19, 86, 27, 90 ] ];
 
     $scope.seeMore = function(content_length) {
         $scope.limitLetters = content_length;

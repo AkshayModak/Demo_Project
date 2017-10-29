@@ -23,7 +23,7 @@ public class Visit {
 
     public void setVisit(HttpServletRequest request) {
         String nextrr_home = System.getProperty("user.dir");
-        String geoDataPath = nextrr_home + "/runtime/geoData/GeoLiteCity.dat";
+        String geoDataPath = nextrr_home + "/ext-data/geoData/GeoLiteCity.dat";
 
         File file = new File(geoDataPath);
         /* String ipAddressRequestCameFrom = request.getRemoteAddr(); */

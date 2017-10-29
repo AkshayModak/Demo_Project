@@ -23,26 +23,10 @@ var dashboardController = function($scope, $rootScope, $uibModal, APIService) {
                         function(data) {
                             data.result = data.result.reverse();
                             $scope.visits = data.result;
+                            $scope.visitsAnalysis = data.visitsAnalysis;
 
-                            // Pagination logic for movies.
-                            $scope.filteredTodos = []
-                            $scope.currentPage = 1
-                            $scope.numPerPage = 10
-                            $scope.maxSize = 5;
-
-                            $scope.numPages = function() {
-                                return Math.ceil($scope.visits.length
-                                        / $scope.numPerPage);
-                            };
-                            $scope
-                                    .$watch(
-                                            'currentPage + numPerPage',
-                                            function() {
-                                                var begin = (($scope.currentPage - 1) * $scope.numPerPage), end = begin
-                                                        + $scope.numPerPage;
-                                                $scope.filteredVisits = $scope.visits
-                                                        .slice(begin, end);
-                                            });
+                            getPagination("visits", $scope);
+                            getPagination("visitsAnalysis", $scope);
                         });
     }
     getVisits();
@@ -839,6 +823,34 @@ myApp.controller('ModalInstanceCtrl', function($scope, $uibModalInstance,
     }
     $scope.nothing = nothing;
 });
+
+/* -- Custom Functions -- */
+function getPagination(scopeVariable, $scope) {
+    //Pagination Logic for fantasy Cricket.
+    $scope.filteredTodos = []
+    $scope.currentPage = 1
+    $scope.numPerPage = 10
+    $scope.maxSize = 5;
+
+    var filteredScopeVariable = "filtered" + capitalizeFirstLetter(scopeVariable);
+    console.log(filteredScopeVariable);
+    console.log(scopeVariable);
+
+    $scope.numPages = function() {
+        return Math.ceil($scope[scopeVariable].length
+                / $scope.numPerPage);
+    };
+    $scope.$watch('currentPage + numPerPage',
+        function() {
+            var begin = (($scope.currentPage - 1) * $scope.numPerPage), end = begin
+                    + $scope.numPerPage;
+            $scope[filteredScopeVariable] = $scope[scopeVariable].slice(begin, end);
+        });
+}
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 /* ------- Controller Entries ------- */
 myApp.controller("navbarController", navbarController);

@@ -89,20 +89,20 @@
             <tr>
               <th>Blacklist</th>
               <th>IpAddress</th>
-              <th>Country</th>
               <th>Status</th>
+              <th>Country</th>
               <th>City</th>
               <th>Total Visits</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr ng-repeat="visitAnalysis in visitsAnalysis">
               <td><input type="checkbox" name="disableIP" /></td>
-              <td>139.36.176.72</td>
-              <td>India</td>
-              <td>Allowed</td>
-              <td>Bangalore</td>
-              <td>11</td>
+              <td>{{ visitAnalysis.ipAddress }}</td>
+              <td>{{ visitAnalysis.country }}</td>
+              <td>{{ visitAnalysis.city }}</td>
+              <td>{{ visitAnalysis.status }}</td>
+              <td>{{ visitAnalysis.visits }}</td>
             </tr>
           </tbody>
         </table>

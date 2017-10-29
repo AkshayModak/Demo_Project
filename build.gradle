@@ -66,6 +66,11 @@ buildscript {
     }
 }
 
+tomcat {
+    contextPath = "";
+    tomcatRun.configFile = file("src/main/java/configs/nextrr-context.xml")
+}
+
 task wrapper(type: Wrapper) {
     gradleVersion = '3.5' //we want gradle 3.5 to run this project
 }

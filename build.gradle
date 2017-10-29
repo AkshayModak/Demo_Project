@@ -43,8 +43,9 @@ dependencies {
     compile group: 'commons-lang', name: 'commons-lang', version: '2.6'
     // https://mvnrepository.com/artifact/javax.servlet/servlet-api
     providedCompile group: 'javax.servlet', name: 'servlet-api', version: '2.5'
-    // https://mvnrepository.com/artifact/com.maxmind.geoip/geoip-api
-    compile group: 'com.maxmind.geoip', name: 'geoip-api', version: '1.2.10'
+    // https://mvnrepository.com/artifact/com.maxmind.geoip2/geoip2
+    compile group: 'com.maxmind.geoip2', name: 'geoip2', version: '2.9.0'
+
 
 
     /** The ‘providedCompile’ line means don’t include this jar in the WEB-INF/lib directory, 

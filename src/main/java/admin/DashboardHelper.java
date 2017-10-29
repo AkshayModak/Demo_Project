@@ -59,10 +59,18 @@ public class DashboardHelper {
                 value.put("visits", totalVisits);
                 finalList.add(value);
             }
-
-            System.out.println("===finalList===" + tempSet);
         });
         result.put("visitsAnalysis", finalList);
+
+        return new Gson().toJson(result);
+    }
+
+    public String getVisitsByDate(String date) {
+        DatabaseUtils dbUtils = new DatabaseUtils();
+        Map<String, Object> queryParams = new HashMap<String, Object>();
+
+        queryParams.put("requestDate", date);
+        Map<String, Object> result = dbUtils.getEntityDataWithConditions("visit", queryParams);
 
         return new Gson().toJson(result);
     }

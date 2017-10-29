@@ -29,6 +29,21 @@ var dashboardController = function($scope, $rootScope, $uibModal, APIService) {
                             getPagination("visitsAnalysis", $scope);
                         });
     }
+
+    getTodayAndYesterdayVisits = function() {
+        APIService
+                .doApiCall({
+                    "req_name" : "getTodayAndYesterdayVisits",
+                    "params" : {}
+                })
+                .success(
+                        function(data) {
+                            $scope.todaysVisits = data.todaysVisits;
+                            $scope.yesterdaysVisits = data.yesterdaysVisits;
+                        });
+    }
+
+    getTodayAndYesterdayVisits();
     getVisits();
 
     // reference -- http://jtblin.github.io/angular-chart.js/
@@ -66,8 +81,8 @@ var dashboardController = function($scope, $rootScope, $uibModal, APIService) {
         }
     };
 
-    $scope.donutColors = [ "rgba(0,3,255,0.9)", "rgba(0,3,158,0.9)",
-            "rgba(232,135,0,0.9)", "rgba(255,0,0,0.9)", "rgba(85,196,0,0.9)" ];
+    /*$scope.donutColors = [ "rgba(0,3,255,0.9)", "rgba(0,3,158,0.9)",
+            "rgba(232,135,0,0.9)", "rgba(255,0,0,0.9)", "rgba(85,196,0,0.9)" ];*/
     $scope.donutLabels = [ "Australia", "USA", "India", "England",
             "South Africa" ];
     $scope.donutData = [ 300, 500, 1000, 200, 150 ];

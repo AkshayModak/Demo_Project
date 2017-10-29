@@ -130,4 +130,10 @@ public class NextrrUtils {
 
         return (String) resultList.get(0).get("description");
     }
+
+    public static String getTodaysDate() {
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+        return dateFormat.format(date).toString();
+    }
 }

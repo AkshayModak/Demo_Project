@@ -43,7 +43,21 @@ var dashboardController = function($scope, $rootScope, $uibModal, APIService) {
                         });
     }
 
+    getVisitsByCountries = function() {
+        APIService
+                .doApiCall({
+                    "req_name" : "getVisitsByCountries",
+                    "params" : {}
+                })
+                .success(
+                        function(data) {
+                            $scope.donutLabels = data.countries;
+                            $scope.donutData = data.visits;
+                        });
+    }
+
     getTodayAndYesterdayVisits();
+    getVisitsByCountries();
     getVisits();
 
     // reference -- http://jtblin.github.io/angular-chart.js/
@@ -51,10 +65,7 @@ var dashboardController = function($scope, $rootScope, $uibModal, APIService) {
             "rgba(154,154,154,0.5)" ];
     $scope.labels = [ "Green", "Orange", "Grey" ];
     $scope.data = [ 300, 500, 100 ];
-    /*
-     * $scope.labels = ["January", "February", "March", "April", "May", "June",
-     * "July"]; $scope.series = ['Series A', 'Series B'];
-     */
+
     $scope.data = [ [ 65, 59, 80, 81, 56, 55, 40 ],
             [ 28, 48, 40, 19, 86, 27, 90 ] ];
     $scope.onClick = function(points, evt) {
@@ -80,12 +91,6 @@ var dashboardController = function($scope, $rootScope, $uibModal, APIService) {
             } ]
         }
     };
-
-    /*$scope.donutColors = [ "rgba(0,3,255,0.9)", "rgba(0,3,158,0.9)",
-            "rgba(232,135,0,0.9)", "rgba(255,0,0,0.9)", "rgba(85,196,0,0.9)" ];*/
-    $scope.donutLabels = [ "Australia", "USA", "India", "England",
-            "South Africa" ];
-    $scope.donutData = [ 300, 500, 1000, 200, 150 ];
 
     $scope.modalParams = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.';
     $scope.limitLetters = '470';

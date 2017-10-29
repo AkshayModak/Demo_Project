@@ -54,7 +54,7 @@ public class AdminServices extends ResourceConfig implements Serializable {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -1);
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-        
+
         String yesterdaysResult = dbHelper.getVisitsByDate(dateFormat.format(cal.getTime()));
 
         Type type = new TypeToken<Map<String, Object>>(){}.getType();
@@ -69,5 +69,13 @@ public class AdminServices extends ResourceConfig implements Serializable {
         resultMap.put("yesterdaysVisits", yesterdaysResultList.size());
 
         return gson.toJson(resultMap);
+    }
+
+    @POST
+    @Path("/getVisitsByCountries")
+    public String getVisitsByCountries() {
+        DashboardHelper dbHelper = new DashboardHelper();
+        String result = dbHelper.getVisitsByCountries();
+        return result;
     }
 }

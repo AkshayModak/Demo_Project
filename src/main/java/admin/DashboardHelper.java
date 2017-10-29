@@ -65,6 +65,42 @@ public class DashboardHelper {
         return new Gson().toJson(result);
     }
 
+    public String getVisitsByCountries() {
+        DatabaseUtils dbUtils = new DatabaseUtils();
+        Map<String, Object> visits = dbUtils.getAllEntityData("visit");
+
+        List<Map<String, Object>> resultList = (List<Map<String, Object>>) visits.get("result");
+        List<String> countryList = new ArrayList<String>();
+        Map<String, List<Map<String, Object>>> resultMap = new HashMap<String, List<Map<String, Object>>>();
+
+        for (Map<String, Object> map : resultList) {
+            if (!resultMap.containsKey((String) map.get("userCountry"))) {
+                if (!map.get("userCountry").equals("null")) {
+                    countryList.add(map.get("userCountry").toString());
+                }
+            }
+        }
+
+        Set<String> tempSet = new HashSet<String>(countryList);
+        List<String> uniqueCountryList = new ArrayList<String>(tempSet);
+        List<Integer> visitsList = new ArrayList<Integer>();
+
+        for (String countryName : uniqueCountryList) {
+            Map<String, Object> queryMap = new HashMap<String, Object>();
+            queryMap.put("userCountry", countryName);
+            Map<String, Object> visitsResult = dbUtils.getEntityDataWithConditions("visit", queryMap);
+
+            List<Map<String, Object>> countryVisitsList = (List<Map<String, Object>>) visitsResult.get("result");
+            visitsList.add(countryVisitsList.size());
+        }
+
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("countries", uniqueCountryList);
+        result.put("visits", visitsList);
+
+        return new Gson().toJson(result);
+    }
+
     public String getVisitsByDate(String date) {
         DatabaseUtils dbUtils = new DatabaseUtils();
         Map<String, Object> queryParams = new HashMap<String, Object>();

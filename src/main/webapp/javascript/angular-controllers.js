@@ -17,9 +17,25 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-var homeController = function($scope, $rootScope) {
+var homeController = function($scope, $rootScope, APIService) {
     $rootScope.home = true;
     $rootScope.pageTitle = "Home | Nextrr";
+
+    getContent = function() {
+        APIService
+        .doApiCall({
+            "req_name" : "getContentByCondition",
+            "params" : {"screen": "nextrr_home"}
+        })
+        .success(
+                function(data) {
+                    content = data.result;
+                    $scope.movieContent = content[0];
+                    $scope.cricketContent = content[1];
+                    $scope.f1Content = content[2];
+                });
+    }
+    getContent();
 }
 
 myApp.controller('navbarController', function ($scope, $rootScope) {
@@ -528,6 +544,7 @@ myApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 	$stateProvider.state("home", {
 		url: "/",
 		templateUrl: "final/CompOne.html",
+		controller: "homeController"
 	}).state("formula1", {
 		url: "/formula1",
 		templateUrl: "final/f1.html",

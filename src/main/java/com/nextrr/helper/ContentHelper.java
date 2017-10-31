@@ -42,4 +42,13 @@ public class ContentHelper {
         }
         return new Gson().toJson("error");
     }
+
+    public String getContentByCondition(MultivaluedMap<String, String> params) {
+        DatabaseUtils dbUtils = new DatabaseUtils();
+        Map<String, Object> queryMap = new HashMap<String, Object>();
+        queryMap.put("screen_content", params.getFirst("screen"));
+        Map<String, Object> result = dbUtils.getEntityDataWithConditions("content", queryMap);
+
+        return new Gson().toJson(result);
+    }
 }

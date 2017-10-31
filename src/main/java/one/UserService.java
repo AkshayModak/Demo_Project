@@ -307,6 +307,14 @@ public class UserService extends ResourceConfig implements Serializable{
 		return result;
 	}
 	
+    @POST
+    @Path("/getContentByCondition")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getContentByCondition(@Context UriInfo uriInfo) {
+        ContentHelper contentHelper = new ContentHelper();
+        String result = contentHelper.getContentByCondition(uriInfo.getQueryParameters());
+        return result;
+    }
 	
 	private void recordVisit(@Context HttpServletRequest requestContext, @Context SecurityContext context) {
 		Visit visit = new Visit();

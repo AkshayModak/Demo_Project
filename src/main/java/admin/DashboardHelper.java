@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.ws.rs.core.MultivaluedMap;
+
 import com.google.gson.Gson;
 
 import one.DatabaseUtils;
@@ -182,5 +184,54 @@ public class DashboardHelper {
         resultMap.put("fantasyCricket", fcMap);
 
         return new Gson().toJson(resultMap);
+    }
+
+    public String getAllContent() {
+        DatabaseUtils dbUtils = new DatabaseUtils();
+        Map<String, Object> content = dbUtils.getAllEntityData("content");
+        return new Gson().toJson(content);
+    }
+
+    public String createContent(MultivaluedMap<String, String> params) {
+        DatabaseUtils dbUtils = new DatabaseUtils();
+        String screen = params.getFirst("screen");
+        String contentType = params.getFirst("contentType");
+        String description = params.getFirst("description");
+        String electronicText = params.getFirst("electronicText");
+
+        Map<String, Object> queryParams = new HashMap<String, Object>();
+        queryParams.put("screen_content", screen);
+        queryParams.put("content_type", contentType);
+        queryParams.put("description", description);
+        queryParams.put("electronicText", electronicText);
+
+        dbUtils.runCreateQuery("content", queryParams);
+        return new Gson().toJson("success");
+    }
+
+    public String updateContent(MultivaluedMap<String, String> params) {
+        DatabaseUtils dbUtils = new DatabaseUtils();
+        String contentId = params.getFirst("contentId");
+        String screen = params.getFirst("screen");
+        String contentType = params.getFirst("contentType");
+        String description = params.getFirst("description");
+        String electronicText = params.getFirst("electronicText");
+
+        Map<String, Object> queryParams = new HashMap<String, Object>();
+        queryParams.put("content_id", contentId);
+        queryParams.put("screen_content", screen);
+        queryParams.put("content_type", contentType);
+        queryParams.put("description", description);
+        queryParams.put("electronicText", electronicText);
+
+        dbUtils.runUpdateQuery("content", queryParams, "content_id");
+        return new Gson().toJson("success");
+    }
+
+    public String removeContent(MultivaluedMap<String, String> params) {
+        DatabaseUtils dbUtils = new DatabaseUtils();
+        String contentId = params.getFirst("contentId");
+        dbUtils.runDeleteQuery("content", contentId, "content_id");
+        return new Gson().toJson("success");
     }
 }

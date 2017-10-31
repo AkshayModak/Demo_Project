@@ -206,3 +206,12 @@ body {
     height: 500px;
     width: 100%;
 }
+
+.panel-heading h2 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: normal;
+    width: 75%;
+    padding-top: 8px;
+}

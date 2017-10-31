@@ -9,6 +9,54 @@ var myApp = angular.module("myModule", [ "ui.router", 'chart.js', 'ngAnimate',
  * ChartJsProvider.setOptions('bubble', { tooltips: { enabled: false } }); });
  */
 
+myApp.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, content, $sce, AdminAPIService) {
+    $scope.close = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+    $scope.trustSrc = function(trailer) {
+        return $sce.trustAsResourceUrl(trailer);
+    }
+    $scope.content = content;
+
+    $scope.manipulateContent = function(content) {
+        console.log(content.content_id);
+        if (content != null && content != undefined && content.content_id != null && content.content_id != undefined && content.content_id != "") {
+            AdminAPIService
+            .doApiCall({
+                "req_name" : "updateContent",
+                "params" : {"contentId": content.content_id, "screen": content.screen_content, "contentType": content.content_type, 
+                    "description": content.description, "electronicText": content.electronicText}
+            }).success(
+                function(data) {
+                    $scope.close();
+                    getContent();
+            });
+        } else {
+            AdminAPIService
+            .doApiCall({
+                "req_name" : "createContent",
+                "params" : {"screen": content.screen_content, "contentType": content.content_type, "description": content.description, 
+                    "electronicText": content.electronicText}
+            }).success(
+                function(data) {
+                    $scope.close();
+                    getContent();
+            });
+        }
+    }
+
+    $scope.removeContent = function(content) {
+        AdminAPIService
+        .doApiCall({
+            "req_name" : "removeContent",
+            "params" : {"contentId": content.content_id}
+        }).success(
+            function(data) {
+                $scope.close();
+        });
+    }
+});
+
 var dashboardController = function($scope, $rootScope, $uibModal, AdminAPIService) {
     $rootScope.home = true;
     $rootScope.pageTitle = "Dashboard | Nextrr";
@@ -28,6 +76,18 @@ var dashboardController = function($scope, $rootScope, $uibModal, AdminAPIServic
                             getPagination("visits", $scope);
                             getPagination("visitsAnalysis", $scope);
                         });
+    }
+
+    getContent = function() {
+        AdminAPIService
+        .doApiCall({
+            "req_name" : "getContent",
+            "params" : {}
+        })
+        .success(
+                function(data) {
+                    $scope.contents = data.result
+                });
     }
 
     getTodayAndYesterdayVisits = function() {
@@ -72,6 +132,7 @@ var dashboardController = function($scope, $rootScope, $uibModal, AdminAPIServic
                         });
     }
 
+    getContent();
     getModulesDetails();
     getTodayAndYesterdayVisits();
     getVisitsByCountries();
@@ -86,13 +147,13 @@ var dashboardController = function($scope, $rootScope, $uibModal, AdminAPIServic
         $scope.limitLetters = content_length;
     }
 
-    $scope.open = function(_nothing) {
+        $scope.open = function(content) {
         var modalInstance = $uibModal.open({
             controller : "ModalInstanceCtrl",
             templateUrl : 'myModalContent.html',
             resolve : {
-                nothing : function() {
-                    return _nothing;
+                content : function() {
+                    return content;
                 }
             }
         });
@@ -813,17 +874,6 @@ var editFantasyCricketController = function($scope, APIService, $http,
         });
     };
 }
-
-myApp.controller('ModalInstanceCtrl', function($scope, $uibModalInstance,
-        nothing, $sce) {
-    $scope.close = function() {
-        $uibModalInstance.dismiss('cancel');
-    };
-    $scope.trustSrc = function(trailer) {
-        return $sce.trustAsResourceUrl(trailer);
-    }
-    $scope.nothing = nothing;
-});
 
 /* -- Custom Functions -- */
 function getPagination(scopeVariable, $scope) {

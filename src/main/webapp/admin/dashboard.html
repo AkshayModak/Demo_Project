@@ -109,72 +109,43 @@
             </tr>
           </tbody>
         </table>
-        <ul uib-pagination ng-model="currentPage" class="pull-right"
+        <ul uib-pagination ng-model="visitPage" class="pull-right"
           total-items="visitsAnalysis.length" max-size="maxSize"
           boundary-links="true"></ul>
       </div>
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12 col-md-4">
-      <div class="dashboard-medium-cards">
-        <h1>
-          Content Section <a href="javascript:void(0)"
-            ng-click="open(modalParams)"> <i
-            class="fa fa-pencil-square-o fa-3" aria-hidden="true"></i>
-          </a>
-        </h1>
-        <p>
-          {{ modalParams | limitTo:limitLetters }} <span
-            ng-if="(modalParams.length > 470) && (limitLetters <= 470)">
-            <a href="javascript:void(0)"
-            ng-click="seeMore(modalParams.length)">see more</a>
-          </span> <span ng-if="modalParams.length > 470 && limitLetters > 470">
-            <a href="javascript:void(0)" ng-click="seeMore(470)">see
-              less</a>
-          </span>
-        </p>
-      </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title pull-left">
+                Content Section
+            </h2>
+            <button class="btn btn-default pull-right" ng-click="open(null, 'createContent')">New</button>
+        <div class="clearfix"></div>
     </div>
-    <div class="col-xs-12 col-md-4">
-      <div class="dashboard-medium-cards">
-        <h1>
-          Content Section <a href="javascript:void(0)"
-            ng-click="open(modalParams)"> <i
-            class="fa fa-pencil-square-o fa-3" aria-hidden="true"></i>
-          </a>
-        </h1>
-        <p>
-          {{ modalParams | limitTo:limitLetters }} <span
-            ng-if="(modalParams.length > 470) && (limitLetters <= 470)">
-            <a href="javascript:void(0)"
-            ng-click="seeMore(modalParams.length)">see more</a>
-          </span> <span ng-if="modalParams.length > 470 && limitLetters > 470">
-            <a href="javascript:void(0)" ng-click="seeMore(470)">see
-              less</a>
-          </span>
-        </p>
-      </div>
-    </div>
-    <div class="col-xs-12 col-md-4">
-      <div class="dashboard-medium-cards">
-        <h1>
-          Content Section <a href="javascript:void(0)"
-            ng-click="open(modalParams)"> <i
-            class="fa fa-pencil-square-o fa-3" aria-hidden="true"></i>
-          </a>
-        </h1>
-        <p>
-          {{ modalParams | limitTo:limitLetters }} <span
-            ng-if="(modalParams.length > 470) && (limitLetters <= 470)">
-            <a href="javascript:void(0)"
-            ng-click="seeMore(modalParams.length)">see more</a>
-          </span> <span ng-if="modalParams.length > 470 && limitLetters > 470">
-            <a href="javascript:void(0)" ng-click="seeMore(470)">see
-              less</a>
-          </span>
-        </p>
-      </div>
+        <div class="panel-body">
+            <div class="col-xs-12 col-md-4" ng-repeat="content in contents">
+                <div class="dashboard-medium-cards">
+                    <h1>
+                      {{ content.description }} <a href="javascript:void(0)"
+                        ng-click="open(content, 'updateContent')"> <i
+                        class="fa fa-pencil-square-o fa-3" aria-hidden="true"></i>
+                      </a>
+                    </h1>
+                    <p>
+                      {{ content.electronicText | limitTo:limitLetters }} <span
+                        ng-if="(content.electronicText.length > 470) && (limitLetters <= 470)">
+                        <a href="javascript:void(0)"
+                        ng-click="seeMore(content.electronicText.length)">see more</a>
+                      </span> <span ng-if="content.electronicText.length > 470 && limitLetters > 470">
+                        <a href="javascript:void(0)" ng-click="seeMore(470)">see
+                          less</a>
+                      </span>
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
   </div>
 </div>
@@ -186,11 +157,31 @@
             Home_Movies_Section
         </div>
         <div class="modal-body">
-            <textarea name="nothing" class="form-control">{{ nothing }}</textarea>
+            <input type="hidden" name="contentId" ng-model="content.content_id"/>
+            <div class="form-group">
+                <label for="screen">Screen:</label>
+                <input type="text" name="screen" class="form-control" ng-model="content.screen_content" id="screen">
+            </div>
+            <div class="form-group">
+                <label for="contentType">Content:</label>
+                <input type="text" name="contentType" class="form-control" ng-model="content.content_type" id="contentType">
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <input type="text" name="description" class="form-control" ng-model="content.description" id="description">
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea name="content" rows="8" class="form-control" ng-model="content.electronicText"></textarea>
+            </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-primary">Submit</button>
-            <button type="button" class="btn btn-primary" ng-click="close()">Cancel</button>
+            <button type="button" class="btn btn-primary" ng-click="manipulateContent(content)">
+                <span ng-if="content.content_id">Update</span>
+                <span ng-if="!content.content_id">Create</span>
+            </button>
+            <button type="button" class="btn btn-default" ng-click="close()">Cancel</button>
+            <button type="button" class="btn btn-danger pull-left" ng-click="removeContent(content)">Delete</button>
         </div>
     </div>
 </script>

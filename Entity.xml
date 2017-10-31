@@ -127,4 +127,11 @@
         <column name="message" data-type="varchar" column-size="1000" null="false"/>
         <column name="messageDateTime" data-type="varchar" column-size="55" null="false"/>
     </table>
+    <table name="content">
+        <column name="content_id" data-type="int" null="false" primary-key="true" auto-increment="true"/>
+        <column name="electronicText" data-type="varchar" column-size="5000" null="false"/>
+        <column name="content_type" data-type="varchar" column-size="50" null="false"/>
+        <column name="screen_content" data-type="varchar" column-size="50" null="false"/>
+        <column name="description" data-type="varchar" column-size="255" null="false"/>
+    </table>
 </entity-def>

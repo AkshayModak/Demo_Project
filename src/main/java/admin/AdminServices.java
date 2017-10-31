@@ -12,7 +12,9 @@ import java.util.Map;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriInfo;
 
 import org.glassfish.jersey.server.ResourceConfig;
 
@@ -84,6 +86,38 @@ public class AdminServices extends ResourceConfig implements Serializable {
     public String getModulesDetails() {
         DashboardHelper dbHelper = new DashboardHelper();
         String result = dbHelper.getModulesDetails();
+        return result;
+    }
+
+    @POST
+    @Path("/getContent")
+    public String getAllContent() {
+        DashboardHelper dbHelper = new DashboardHelper();
+        String result = dbHelper.getAllContent();
+        return result;
+    }
+
+    @POST
+    @Path("/createContent")
+    public String createContent(@Context UriInfo uriInfo) {
+        DashboardHelper dbHelper = new DashboardHelper();
+        String result = dbHelper.createContent(uriInfo.getQueryParameters());
+        return result;
+    }
+
+    @POST
+    @Path("/updateContent")
+    public String updateContent(@Context UriInfo uriInfo) {
+        DashboardHelper dbHelper = new DashboardHelper();
+        String result = dbHelper.updateContent(uriInfo.getQueryParameters());
+        return result;
+    }
+
+    @POST
+    @Path("/removeContent")
+    public String removeContent(@Context UriInfo uriInfo) {
+        DashboardHelper dbHelper = new DashboardHelper();
+        String result = dbHelper.removeContent(uriInfo.getQueryParameters());
         return result;
     }
 }

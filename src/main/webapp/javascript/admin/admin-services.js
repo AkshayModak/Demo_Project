@@ -76,6 +76,8 @@ myApp.factory('AuthenticationService',
         ['Base64', '$http', '$rootScope', '$timeout', 'localStorageService', 'AdminAPIService',
         function (Base64, $http, $rootScope, $timeout, localStorageService, AdminAPIService) {
             var service = {};
+
+            service.Login = function (username, password, callback) {
                 AdminAPIService.doApiCall({
                     "req_name" : "authenticateUser",
                     "params" : {"username": username, "password": password}

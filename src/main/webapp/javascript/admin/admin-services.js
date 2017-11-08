@@ -73,28 +73,16 @@ myApp.factory('APIService', [
 // https://www.tutorialspoint.com/angularjs/angularjs_login_application.htm -- already downloaded on local
 
 myApp.factory('AuthenticationService',
-        ['Base64', '$http', '$rootScope', '$timeout', 'localStorageService', 
-        function (Base64, $http, $rootScope, $timeout, localStorageService) {
+        ['Base64', '$http', '$rootScope', '$timeout', 'localStorageService', 'AdminAPIService',
+        function (Base64, $http, $rootScope, $timeout, localStorageService, AdminAPIService) {
             var service = {};
-
-            service.Login = function (username, password, callback) {
-                /* Dummy authentication for testing, uses $timeout to simulate api call
-                 ----------------------------------------------*/
-                $timeout(function(){
-                    var response = { success: username === 'howtodoinjava' && password === 'password' };
-                    if(!response.success) {
-                        response.message = 'Username or password is incorrect';
-                    }
+                AdminAPIService.doApiCall({
+                    "req_name" : "authenticateUser",
+                    "params" : {"username": username, "password": password}
+                }).success(function(response) {
+                    console.log('====response===', response);
                     callback(response);
-                }, 1000);
-
-                /* Use this for real authentication
-                 ----------------------------------------------*/
-                //$http.post('/api/authenticate', { username: username, password: password })
-                //    .success(function (response) {
-                //        callback(response);
-                //    });
-
+                });
             };
      
             service.SetCredentials = function (username, password) {

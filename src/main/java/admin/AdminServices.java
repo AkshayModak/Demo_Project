@@ -19,6 +19,7 @@ import javax.ws.rs.core.UriInfo;
 
 import org.glassfish.jersey.filter.LoggingFilter;
 import org.glassfish.jersey.server.ResourceConfig;
+import javax.annotation.security.PermitAll;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -42,6 +43,17 @@ public class AdminServices extends ResourceConfig implements Serializable {
         register(AuthenticationFilter.class);
         register(LoggingFilter.class);
         register(GsonMessageBodyHandler.class);
+    }
+
+    @POST
+    @Path("/authenticateUser")
+    @PermitAll
+    public String authenticateUser(@Context UriInfo uriInfo) {
+        DashboardHelper dbHelper = new DashboardHelper();
+        String userName = uriInfo.getQueryParameters().getFirst("username");
+        String password = uriInfo.getQueryParameters().getFirst("password");
+        String result = dbHelper.authenticateUser(userName, password);
+        return result;
     }
 
     @RolesAllowed("ADMIN")

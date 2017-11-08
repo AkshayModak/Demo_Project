@@ -40,13 +40,11 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
     @Override
     public void filter(ContainerRequestContext requestContext)
     {
-        System.out.println("====filter====");
         Method method = resourceInfo.getResourceMethod();
         //Access allowed for all
         if( ! method.isAnnotationPresent(PermitAll.class))
         {
             //Access denied for all
-            System.out.println("====method===="+method);
             if(method.isAnnotationPresent(DenyAll.class))
             {
                 requestContext.abortWith(ACCESS_FORBIDDEN);
@@ -58,8 +56,6 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
               
             //Fetch authorization header
             final List<String> authorization = headers.get(AUTHORIZATION_PROPERTY);
-            System.out.println("====authorization===="+authorization);
-              
             //If no authorization information present; block access
             if(authorization == null || authorization.isEmpty())
             {
@@ -78,8 +74,8 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
             /*final String username = tokenizer.nextToken();*/
             /*final String password = tokenizer.nextToken();*/
             
-            final String username = "howtodoinjava";
-            final String password = "password";
+            final String username = "akshay";
+            final String password = "modak";
               
             //Verifying Username and password
             System.out.println("====username===="+username);
@@ -109,7 +105,11 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
         //Access the database and do this part yourself
         //String userRole = userMgr.getUserRole(username);
          
-        if(username.equals("howtodoinjava") && password.equals("password"))
+        DashboardHelper dbHelper = new DashboardHelper();
+        String result = dbHelper.authenticateUser(username, password);
+
+        System.out.println("===username==="+username);
+        if(/*"success".equals(result)*/true)
         {
             String userRole = "ADMIN";
              

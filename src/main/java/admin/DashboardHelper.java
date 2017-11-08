@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.security.PermitAll;
 import javax.ws.rs.core.MultivaluedMap;
 import com.google.gson.Gson;
 
@@ -269,5 +270,18 @@ public class DashboardHelper {
             }
         }
         return new Gson().toJson(unreadCounter);
+    }
+
+    @PermitAll
+    public String authenticateUser(String username, String password) {
+
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("success", false);
+        if ("akshay".equals(username) && "modak".equals(password)) {
+            resultMap.put("success", true);
+            return new Gson().toJson(resultMap);
+        }
+
+        return new Gson().toJson(resultMap);
     }
 }

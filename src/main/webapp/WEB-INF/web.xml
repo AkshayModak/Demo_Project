@@ -53,4 +53,9 @@
     <servlet-name>EntityServlet</servlet-name>
     <url-pattern>/createEntities</url-pattern>
   </servlet-mapping>
+
+  <login-config>
+   <auth-method>BASIC</auth-method>
+   <realm-name>Basic Authentication Example</realm-name>
+  </login-config>
 </web-app>

@@ -1,5 +1,5 @@
-var myApp = angular.module("myModule", [ "ui.router", 'chart.js', 'ngAnimate',
-        "ui.bootstrap", "ngMaterial", "ngMessages", "infinite-scroll" ]);
+var myApp = angular.module("myModule", ["ui.router", 'chart.js',
+        "ui.bootstrap", "ngMaterial", "infinite-scroll", "LocalStorageModule"]);
 
 /*
  * myApp.config(function (ChartJsProvider) { // Configure all charts
@@ -57,7 +57,96 @@ myApp.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, conte
     }
 });
 
-var dashboardController = function($scope, $rootScope, $uibModal, AdminAPIService) {
+var loginController = function ($scope, $rootScope, $location, AuthenticationService, localStorageService) {
+            // reset login status
+            /*AuthenticationService.ClearCredentials();*/
+
+            $scope.login = function () {
+                $scope.dataLoading = true;
+                AuthenticationService.Login($scope.username, $scope.password, function(response) {
+                    if(response.success) {
+                        AuthenticationService.SetCredentials($scope.username, $scope.password);
+                        $location.path('/');
+                        location.reload();
+                    } else {
+                        $scope.error = response.message;
+                        $scope.dataLoading = false;
+                    }
+                });
+            };
+            localStorageService.set("name", "akshay");
+}
+
+var userMessagesController = function ($scope, $sce, AdminAPIService, $rootScope, $window) {
+    $scope.getUserMessages = function() {
+        AdminAPIService
+        .doApiCall({
+            "req_name" : "getUserMessages",
+            "params" : {}
+        }).success(
+            function(data) {
+                for (i =0 ; i < data.length; i++) {
+                    data[i].messageDateTime = new Date(data[i].messageDateTime);
+                }
+                $scope.showMessageList = true;
+                $scope.userMessages = data;
+        });
+    }
+    $scope.getUserMessages();
+
+    $scope.getMessageContent = function(userMessage) {
+        $scope.showMessageList = false;
+        $scope.userMessage = userMessage;
+        $scope.subject = "No Subject";
+        AdminAPIService
+        .doApiCall({
+            "req_name" : "markMessageRead",
+            "params" : {"id": userMessage.user_message_id}
+        }).success(
+            function(data) {
+                unreadMessagesCount();
+                $rootScope.unreadMessagesCount = $window.localStorage.getItem("unreadMessagesCount");
+            });
+    }
+
+    $scope.removeUserMessage = function(userMessage) {
+        if (confirm('Are you sure you want remove this message?')) {
+            AdminAPIService
+            .doApiCall({
+                "req_name" : "removeUserMessage",
+                "params" : {"id": userMessage.user_message_id}
+            }).success(
+                function(data) {
+                    $scope.getUserMessages();
+                    unreadMessagesCount();
+            });
+        } else {
+            // Do nothing!
+        }
+    }
+
+    unreadMessagesCount = function() {
+        AdminAPIService
+        .doApiCall({
+            "req_name" : "getUnreadMessagesCount",
+            "params" : {}
+        })
+        .success(
+                function(data) {
+                    $window.localStorage.setItem("unreadMessagesCount", data);
+                    $rootScope.unreadMessagesCount = $window.localStorage.getItem("unreadMessagesCount");
+                });
+    }
+
+    $scope.setDeleteMessage = function(userMessage) {
+        $scope.selectedToDelete = userMessage;
+    }
+    $rootScope.unreadMessagesCount = $window.localStorage.getItem("unreadMessagesCount");
+}
+
+//myApp.controller("dashboardController", dashboardController);
+myApp.controller("dashboardController" ,function($scope, $rootScope, $uibModal, AdminAPIService, $window, $timeout, localStorageService) {
+
     $rootScope.home = true;
     $rootScope.pageTitle = "Dashboard | Nextrr";
 
@@ -89,6 +178,19 @@ var dashboardController = function($scope, $rootScope, $uibModal, AdminAPIServic
                     $scope.contents = data.result
                 });
     }
+
+    unreadMessagesCount = function() {
+        AdminAPIService
+        .doApiCall({
+            "req_name" : "getUnreadMessagesCount",
+            "params" : {}
+        })
+        .success(
+                function(data) {
+                    $window.localStorage.setItem("unreadMessagesCount", data);
+                });
+    }
+    unreadMessagesCount();
 
     getTodayAndYesterdayVisits = function() {
         AdminAPIService
@@ -158,19 +260,32 @@ var dashboardController = function($scope, $rootScope, $uibModal, AdminAPIServic
             }
         });
     };
+    $rootScope.unreadMessagesCount = $window.localStorage.getItem("unreadMessagesCount");
+});
 
-}
-
-var navbarController = function($scope, $rootScope) {
+var navbarController = function($scope, $rootScope, AuthenticationService, $location, localStorageService) {
     $rootScope.isNavCollapsed = true;
     $scope.isCollapsed = true;
     $scope.isCollapsedHorizontal = true;
 
+    var loggedin = localStorageService.get('globals');
+    if (loggedin == undefined || loggedin == null || loggedin == '') {
+        $("#sidebar-wrapper").detach();
+        $("#wrapper").toggleClass("active");
+        $("#menu-toggle").detach();
+        $("#navbar > ul").detach();
+    }
     /* Menu-toggle */
     $("#menu-toggle").click(function(e) {
         e.preventDefault();
         $("#wrapper").toggleClass("active");
     });
+
+    $scope.logout = function() {
+        AuthenticationService.ClearCredentials();
+        $location.path('/login');
+        location.reload();
+    }
 }
 
 var editMoviesController = function($scope, APIService, $http, $mdConstant) {
@@ -903,14 +1018,16 @@ function capitalizeFirstLetter(string) {
 
 /* ------- Controller Entries ------- */
 myApp.controller("navbarController", navbarController);
-myApp.controller("dashboardController", dashboardController);
 myApp.controller("editMoviesController", editMoviesController);
 myApp.controller("editCricketController", editCricketController);
 myApp.controller("editF1Controller", editF1Controller);
 myApp.controller("editFantasyCricketController", editFantasyCricketController);
+myApp.controller("userMessagesController", userMessagesController);
+myApp.controller("loginController", loginController);
 
 /* ----- Routing ----- */
-myApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+myApp.config(function($stateProvider, $urlRouterProvider, $locationProvider, localStorageServiceProvider) {
+    localStorageServiceProvider.setPrefix('nextrr');
     $stateProvider.state("home", {
         url : "/",
         templateUrl : "dashboard.html",
@@ -931,9 +1048,31 @@ myApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
         url : "/fantasy-cricket",
         templateUrl : "fantasyCricketInsert.html",
         controller : "editFantasyCricketController"
+    }).state("user-message", {
+        url : "/user-messages",
+        templateUrl : "userMessages.html",
+        controller : "userMessagesController"
+    }).state("login", {
+        url : "/login",
+        templateUrl : "login.html",
+        controller : "loginController"
     }).state("otherwise", {
         url : "/otherwise",
-        templateUrl : "dashboard.html",
-        controller : "dashboardController"
+        templateUrl : "login.html",
+        controller : "loginController"
     });
-});
+}).run(['$rootScope', '$location', '$http', 'localStorageService', 
+    function ($rootScope, $location, $http, localStorageService) {
+    // keep user logged in after page refresh
+    $rootScope.globals = localStorageService.get('globals') || {};
+    if ($rootScope.globals.currentUser) {
+        $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
+    }
+
+    $rootScope.$on('$locationChangeStart', function (event, next, current) {
+        // redirect to login page if not logged in
+        if ($location.path() !== '/login' && !$rootScope.globals.currentUser) {
+            $location.path('/login');
+        }
+    });
+}]);

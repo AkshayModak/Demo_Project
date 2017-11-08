@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.ws.rs.core.MultivaluedMap;
-
 import com.google.gson.Gson;
 
 import one.DatabaseUtils;
@@ -233,5 +232,42 @@ public class DashboardHelper {
         String contentId = params.getFirst("contentId");
         dbUtils.runDeleteQuery("content", contentId, "content_id");
         return new Gson().toJson("success");
+    }
+
+    public String getUserMessages() {
+        DatabaseUtils dbUtils = new DatabaseUtils();
+        Map<String, Object> userMessages = dbUtils.getAllEntityData("user_message");
+        return new Gson().toJson(userMessages.get("result"));
+    }
+
+    public String markMessageRead(MultivaluedMap<String, String> params) {
+        DatabaseUtils dbUtils = new DatabaseUtils();
+        String userMessageId = params.getFirst("id");
+        Map<String, Object> queryParams = new HashMap<String, Object>();
+        queryParams.put("user_message_id", userMessageId);
+        queryParams.put("hasRead", "Y");
+
+        dbUtils.runUpdateQuery("user_message", queryParams, "user_message_id");
+        return new Gson().toJson("success");
+    }
+
+    public String removeUserMessage(MultivaluedMap<String, String> params) {
+        DatabaseUtils dbUtils = new DatabaseUtils();
+        String userMessageId = params.getFirst("id");
+        dbUtils.runDeleteQuery("user_message", userMessageId, "user_message_id");
+        return new Gson().toJson("success");
+    }
+
+    public String getUnreadMessagesCount() {
+        DatabaseUtils dbUtils = new DatabaseUtils();
+        Map<String, Object> userMessages = dbUtils.getAllEntityData("user_message");
+        int unreadCounter = 0;
+
+        for (Map<String, Object> map : (List<Map<String, Object>>) userMessages.get("result")) {
+            if (map.get("hasRead") == null) {
+                unreadCounter = unreadCounter + 1;
+            }
+        }
+        return new Gson().toJson(unreadCounter);
     }
 }

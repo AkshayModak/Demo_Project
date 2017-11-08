@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -16,6 +17,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
+import org.glassfish.jersey.filter.LoggingFilter;
 import org.glassfish.jersey.server.ResourceConfig;
 
 import com.google.gson.Gson;
@@ -35,8 +37,14 @@ public class AdminServices extends ResourceConfig implements Serializable {
 
     public AdminServices() {
         System.out.println("===running--- Found Class====");
+        packages("admin");
+        //Register Auth Filter here
+        register(AuthenticationFilter.class);
+        register(LoggingFilter.class);
+        register(GsonMessageBodyHandler.class);
     }
 
+    @RolesAllowed("ADMIN")
     @POST
     @Path("/getVisits")
     public String getVisits() {
@@ -45,6 +53,7 @@ public class AdminServices extends ResourceConfig implements Serializable {
         return result;
     }
 
+    @RolesAllowed("ADMIN")
     @POST
     @Path("/getTodayAndYesterdayVisits")
     public String getTodayAndYesterdayVisits() {
@@ -73,6 +82,7 @@ public class AdminServices extends ResourceConfig implements Serializable {
         return gson.toJson(resultMap);
     }
 
+    @RolesAllowed("ADMIN")
     @POST
     @Path("/getVisitsByCountries")
     public String getVisitsByCountries() {
@@ -81,6 +91,7 @@ public class AdminServices extends ResourceConfig implements Serializable {
         return result;
     }
 
+    @RolesAllowed("ADMIN")
     @POST
     @Path("/getModulesDetails")
     public String getModulesDetails() {
@@ -89,6 +100,7 @@ public class AdminServices extends ResourceConfig implements Serializable {
         return result;
     }
 
+    @RolesAllowed("ADMIN")
     @POST
     @Path("/getContent")
     public String getAllContent() {
@@ -97,6 +109,7 @@ public class AdminServices extends ResourceConfig implements Serializable {
         return result;
     }
 
+    @RolesAllowed("ADMIN")
     @POST
     @Path("/createContent")
     public String createContent(@Context UriInfo uriInfo) {
@@ -105,6 +118,7 @@ public class AdminServices extends ResourceConfig implements Serializable {
         return result;
     }
 
+    @RolesAllowed("ADMIN")
     @POST
     @Path("/updateContent")
     public String updateContent(@Context UriInfo uriInfo) {
@@ -113,11 +127,48 @@ public class AdminServices extends ResourceConfig implements Serializable {
         return result;
     }
 
+    @RolesAllowed("ADMIN")
     @POST
     @Path("/removeContent")
     public String removeContent(@Context UriInfo uriInfo) {
         DashboardHelper dbHelper = new DashboardHelper();
         String result = dbHelper.removeContent(uriInfo.getQueryParameters());
+        return result;
+    }
+
+    @RolesAllowed("ADMIN")
+    @POST
+    @Path("/getUserMessages")
+    public String getUserMessages() {
+        DashboardHelper dbHelper = new DashboardHelper();
+        String result = dbHelper.getUserMessages();
+        return result;
+    }
+
+    @RolesAllowed("ADMIN")
+    @POST
+    @Path("/markMessageRead")
+    public String markMessageRead(@Context UriInfo uriInfo) {
+        DashboardHelper dbHelper = new DashboardHelper();
+        String result = dbHelper.markMessageRead(uriInfo.getQueryParameters());
+        return result;
+    }
+
+    @RolesAllowed("ADMIN")
+    @POST
+    @Path("/removeUserMessage")
+    public String removeUserMessage(@Context UriInfo uriInfo) {
+        DashboardHelper dbHelper = new DashboardHelper();
+        String result = dbHelper.removeUserMessage(uriInfo.getQueryParameters());
+        return result;
+    }
+
+    @RolesAllowed("ADMIN")
+    @POST
+    @Path("/getUnreadMessagesCount")
+    public String getUnreadMessagesCount() {
+        DashboardHelper dbHelper = new DashboardHelper();
+        String result = dbHelper.getUnreadMessagesCount();
         return result;
     }
 }

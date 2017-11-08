@@ -126,6 +126,7 @@
         <column name="userEmail" data-type="varchar" column-size="100" null="false"/>
         <column name="message" data-type="varchar" column-size="1000" null="false"/>
         <column name="messageDateTime" data-type="varchar" column-size="55" null="false"/>
+        <column name="hasRead" data-type="varchar" column-size="1"/>
     </table>
     <table name="content">
         <column name="content_id" data-type="int" null="false" primary-key="true" auto-increment="true"/>

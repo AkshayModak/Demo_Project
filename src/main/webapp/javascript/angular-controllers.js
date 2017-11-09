@@ -1,22 +1,28 @@
 
 var myApp = angular.module("myModule", ["ui.router",'ngAnimate', 'ngSanitize', "ui.bootstrap", "ngMaterial", "ngMessages", "infinite-scroll"]);
 
-/*myApp.run(function($rootScope, $templateCache) {
-	$rootScope.$on('$viewContentLoaded', function() {
-		$templateCache.removeAll();
-	});
-});
-*/
-
-
-/*angular.element().bind('load', function() {
-   $scope.loader=true;
-});*/
-
+/* ======= Utility Functions =======*/
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function format_time(date_obj) {
+    // formats a javascript Date object into a 12h AM/PM time string
+    var hour = date_obj.getHours();
+    var minute = date_obj.getMinutes();
+    var amPM = (hour > 11) ? "pm" : "am";
+    if (hour > 12) {
+        hour -= 12;
+    } else if (hour == 0) {
+        hour = "12";
+    }
+    if (minute < 10) {
+        minute = "0" + minute;
+    }
+    return hour + ":" + minute + amPM;
+}
+
+/* ======== Controller Definitions =======*/
 var homeController = function($scope, $rootScope, APIService) {
     $rootScope.home = true;
     $rootScope.pageTitle = "Home | Nextrr";
@@ -26,8 +32,7 @@ var homeController = function($scope, $rootScope, APIService) {
         .doApiCall({
             "req_name" : "getContentByCondition",
             "params" : {"screen": "nextrr_home"}
-        })
-        .success(
+        }).success(
                 function(data) {
                     content = data.result;
                     $scope.movieContent = content[0];
@@ -38,44 +43,13 @@ var homeController = function($scope, $rootScope, APIService) {
     getContent();
 }
 
-myApp.controller('navbarController', function ($scope, $rootScope) {
+var navbarController = function ($scope, $rootScope) {
     $rootScope.isNavCollapsed = true;
     $scope.isCollapsed = true;
     $scope.isCollapsedHorizontal = true;
-});
-
-function format_time(date_obj) {
-	  // formats a javascript Date object into a 12h AM/PM time string
-	  var hour = date_obj.getHours();
-	  var minute = date_obj.getMinutes();
-	  var amPM = (hour > 11) ? "pm" : "am";
-	  if(hour > 12) {
-	    hour -= 12;
-	  } else if(hour == 0) {
-	    hour = "12";
-	  }
-	  if(minute < 10) {
-	    minute = "0" + minute;
-	  }
-	  return hour + ":" + minute + amPM;
 }
 
-/* http://stackoverflow.com/questions/14878761/bind-class-toggle-to-window-scroll-event */
-myApp.directive("scroll", function ($window) {
-    return function(scope, element, attrs) {
-        angular.element($window).bind("scroll", function() {
-             if (this.pageYOffset < 50) {
-                 scope.boolChangeClass = false;
-             } else {
-                 scope.boolChangeClass = true;
-             }
-            scope.$apply();
-        });
-    };
-});
-
 var fantasyCricketController = function($scope, $rootScope, APIService, ModalService, $http, $uibModal, $stateParams) {
-
     getFantasyCricketPlayers = function() {
         $scope.showSpinner = true;
         APIService.doApiCall({
@@ -257,8 +231,7 @@ var fantasyCricketController = function($scope, $rootScope, APIService, ModalSer
 }
 
 var cricketController = function($scope, APIService, ModalService, $http, $uibModal, $stateParams, $rootScope) {
-
-	$scope.expanded = false;
+    $scope.expanded = false;
 
     $scope.filterCricket = function(string) {
         $scope.filterString = "";
@@ -386,46 +359,45 @@ var cricketController = function($scope, APIService, ModalService, $http, $uibMo
 }
 
 var moviesController = function($scope, APIService, ModalService, $http, $uibModal, $stateParams, $rootScope) {
-	
-	var movieType = $stateParams.movieType;
-	if ("hollywood" === movieType) {
-		$scope.selectedType = 0;
-	} else {
-		$scope.selectedType = 1;
-	}
-	
-	var getMovies = function() {
+    var movieType = $stateParams.movieType;
+    if ("hollywood" === movieType) {
+        $scope.selectedType = 0;
+    } else {
+        $scope.selectedType = 1;
+    }
+
+    var getMovies = function() {
         APIService.doApiCall({
             "req_name": "getMovies",
             "params": {movieType: movieType},
         }).success(function(data) {
-        	var colors = ['#1a237e', '#880e4f', '#4a148c', '#004d40', '#6d4c41', '#455a64'];
-			data.sort(function(a, b) {
-				// Turn your strings into dates, and then subtract them
-				// to get a value that is either negative, positive, or
-				// zero.
-				return new Date(a.releaseDate) - new Date(b.releaseDate);
-			});
-        	for (i = 0; i < data.length; i++) {
+            var colors = ['#1a237e', '#880e4f', '#4a148c', '#004d40', '#6d4c41', '#455a64'];
+            data.sort(function(a, b) {
+                // Turn your strings into dates, and then subtract them
+                // to get a value that is either negative, positive, or
+                // zero.
+                return new Date(a.releaseDate) - new Date(b.releaseDate);
+            });
+            for (i = 0; i < data.length; i++) {
                 var randomColor = getRandomInt(0, 4);
-				data[i].movieColor = colors[randomColor];
-            	var today = new Date();
-            	today.setHours(0,0,0,0);
-            	var releaseDate = new Date(data[i].releaseDate);
-            	if (releaseDate < today) {
-            		data[i].displayMovie = "none";
-            	}
+                data[i].movieColor = colors[randomColor];
+                var today = new Date();
+                today.setHours(0,0,0,0);
+                var releaseDate = new Date(data[i].releaseDate);
+                if (releaseDate < today) {
+                    data[i].displayMovie = "none";
+                }
             }
             $scope.movies = data;
         });
     }
 
     if ("hollywood" === movieType) {
-    	getMovies();
-	} else {
-		getMovies();
-	}
-	
+        getMovies();
+    } else {
+        getMovies();
+    }
+
     /* reference -- http://jsfiddle.net/8s9ss/4/ */
     $scope.open = function (_movie) {
         var modalInstance = $uibModal.open({
@@ -440,35 +412,35 @@ var moviesController = function($scope, APIService, ModalService, $http, $uibMod
         });
     };
 
-	$scope.showAllMovies = function(movies) {
-		var today = new Date();
-		today.setHours(0,0,0,0);
-		if ($scope.released) {
-			for (i = 0; i < movies.length; i++) {
-				movies[i].displayMovie = "block";
-			}
-		} else {
-			for (i = 0; i < movies.length; i++) {
-				var releaseDate = new Date(movies[i].releaseDate);
-				if (releaseDate < today) {
-					movies[i].displayMovie = "none";
-				}
-			}
-		}
-	}
+    $scope.showAllMovies = function(movies) {
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+        if ($scope.released) {
+            for (i = 0; i < movies.length; i++) {
+                movies[i].displayMovie = "block";
+            }
+        } else {
+            for (i = 0; i < movies.length; i++) {
+                var releaseDate = new Date(movies[i].releaseDate);
+                if (releaseDate < today) {
+                    movies[i].displayMovie = "none";
+                }
+            }
+        }
+    }
 
     $rootScope.pageTitle = "Movies | Nextrr";
 };
 
-myApp.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, movie, $sce) {
+var ModalInstanceCtrl = function ($scope, $uibModalInstance, movie, $sce) {
     $scope.close = function () {
         $uibModalInstance.dismiss('cancel');
     };
     $scope.trustSrc = function(trailer) {
         return $sce.trustAsResourceUrl(trailer);
     }
-	$scope.movie = movie;
-});
+    $scope.movie = movie;
+}
 
 var formula1Controller = function($scope, APIService, $http, $sce, $rootScope) {
 
@@ -477,19 +449,20 @@ var formula1Controller = function($scope, APIService, $http, $sce, $rootScope) {
         "params": {},
     }).success(function(data) {
     	for (i = 0; i < data.length; i++) {
-    		var monthNames = ["January", "February", "March", "April", "May", "June",
-    			  "July", "August", "September", "October", "November", "December"
-    			];
-        	data[i].expanded = false;
-        	var mainRaceDate = new Date(data[i].mainRace.date);
-        	if (data[i].FIRSTPRACTICE != null || data[i].FIRSTPRACTICE != undefined) {
-        		var firstPracticeDate = new Date(data[i].FIRSTPRACTICE.date);
-        		data[i].FIRSTPRACTICE.date = firstPracticeDate.getDate() + " " + monthNames[firstPracticeDate.getMonth()];
-        	}
-        	var raceDate = mainRaceDate.getDate();
-        	var currentDate = new Date().getDate();
+            var monthNames = [ "January", "February", "March",
+                    "April", "May", "June", "July", "August",
+                    "September", "October", "November",
+                    "December" ];
+            data[i].expanded = false;
+            var mainRaceDate = new Date(data[i].mainRace.date);
+            if (data[i].FIRSTPRACTICE != null || data[i].FIRSTPRACTICE != undefined) {
+                var firstPracticeDate = new Date(data[i].FIRSTPRACTICE.date);
+                data[i].FIRSTPRACTICE.date = firstPracticeDate.getDate() + " " + monthNames[firstPracticeDate.getMonth()];
+            }
+            var raceDate = mainRaceDate.getDate();
+            var currentDate = new Date().getDate();
             data[i].sortTime = mainRaceDate.getTime();
-        	data[i].mainRace.date = raceDate + " " + monthNames[mainRaceDate.getMonth()];
+            data[i].mainRace.date = raceDate + " " + monthNames[mainRaceDate.getMonth()];
             if (mainRaceDate.getTime() < new Date().getTime()) {
                 data[i].isFinished = true;
                 $scope.nextEvent = data[i + 1];
@@ -502,7 +475,6 @@ var formula1Controller = function($scope, APIService, $http, $sce, $rootScope) {
         }
         $scope.formula1 = data;
     });
-
     $rootScope.pageTitle = "Formula 1 Schedule | Nextrr";
 }
 
@@ -529,7 +501,6 @@ var contactUsController = function($scope, APIService, $rootScope) {
             $scope.contact = [];
         }
     }
-
     $rootScope.pageTitle = "Contact Us | Nextrr";
 }
 
@@ -539,7 +510,10 @@ myApp.controller("cricketController", cricketController);
 myApp.controller("fantasyCricketController", fantasyCricketController);
 myApp.controller("homeController", homeController);
 myApp.controller("contactUsController", contactUsController);
+myApp.controller('navbarController', navbarController);
+myApp.controller('ModalInstanceCtrl', ModalInstanceCtrl);
 
+/* ======== Routes Configurations ========*/
 myApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 	$stateProvider.state("home", {
 		url: "/",

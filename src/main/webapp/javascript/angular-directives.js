@@ -1,6 +1,3 @@
-
-
-
 /*http://www.folio3.com/blog/angularjs-file-upload-example-tutorial/*/
 myApp.directive('demoFileModel', function ($parse) {
         return {
@@ -120,3 +117,17 @@ myApp.directive('modalMovable', ['$document',
         };
     }
 ]);
+
+/* http://stackoverflow.com/questions/14878761/bind-class-toggle-to-window-scroll-event */
+myApp.directive("scroll", function ($window) {
+    return function(scope, element, attrs) {
+        angular.element($window).bind("scroll", function() {
+             if (this.pageYOffset < 50) {
+                 scope.boolChangeClass = false;
+             } else {
+                 scope.boolChangeClass = true;
+             }
+            scope.$apply();
+        });
+    };
+});

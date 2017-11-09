@@ -82,7 +82,6 @@ myApp.factory('AuthenticationService',
                     "req_name" : "authenticateUser",
                     "params" : {"username": username, "password": password}
                 }).success(function(response) {
-                    console.log('====response===', response);
                     callback(response);
                 });
             };

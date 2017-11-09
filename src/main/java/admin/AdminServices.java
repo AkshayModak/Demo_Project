@@ -1,6 +1,7 @@
 package admin;
 
 import java.io.Serializable;
+import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -13,6 +14,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
@@ -37,9 +39,7 @@ public class AdminServices extends ResourceConfig implements Serializable {
     public final String className = AdminServices.class.getName();
 
     public AdminServices() {
-        System.out.println("===running--- Found Class====");
         packages("admin");
-        //Register Auth Filter here
         register(AuthenticationFilter.class);
         register(LoggingFilter.class);
         register(GsonMessageBodyHandler.class);

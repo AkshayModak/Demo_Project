@@ -77,10 +77,6 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
             final String username = "akshay";
             final String password = "modak";
               
-            //Verifying Username and password
-            System.out.println("====username===="+username);
-            System.out.println("====password===="+password);
-              
             //Verify user access
             if(method.isAnnotationPresent(RolesAllowed.class))
             {
@@ -108,7 +104,6 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
         DashboardHelper dbHelper = new DashboardHelper();
         String result = dbHelper.authenticateUser(username, password);
 
-        System.out.println("===username==="+username);
         if(/*"success".equals(result)*/true)
         {
             String userRole = "ADMIN";

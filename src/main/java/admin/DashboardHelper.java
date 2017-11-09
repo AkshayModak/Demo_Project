@@ -272,9 +272,7 @@ public class DashboardHelper {
         return new Gson().toJson(unreadCounter);
     }
 
-    @PermitAll
     public String authenticateUser(String username, String password) {
-
         Map<String, Object> resultMap = new HashMap<String, Object>();
         resultMap.put("success", false);
         if ("akshay".equals(username) && "modak".equals(password)) {

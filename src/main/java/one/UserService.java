@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.annotation.security.PermitAll;
 import javax.inject.Singleton;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -47,6 +48,7 @@ public class UserService extends ResourceConfig implements Serializable{
 	@POST
 	@Path("/getCountryAssoc")
 	@Produces(MediaType.APPLICATION_JSON)
+	@PermitAll
 	public String getCountryAssoc(@QueryParam("sports_type_id") String sports_type_id) {
 		GenericHelper genericHelper = new GenericHelper();
 		String result = (String) genericHelper.getCountryAssoc(sports_type_id, "GSON");
@@ -57,6 +59,7 @@ public class UserService extends ResourceConfig implements Serializable{
 	@POST
 	@Path("/getFormula1Schedule")
 	@Produces(MediaType.APPLICATION_JSON)
+	@PermitAll
 	public String getFormula1Schedule() {
 		Formula1Helper f1Helper = new Formula1Helper();
 		String result = f1Helper.getFormula1Schedule();
@@ -66,6 +69,7 @@ public class UserService extends ResourceConfig implements Serializable{
 	@POST
 	@Path("/getFormula1ToEdit")
 	@Produces(MediaType.APPLICATION_JSON)
+	@PermitAll
 	public String getFormula1ToEdit() {
 		Formula1Helper f1Helper = new Formula1Helper();
 		String result = f1Helper.getFormula1ToEdit();
@@ -75,6 +79,7 @@ public class UserService extends ResourceConfig implements Serializable{
 	@POST
 	@Path("/updateF1Practice")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@PermitAll
 	public String setF1Practice(@Context UriInfo uriInfo) {
 		Formula1Helper f1Helper = new Formula1Helper();
 		String result = f1Helper.updateF1Practice(uriInfo.getQueryParameters());
@@ -84,6 +89,7 @@ public class UserService extends ResourceConfig implements Serializable{
 	@POST
 	@Path("/setF1Schedule")
 	@Produces(MediaType.APPLICATION_JSON)
+	@PermitAll
 	public String setF1Schedule(@Context UriInfo uriInfo) {
 		Formula1Helper f1Helper = new Formula1Helper();
 		String result = f1Helper.setF1Schedule(uriInfo.getQueryParameters());
@@ -93,6 +99,7 @@ public class UserService extends ResourceConfig implements Serializable{
 	@POST
 	@Path("/removeF1Schedule")
 	@Produces(MediaType.APPLICATION_JSON)
+	@PermitAll
 	public String removeF1Schedule(@Context UriInfo uriInfo) {
 		Formula1Helper f1Helper = new Formula1Helper();
 		String result = f1Helper.removeF1Schedule(uriInfo.getQueryParameters());
@@ -102,6 +109,7 @@ public class UserService extends ResourceConfig implements Serializable{
 	@POST
 	@Path("/getMovies")
 	@Produces(MediaType.APPLICATION_JSON)
+	@PermitAll
 	public String getMovies(@Context UriInfo uriInfo) {
 		MoviesServices movieServices = new MoviesServices();
 		String result = movieServices.getMovies(uriInfo.getQueryParameters());
@@ -111,6 +119,7 @@ public class UserService extends ResourceConfig implements Serializable{
 	@POST
 	@Path("/getMoviesToEdit")
 	@Produces(MediaType.APPLICATION_JSON)
+	@PermitAll
 	public String getMoviesToEdit() {
 		MoviesServices movieServices = new MoviesServices();
 		String result = movieServices.getMoviesToEdit();
@@ -120,6 +129,7 @@ public class UserService extends ResourceConfig implements Serializable{
 	@POST
 	@Path("/setMovie")
 	@Produces(MediaType.APPLICATION_JSON)
+	@PermitAll
 	public String setMovie(@Context UriInfo uriInfo) {
 		MoviesServices movieServices = new MoviesServices();
 		String result = movieServices.setMovie(uriInfo.getQueryParameters());
@@ -129,6 +139,7 @@ public class UserService extends ResourceConfig implements Serializable{
 	@POST
 	@Path("/removeMovie")
 	@Produces(MediaType.APPLICATION_JSON)
+	@PermitAll
 	public String removeMovie(@Context UriInfo uriInfo) {
 		MoviesServices movieServices = new MoviesServices();
 		String result = movieServices.removeMovie(uriInfo.getQueryParameters());
@@ -138,6 +149,7 @@ public class UserService extends ResourceConfig implements Serializable{
 	@POST
 	@Path("/updateMovie")
 	@Produces(MediaType.APPLICATION_JSON)
+	@PermitAll
 	public String updateMovie(@Context UriInfo uriInfo) {
 		MoviesServices movieServices = new MoviesServices();
 		String result = movieServices.updateMovie(uriInfo.getQueryParameters());
@@ -147,6 +159,7 @@ public class UserService extends ResourceConfig implements Serializable{
 	@POST
 	@Path("/setCricket")
 	@Produces(MediaType.APPLICATION_JSON)
+	@PermitAll
 	public String setCricket(@Context UriInfo uriInfo) {
 		CricketHelper cricketHelper = new CricketHelper();
 		String result = cricketHelper.setCricket(uriInfo.getQueryParameters());
@@ -156,6 +169,7 @@ public class UserService extends ResourceConfig implements Serializable{
 	@POST
 	@Path("/getIntlCricket")
 	@Produces(MediaType.APPLICATION_JSON)
+	@PermitAll
 	public String getIntlCricket() {
 		CricketHelper cricketHelper = new CricketHelper();
 		String result = cricketHelper.getIntlCricket();
@@ -165,6 +179,7 @@ public class UserService extends ResourceConfig implements Serializable{
 	@POST
 	@Path("/getIntlCricketToDisplay")
 	@Produces(MediaType.APPLICATION_JSON)
+	@PermitAll
 	public String getIntlCricketToDisplay() {
 		CricketHelper cricketHelper = new CricketHelper();
 		String result = cricketHelper.getIntlCricketToDisplay();
@@ -174,6 +189,7 @@ public class UserService extends ResourceConfig implements Serializable{
 	@POST
 	@Path("/getCricketCountries")
 	@Produces(MediaType.APPLICATION_JSON)
+	@PermitAll
 	public String getCricketCountries() {
 		GenericHelper genericHelper = new GenericHelper();
 		String result = genericHelper.getCountriesBySport("CRICKET");
@@ -183,6 +199,7 @@ public class UserService extends ResourceConfig implements Serializable{
 	@POST
 	@Path("/getCricketMatchTypes")
 	@Produces(MediaType.APPLICATION_JSON)
+	@PermitAll
 	public String getCricketMatchTypes() {
 		DatabaseUtils dbUtils = new DatabaseUtils();
 		Map<String, Object> queryParams = new HashMap<String, Object>();
@@ -194,6 +211,7 @@ public class UserService extends ResourceConfig implements Serializable{
 	@POST
 	@Path("/removeCricket")
 	@Produces(MediaType.APPLICATION_JSON)
+	@PermitAll
 	public String removeCricket(@Context UriInfo uriInfo) {
 		CricketHelper cricketHelper = new CricketHelper();
 		String result = cricketHelper.removeCricket(uriInfo.getQueryParameters());
@@ -203,6 +221,7 @@ public class UserService extends ResourceConfig implements Serializable{
 	@POST
 	@Path("/updateCricket")
 	@Produces(MediaType.APPLICATION_JSON)
+	@PermitAll
 	public String updateCricket(@Context UriInfo uriInfo) {
 		CricketHelper cricketHelper = new CricketHelper();
 		String result = cricketHelper.updateCricket(uriInfo.getQueryParameters());
@@ -212,6 +231,7 @@ public class UserService extends ResourceConfig implements Serializable{
 	@POST
 	@Path("/getCricketLeagues")
 	@Produces(MediaType.APPLICATION_JSON)
+	@PermitAll
 	public String getCricketLeagues() {
 		CricketHelper cricketHelper = new CricketHelper();
 		String result = cricketHelper.getCricketLeagues();
@@ -221,6 +241,7 @@ public class UserService extends ResourceConfig implements Serializable{
 	@POST
 	@Path("/getAllRawCricketLeagues")
 	@Produces(MediaType.APPLICATION_JSON)
+	@PermitAll
 	public String getAllRawCricketLeagues() {
 		CricketHelper cricketHelper = new CricketHelper();
 		String result = cricketHelper.getAllRawCricketLeagues();
@@ -230,6 +251,7 @@ public class UserService extends ResourceConfig implements Serializable{
 	@POST
 	@Path("/addRemoveSportsLeague")
 	@Produces(MediaType.APPLICATION_JSON)
+	@PermitAll
 	public String addRemoveSportsLeague(@Context UriInfo uriInfo) {
 		GenericHelper genericHelper = new GenericHelper();
 		String sports_id = uriInfo.getQueryParameters().getFirst("sports_league_id");
@@ -247,6 +269,7 @@ public class UserService extends ResourceConfig implements Serializable{
 	@POST
 	@Path("/getFantasyCricketPlayers")
 	@Produces(MediaType.APPLICATION_JSON)
+	@PermitAll
 	public String getFantasyCricketPlayers() {
 		FantasyCricketHelper fcHelper = new FantasyCricketHelper();
 		String result = fcHelper.getAllPlayers();
@@ -256,6 +279,7 @@ public class UserService extends ResourceConfig implements Serializable{
 	@POST
 	@Path("/getFantasyCricketResult")
 	@Produces(MediaType.APPLICATION_JSON)
+	@PermitAll
 	public String getFantasyCricketResult(@Context UriInfo uriInfo) {
 		FantasyCricketHelper fcHelper = new FantasyCricketHelper();
 		String result = fcHelper.playCricket(uriInfo.getQueryParameters());
@@ -265,6 +289,7 @@ public class UserService extends ResourceConfig implements Serializable{
 	@POST
 	@Path("/setFantasyCricketRecord")
 	@Produces(MediaType.APPLICATION_JSON)
+	@PermitAll
 	public String setFantasyCricketRecord(@Context UriInfo uriInfo) {
 		FantasyCricketHelper fcHelper = new FantasyCricketHelper();
 		String result = fcHelper.setFantasyCricketRecord(uriInfo.getQueryParameters());
@@ -274,6 +299,7 @@ public class UserService extends ResourceConfig implements Serializable{
 	@POST
 	@Path("/removeFantasyCricketRecord")
 	@Produces(MediaType.APPLICATION_JSON)
+	@PermitAll
 	public String removeFantasyCricketRecord(@Context UriInfo uriInfo) {
 		FantasyCricketHelper fcHelper = new FantasyCricketHelper();
 		String result = fcHelper.removeFantasyCricketRecord(uriInfo.getQueryParameters());
@@ -283,6 +309,7 @@ public class UserService extends ResourceConfig implements Serializable{
 	@POST
 	@Path("/updateFantasyCricket")
 	@Produces(MediaType.APPLICATION_JSON)
+	@PermitAll
 	public String updateFantasyCricket(@Context UriInfo uriInfo) {
 		FantasyCricketHelper fcHelper = new FantasyCricketHelper();
 		String result = fcHelper.updateFantasyCricket(uriInfo.getQueryParameters());
@@ -292,6 +319,7 @@ public class UserService extends ResourceConfig implements Serializable{
 	@POST
 	@Path("/setPlayAgainst")
 	@Produces(MediaType.APPLICATION_JSON)
+	@PermitAll
 	public String setPlayAgainst(@Context UriInfo uriInfo) {
 		FantasyCricketHelper fcHelper = new FantasyCricketHelper();
 		String result = fcHelper.setPlayAgainst(uriInfo.getQueryParameters());
@@ -301,6 +329,7 @@ public class UserService extends ResourceConfig implements Serializable{
 	@POST
 	@Path("/setMessage")
 	@Produces(MediaType.APPLICATION_JSON)
+	@PermitAll
 	public String setMessage(@Context UriInfo uriInfo) {
 		ContentHelper contentHelper = new ContentHelper();
 		String result = contentHelper.setMessage(uriInfo.getQueryParameters());
@@ -310,6 +339,7 @@ public class UserService extends ResourceConfig implements Serializable{
     @POST
     @Path("/getContentByCondition")
     @Produces(MediaType.APPLICATION_JSON)
+    @PermitAll
     public String getContentByCondition(@Context UriInfo uriInfo) {
         ContentHelper contentHelper = new ContentHelper();
         String result = contentHelper.getContentByCondition(uriInfo.getQueryParameters());

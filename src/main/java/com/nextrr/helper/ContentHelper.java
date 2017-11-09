@@ -22,7 +22,6 @@ public class ContentHelper {
 
         Calendar cal = Calendar.getInstance();
         DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        System.out.println("===cal Date==="+sdf.format(cal.getTime()));
         String messageDateTime = sdf.format(cal.getTime());
 
         String userEmail = params.getFirst("email");
@@ -32,9 +31,6 @@ public class ContentHelper {
             queryMap.put("messageDateTime", messageDateTime);
             queryMap.put("userEmail", userEmail);
             queryMap.put("message", message);
-
-            System.out.println("====queryMap===="+queryMap);
-
             DatabaseUtils dbUtils = new DatabaseUtils();
             dbUtils.runCreateQuery("user_message", queryMap);
 

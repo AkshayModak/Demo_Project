@@ -868,12 +868,12 @@ uib-accordion > div > div > div > div.panel-body {
 }
 
 .movie-background {
-    background-image: url("../images/carouselImages/movies-carousel.jpg");
+    background-image: url("../images/carouselImages/movie-carousel.jpg");
     background-size: cover;
 }
  
 .cricket-background {
-    background-image: url("../images/carouselImages/cricket-carousel.jpg");
+    background-image: url("../images/carouselImages/cricket-carousel-1.jpg");
     background-size: cover;
 }
  

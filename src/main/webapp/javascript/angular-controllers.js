@@ -530,43 +530,40 @@ myApp.controller('ModalInstanceCtrl', ModalInstanceCtrl);
 
 /* ======== Routes Configurations ========*/
 myApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
-	$stateProvider.state("home", {
-		url: "/",
-		templateUrl: "final/CompOne.html",
-		controller: "homeController"
-	}).state("formula1", {
-		url: "/formula1",
-		templateUrl: "final/f1.html",
-		controller: "formula1Controller"
-	}).state("movies", {
-		url: "/movies/:movieType",
-		templateUrl: "final/movies.html",
-		controller: "moviesController"
-	}).state("gallery", {
-		url: "/gallery/:movieId",
-		templateUrl: "templates/gallery.html",
-		controller: "galleryController"
-	}).state("cricket", {
-		url: "/cricket/:teamId",
-		templateUrl: "final/cricket.html",
-		controller: "cricketController"
-	}).state("fantasy-cricket", {
-		url: "/fantasy-Cricket",
-		templateUrl: "final/FantasyCricket.html",
-		controller: "fantasyCricketController"
-	}).state("disclaimer", {
-		url: "/disclaimer",
-		templateUrl: "final/disclaimer.html",
-	}).state("credits", {
-		url: "/credits",
-		templateUrl: "final/credits.html",
-	}).state("contact-us", {
-		url: "/contact-us",
-		templateUrl: "final/contact-us.html",
-		controller: "contactUsController"
-	}).state("otherwise", {
-		url: "/otherwise",
-		templateUrl: "final/compOne.html",
-		controller: "homeController"
-	});
+    $stateProvider.state("home", {
+        url : "/",
+        templateUrl : "final/CompOne.html",
+        controller : "homeController"
+    }).state("formula1", {
+        url : "/formula1",
+        templateUrl : "final/f1.html",
+        controller : "formula1Controller"
+    }).state("movies", {
+        url : "/movies/:movieType",
+        templateUrl : "final/movies.html",
+        controller : "moviesController"
+    }).state("gallery", {
+        url : "/gallery/:movieId",
+        templateUrl : "templates/gallery.html",
+        controller : "galleryController"
+    }).state("cricket", {
+        url : "/cricket/:teamId",
+        templateUrl : "final/cricket.html",
+        controller : "cricketController"
+    }).state("fantasy-cricket", {
+        url : "/fantasy-Cricket",
+        templateUrl : "final/FantasyCricket.html",
+        controller : "fantasyCricketController"
+    }).state("disclaimer", {
+        url : "/disclaimer",
+        templateUrl : "final/disclaimer.html",
+    }).state("credits", {
+        url : "/credits",
+        templateUrl : "final/credits.html",
+    }).state("contact-us", {
+        url : "/contact-us",
+        templateUrl : "final/contact-us.html",
+        controller : "contactUsController"
+    });
+    $urlRouterProvider.otherwise('/'); //redirect to home screen if page not found.
 });

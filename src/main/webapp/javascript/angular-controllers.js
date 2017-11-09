@@ -1,9 +1,16 @@
 
 var myApp = angular.module("myModule", ["ui.router",'ngAnimate', 'ngSanitize', "ui.bootstrap", "ngMaterial", "ngMessages", "infinite-scroll"]);
 
+/*
+ *
+ * pageTitle: Title which will be displayed on tabs.
+ * APIService: Custom service to hit Http Requests. Using jersey for rest calls.
+ * 
+ */
+
 /* ======= Utility Functions =======*/
 function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+    return Math.floor(Math.random() * (max - min + 1)) + min; //return a random number in between certain range
 }
 
 function format_time(date_obj) {
@@ -65,7 +72,7 @@ var fantasyCricketController = function($scope, $rootScope, APIService, ModalSer
     }
 
     $scope.userEleven = [];
-    $scope.userEleven.teamName = "Demo XI";
+    $scope.userEleven.teamName = "Hellraiser XI"; //Default Player team name
 
     $scope.rating = 0;
     $scope.ratingExceedAlert = false;
@@ -74,6 +81,7 @@ var fantasyCricketController = function($scope, $rootScope, APIService, ModalSer
     $scope.disableWicketkeepers = false;
     $scope.disableAllRounders = false;
 
+    //Count of player categories
     var totalBatsmen = 0;
     var totalWicketkeepers = 0;
     var totalBowlers = 0;
@@ -94,21 +102,20 @@ var fantasyCricketController = function($scope, $rootScope, APIService, ModalSer
             totalAllRounders = totalAllRounders + 1;
         }
 
-        if (totalBatsmen >= 5) {
+        if (totalBatsmen >= 5) {            //Can Only select 5 batsman at a time
              $scope.disableBatsmen = true;
         }
-        if (totalBowlers >= 3) {
+        if (totalBowlers >= 3) {            //Can't select more than 3 bowlers at a time
             $scope.disableBowlers = true;
         }
-        if (totalWicketkeepers >= 1) {
+        if (totalWicketkeepers >= 1) {      //Can't select more than 1 wicket-keeper
             $scope.disableWicketkeepers = true;
         }
-        if (totalAllRounders >= 2) {
+        if (totalAllRounders >= 2) {        //Can't select more than 1 All-Rounders
             $scope.disableAllRounders = true;
         }
         
-        console.log($scope.rating);
-        if ($scope.rating <= 100) {
+        if ($scope.rating <= 100) {         //Disable add player button if rating exceeds 100 mark
             item.pushed = true;
             $scope.userEleven.push(item);
 
@@ -142,6 +149,8 @@ var fantasyCricketController = function($scope, $rootScope, APIService, ModalSer
             totalAllRounders = totalAllRounders - 1;
         }
 
+        /*Enable disabled add button if player limit of certain category 
+          remains under rating limit. ie. 100 */
         if (totalBatsmen < 5) {
              $scope.disableBatsmen = false;
         }
@@ -159,6 +168,7 @@ var fantasyCricketController = function($scope, $rootScope, APIService, ModalSer
     $scope.showScoreboard = false;
     $scope.playCricket = function(userEleven, computerPlayers, playingAgainst, tossPreference) {
         if (computerPlayers == undefined || computerPlayers.length < 11) {
+            //Display error message if user submits before selecting opposition team.
             $scope.errorMessage = "Please select country to play against.";
             return;
         }
@@ -171,15 +181,15 @@ var fantasyCricketController = function($scope, $rootScope, APIService, ModalSer
                 $scope.tossPreference = data[0];
                 if ("user" == data) {
                     $scope.tossPreference = true;
-                    $scope.tossMessage = userEleven.teamName + " Won the toss."
+                    $scope.tossMessage = userEleven.teamName + " Won the toss." //Display when user wins the toss.
                     $scope.wonBy = "user";
                 } else if ("computer-bat" == data) {
                     $scope.tossPreference = true;
-                    $scope.tossMessage = playingAgainst + " has won the toss and elected to bat first";
+                    $scope.tossMessage = playingAgainst + " has won the toss and elected to bat first"; //Display when computer elects to bat first.
                     $scope.wonBy = "computer";
                 } else if ("computer-bowl" == data) {
                     $scope.tossPreference = true;
-                    $scope.tossMessage = playingAgainst + " has won the toss and elected to bowl first";
+                    $scope.tossMessage = playingAgainst + " has won the toss and elected to bowl first"; //Display when computer elects to bowl first.
                     $scope.wonBy = "computer";
                 }
                 $scope.team1 = data[1];
@@ -197,7 +207,7 @@ var fantasyCricketController = function($scope, $rootScope, APIService, ModalSer
             $scope.showSpinner = false;
         } else {
             playersRequired = 11 - userEleven.length;
-            $scope.errorMessage = "Need " + playersRequired +" more player(s) to play a match.";
+            $scope.errorMessage = "Need " + playersRequired +" more player(s) to play a match."; //Display if user tries to play with less than 11 players
         }
     }
 
@@ -233,6 +243,7 @@ var fantasyCricketController = function($scope, $rootScope, APIService, ModalSer
 var cricketController = function($scope, APIService, ModalService, $http, $uibModal, $stateParams, $rootScope) {
     $scope.expanded = false;
 
+    //filter cricket list based on passed conditions. Used to filter based on Country and to clear selected country list.
     $scope.filterCricket = function(string) {
         $scope.filterString = "";
         if (string == '') {
@@ -242,6 +253,7 @@ var cricketController = function($scope, APIService, ModalService, $http, $uibMo
         $scope.selectedTeam = string;
     }
 
+    //Toggle to display all Cricket matches. ie. Completed and Upcoming
     $scope.showAllCricket = function() {
         if ($scope.released) {
             var today = new Date();
@@ -289,7 +301,7 @@ var cricketController = function($scope, APIService, ModalService, $http, $uibMo
             "params": {}
         }).success(function(data) {
             cricketList = data.result;
-            var colors = ['#1a237e', '#880e4f', '#4a148c', '#004d40', '#6d4c41', '#455a64'];
+            var colors = ['#1a237e', '#880e4f', '#4a148c', '#004d40', '#6d4c41', '#455a64']; //Color list for cricket-bar. Chosen randomly
             var today = new Date();
             today.setHours(0,0,0,0);
             for (i=0; i < cricketList.length; i++) {
@@ -371,11 +383,10 @@ var moviesController = function($scope, APIService, ModalService, $http, $uibMod
             "req_name": "getMovies",
             "params": {movieType: movieType},
         }).success(function(data) {
-            var colors = ['#1a237e', '#880e4f', '#4a148c', '#004d40', '#6d4c41', '#455a64'];
+            var colors = ['#1a237e', '#880e4f', '#4a148c', '#004d40', '#6d4c41', '#455a64']; //Movie-bar colors. Chosen randomly
             data.sort(function(a, b) {
-                // Turn your strings into dates, and then subtract them
-                // to get a value that is either negative, positive, or
-                // zero.
+                /* Turn your strings into dates, and then subtract them
+                 to get a value that is either negative, positive, or zero. */
                 return new Date(a.releaseDate) - new Date(b.releaseDate);
             });
             for (i = 0; i < data.length; i++) {
@@ -398,7 +409,9 @@ var moviesController = function($scope, APIService, ModalService, $http, $uibMod
         getMovies();
     }
 
-    /* reference -- http://jsfiddle.net/8s9ss/4/ */
+    /* Open trailer modal with passed movie
+     * reference -- http://jsfiddle.net/8s9ss/4/ 
+     *  */
     $scope.open = function (_movie) {
         var modalInstance = $uibModal.open({
           controller: "ModalInstanceCtrl",
@@ -412,6 +425,7 @@ var moviesController = function($scope, APIService, ModalService, $http, $uibMod
         });
     };
 
+    //Show all movies. ie. Released and Upcoming
     $scope.showAllMovies = function(movies) {
         var today = new Date();
         today.setHours(0, 0, 0, 0);
@@ -488,6 +502,7 @@ var contactUsController = function($scope, APIService, $rootScope) {
             }).success(function(data) {
                 console.log(data);
                 if (data != null || data != "") {
+                    //Messages to display after user submits contact Us.
                     if ('success' === data) {
                         $scope.alerts = [{ type: 'success', msg: 'Thank You for contacting Us. We will try to revert you back as soon as possible.' }];
                     } else {

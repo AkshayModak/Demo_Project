@@ -1,0 +1,157 @@
+diff --git a/src/main/webapp/index.html b/src/main/webapp/index.html
+index eb49949..1d07e53 100644
+--- a/src/main/webapp/index.html
++++ b/src/main/webapp/index.html
+@@ -3,28 +3,28 @@
+   <head>
+     <title ng-bind="pageTitle">loading...</title>
+     <base href="/Demo_Project/#home">
+-    <link rel="icon" type="image/png" sizes="32x32" href="indexImages/favicon-32x32.png">
++    <link rel="icon" type="image/png" sizes="32x32" href="/indexImages/favicon-32x32.png">
+     <meta charset="utf-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+-    <script src="javascript/jquery/jquery.min.js"></script>
+-    <script src="javascript/angular.js"></script>
+-    <script src="javascript/angular-ui-router.js"></script>
+-    <script src="javascript/angular-animate.js"></script>
+-    <script src="javascript/angular-sanitize.js"></script>
++    <script src="/javascript/jquery/jquery.min.js"></script>
++    <script src="/javascript/angular.js"></script>
++    <script src="/javascript/angular-ui-router.js"></script>
++    <script src="/javascript/angular-animate.js"></script>
++    <script src="/javascript/angular-sanitize.js"></script>
+     <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+-    <script src="javascript/ui-bootstrap-tpls.js"></script>
+-    <script src="javascript/angular-controllers.js"></script>
+-    <script src="javascript/angular-services.js"></script>
+-    <script src="javascript/angular-directives.js"></script>
+-    <script src="javascript/angular-factory.js"></script>
+-    <script src="javascript/ng-infinite-scroll.min.js"></script>
++    <script src="/javascript/ui-bootstrap-tpls.js"></script>
++    <script src="/javascript/angular-controllers.js"></script>
++    <script src="/javascript/angular-services.js"></script>
++    <script src="/javascript/angular-directives.js"></script>
++    <script src="/javascript/angular-factory.js"></script>
++    <script src="/javascript/ng-infinite-scroll.min.js"></script>
+     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+     <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+-    <script src="javascript/filter.js"></script>
+-    <link href="css/bootstrap.min.css" rel="stylesheet">
+-    <link href="css/style.css" rel="stylesheet">
++    <script src="/javascript/filter.js"></script>
++    <link href="/css/bootstrap.min.css" rel="stylesheet">
++    <link href="/css/style.css" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css?family=Cinzel|Shadows+Into+Light|Fira+Sans" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+diff --git a/src/main/webapp/javascript/admin/admin-controllers.js b/src/main/webapp/javascript/admin/admin-controllers.js
+index c9840bd..5ee94fb 100644
+--- a/src/main/webapp/javascript/admin/admin-controllers.js
++++ b/src/main/webapp/javascript/admin/admin-controllers.js
+@@ -1030,35 +1030,35 @@ myApp.config(function($stateProvider, $urlRouterProvider, $locationProvider, loc
+     localStorageServiceProvider.setPrefix('nextrr');
+     $stateProvider.state("home", {
+         url : "/",
+-        templateUrl : "dashboard.html",
++        templateUrl : "/admin/dashboard.html",
+         controller : "dashboardController"
+     }).state("movies", {
+         url : "/movies",
+-        templateUrl : "moviesInsert.html",
++        templateUrl : "/admin/moviesInsert.html",
+         controller : "editMoviesController"
+     }).state("cricket", {
+         url : "/cricket",
+-        templateUrl : "cricketInsert.html",
++        templateUrl : "/admin/cricketInsert.html",
+         controller : "editCricketController"
+     }).state("formula-one", {
+         url : "/f1",
+-        templateUrl : "F1Insert.html",
++        templateUrl : "/admin/F1Insert.html",
+         controller : "editF1Controller"
+     }).state("fantasy-cricket", {
+         url : "/fantasy-cricket",
+-        templateUrl : "fantasyCricketInsert.html",
++        templateUrl : "/admin/fantasyCricketInsert.html",
+         controller : "editFantasyCricketController"
+     }).state("user-message", {
+         url : "/user-messages",
+-        templateUrl : "userMessages.html",
++        templateUrl : "/admin/userMessages.html",
+         controller : "userMessagesController"
+     }).state("login", {
+         url : "/login",
+-        templateUrl : "login.html",
++        templateUrl : "/admin/login.html",
+         controller : "loginController"
+     }).state("otherwise", {
+         url : "/otherwise",
+-        templateUrl : "login.html",
++        templateUrl : "/admin/login.html",
+         controller : "loginController"
+     });
+ }).run(['$rootScope', '$location', '$http', 'localStorageService', 
+@@ -1072,7 +1072,7 @@ myApp.config(function($stateProvider, $urlRouterProvider, $locationProvider, loc
+     $rootScope.$on('$locationChangeStart', function (event, next, current) {
+         // redirect to login page if not logged in
+         if ($location.path() !== '/login' && !$rootScope.globals.currentUser) {
+-            $location.path('/login');
++            $location.path('/admin/login');
+         }
+     });
+ }]);
+\ No newline at end of file
+diff --git a/src/main/webapp/javascript/angular-controllers.js b/src/main/webapp/javascript/angular-controllers.js
+index c687045..37edf9e 100644
+--- a/src/main/webapp/javascript/angular-controllers.js
++++ b/src/main/webapp/javascript/angular-controllers.js
+@@ -532,37 +532,37 @@ myApp.controller('ModalInstanceCtrl', ModalInstanceCtrl);
+ myApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+     $stateProvider.state("home", {
+         url : "/",
+-        templateUrl : "final/CompOne.html",
++        templateUrl : "/final/CompOne.html",
+         controller : "homeController"
+     }).state("formula1", {
+         url : "/formula1",
+-        templateUrl : "final/f1.html",
++        templateUrl : "/final/f1.html",
+         controller : "formula1Controller"
+     }).state("movies", {
+         url : "/movies/:movieType",
+-        templateUrl : "final/movies.html",
++        templateUrl : "/final/movies.html",
+         controller : "moviesController"
+     }).state("gallery", {
+         url : "/gallery/:movieId",
+-        templateUrl : "templates/gallery.html",
++        templateUrl : "/templates/gallery.html",
+         controller : "galleryController"
+     }).state("cricket", {
+         url : "/cricket/:teamId",
+-        templateUrl : "final/cricket.html",
++        templateUrl : "/final/cricket.html",
+         controller : "cricketController"
+     }).state("fantasy-cricket", {
+         url : "/fantasy-Cricket",
+-        templateUrl : "final/FantasyCricket.html",
++        templateUrl : "/final/FantasyCricket.html",
+         controller : "fantasyCricketController"
+     }).state("disclaimer", {
+         url : "/disclaimer",
+-        templateUrl : "final/disclaimer.html",
++        templateUrl : "/final/disclaimer.html",
+     }).state("credits", {
+         url : "/credits",
+-        templateUrl : "final/credits.html",
++        templateUrl : "/final/credits.html",
+     }).state("contact-us", {
+         url : "/contact-us",
+-        templateUrl : "final/contact-us.html",
++        templateUrl : "/final/contact-us.html",
+         controller : "contactUsController"
+     });
+     $urlRouterProvider.otherwise('/'); //redirect to home screen if page not found.

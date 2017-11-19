@@ -164,3 +164,57 @@ index c687045..37edf9e 100644
          controller : "contactUsController"
      });
      $urlRouterProvider.otherwise('/'); //redirect to home screen if page not found.
+
+diff --git a/src/main/webapp/admin/index.html b/src/main/webapp/admin/index.html
+index a2eb499..c042e94 100644
+--- a/src/main/webapp/admin/index.html
++++ b/src/main/webapp/admin/index.html
+@@ -38,7 +38,7 @@
+   </head>
+   <body>
+     <div id="wrapper">
+-    <div ng-include="'navbar.html'"></div>
++    <div ng-include="'/navbar.html'"></div>
+       <div id="loadingDiv" ng-if="showSpinner">
+         <i class="fa fa-cog fa-spin fa-3x fa-fw" aria-hidden="true"></i> <span
+           class="sr-only">Saving. Hang tight!</span>
+diff --git a/src/main/webapp/final/FantasyCricket.html b/src/main/webapp/final/FantasyCricket.html
+index 303af08..f884c4c 100644
+--- a/src/main/webapp/final/FantasyCricket.html
++++ b/src/main/webapp/final/FantasyCricket.html
+@@ -47,6 +47,6 @@
+   </div>
+ </div>
+ <div class="container" style="padding-top: 150px; padding-bottom: 50px;">
+-    <div class="hidden-xs hidden-sm" ng-include="'final/desktop/FantasyCricketDesktop.html'"></div>
+-    <div class="visible-xs visible-sm" ng-include="'final/mobile/FantasyCricketMobile.html'"></div>
++    <div class="hidden-xs hidden-sm" ng-include="'/final/desktop/FantasyCricketDesktop.html'"></div>
++    <div class="visible-xs visible-sm" ng-include="'/final/mobile/FantasyCricketMobile.html'"></div>
+ </div>
+\ No newline at end of file
+diff --git a/src/main/webapp/final/cricket.html b/src/main/webapp/final/cricket.html
+index 0bf33c6..2872fd1 100644
+--- a/src/main/webapp/final/cricket.html
++++ b/src/main/webapp/final/cricket.html
+@@ -49,7 +49,7 @@
+             </md-content>
+         </md-sidenav>
+       </div>
+-      <div class="col-md-9 hidden-xs hidden-sm" ng-include="'final/desktop/desktopCricket.html'"></div>
++      <div class="col-md-9 hidden-xs hidden-sm" ng-include="'/final/desktop/desktopCricket.html'"></div>
+     </div>
+-    <div class="visible-xs visible-sm" ng-include="'final/mobile/mobileCricket.html'"></div>
++    <div class="visible-xs visible-sm" ng-include="'/final/mobile/mobileCricket.html'"></div>
+ </div>
+diff --git a/src/main/webapp/final/movies.html b/src/main/webapp/final/movies.html
+index 6d7db25..9f16ccc 100644
+--- a/src/main/webapp/final/movies.html
++++ b/src/main/webapp/final/movies.html
+@@ -3,5 +3,5 @@
+     Released Movies
+   </md-switch>
+ </div>
+-<div class="container hidden-xs hidden-sm" ng-include="'final/desktop/desktopMovies.html'"></div>
+-<div class="visible-xs visible-sm" ng-include="'final/mobile/mobileMovies.html'"></div>
++<div class="container hidden-xs hidden-sm" ng-include="'/final/desktop/desktopMovies.html'"></div>
++<div class="visible-xs visible-sm" ng-include="'/final/mobile/mobileMovies.html'"></div>

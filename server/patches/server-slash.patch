@@ -1,5 +1,5 @@
 diff --git a/src/main/webapp/index.html b/src/main/webapp/index.html
-index eb49949..1d07e53 100644
+index eb49949..36b96ce 100644
 --- a/src/main/webapp/index.html
 +++ b/src/main/webapp/index.html
 @@ -3,28 +3,28 @@
@@ -46,6 +46,15 @@ index eb49949..1d07e53 100644
      <link href="https://fonts.googleapis.com/css?family=Cinzel|Shadows+Into+Light|Fira+Sans" rel="stylesheet">
      <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
      <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+@@ -32,7 +32,7 @@
+     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+   </head>
+-  <div ng-include="'final/innerNavbar.html'"></div>
++  <div ng-include="'/final/innerNavbar.html'"></div>
+   <body>
+     <div id="loadingDiv" ng-if="showSpinner">
+         <i class="fa fa-cog fa-spin fa-3x fa-fw" aria-hidden="true"></i>
 diff --git a/src/main/webapp/javascript/admin/admin-controllers.js b/src/main/webapp/javascript/admin/admin-controllers.js
 index c9840bd..5ee94fb 100644
 --- a/src/main/webapp/javascript/admin/admin-controllers.js

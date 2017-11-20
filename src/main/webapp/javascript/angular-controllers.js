@@ -58,7 +58,7 @@ var navbarController = function ($scope, $rootScope) {
 
 var fantasyCricketController = function($scope, $rootScope, APIService, ModalService, $http, $uibModal, $stateParams) {
     getFantasyCricketPlayers = function() {
-        $scope.showSpinner = true;
+        $rootScope.showLoader = true;
         APIService.doApiCall({
             "req_name": "getFantasyCricketPlayers",
             "params": {}
@@ -67,8 +67,8 @@ var fantasyCricketController = function($scope, $rootScope, APIService, ModalSer
                 data[i].pushed = "";
             }
             $scope.players = data;
+            $rootScope.showLoader = false;
         });
-        $scope.showSpinner = false;
     }
 
     $scope.userEleven = [];
@@ -296,6 +296,7 @@ var cricketController = function($scope, APIService, ModalService, $http, $uibMo
     $scope.cricketList = [];
 
     getIntlCricketToDisplay = function() {
+        $rootScope.showLoader = true;
         APIService.doApiCall({
             "req_name": "getIntlCricketToDisplay",
             "params": {}
@@ -315,6 +316,7 @@ var cricketController = function($scope, APIService, ModalService, $http, $uibMo
                 }
             }
             $scope.cricketList = cricketList;
+            $rootScope.showLoader = false;
         });
     }
     getIntlCricketToDisplay();
@@ -379,6 +381,7 @@ var moviesController = function($scope, APIService, ModalService, $http, $uibMod
     }
 
     var getMovies = function() {
+        $rootScope.showLoader = true;
         APIService.doApiCall({
             "req_name": "getMovies",
             "params": {movieType: movieType},
@@ -400,6 +403,7 @@ var moviesController = function($scope, APIService, ModalService, $http, $uibMod
                 }
             }
             $scope.movies = data;
+            $rootScope.showLoader = false;
         });
     }
 
@@ -458,6 +462,7 @@ var ModalInstanceCtrl = function ($scope, $uibModalInstance, movie, $sce) {
 
 var formula1Controller = function($scope, APIService, $http, $sce, $rootScope) {
 
+    $rootScope.showLoader = true;
     APIService.doApiCall({
         "req_name": "getFormula1Schedule",
         "params": {},
@@ -488,6 +493,7 @@ var formula1Controller = function($scope, APIService, $http, $sce, $rootScope) {
             }
         }
         $scope.formula1 = data;
+        $rootScope.showLoader = false;
     });
     $rootScope.pageTitle = "Formula 1 Schedule | Nextrr";
 }

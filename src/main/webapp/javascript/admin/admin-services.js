@@ -7,8 +7,7 @@ myApp.factory('AdminAPIService', [
             return {
                 doApiCall : function(obj) {
                     var xhr = $http({
-                        url : 'http://' + location.host + "/" + appName
-                                + '/rest/admin/' + obj.req_name,
+                        url : 'http://' + location.host + '/rest/admin/' + obj.req_name,
                         method : 'POST',
                         timeout : obj.timeout,
                         params : obj.params,
@@ -42,8 +41,7 @@ myApp.factory('APIService', [
             return {
                 doApiCall : function(obj) {
                     var xhr = $http({
-                        url : 'http://' + location.host + "/" + appName
-                                + '/rest/UserService/' + obj.req_name,
+                        url : 'http://' + location.host + '/rest/UserService/' + obj.req_name,
                         method : 'POST',
                         timeout : obj.timeout,
                         params : obj.params,

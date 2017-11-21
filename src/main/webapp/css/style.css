@@ -241,7 +241,7 @@ md-input-container { margin: 0 0 !important; }
         -webkit-background-size: cover;
         background-size: cover;
         background-position: center;
-        background-image: url(../images/carouselImages/comp-one.jpg);
+        background-image: url(../images/carouselImages/main-cover.jpg);
     }
 
     div.CompThree {
@@ -419,7 +419,7 @@ md-input-container { margin: 0 0 !important; }
         -webkit-background-size: cover;
         background-size: cover;
         background-position: center;
-        background-image: url(../images/carouselImages/comp-one.jpg);
+        background-image: url(../images/carouselImages/main-cover.jpg);
     }
 
     div.CompThree {
@@ -859,17 +859,17 @@ uib-accordion > div > div > div > div.panel-body {
 }
 
 .movie-background {
-    background-image: url("../images/carouselImages/movie-carousel.jpg");
+    background-image: url("../images/carouselImages/movie-home.jpg");
     background-size: cover;
 }
  
 .cricket-background {
-    background-image: url("../images/carouselImages/cricket-carousel-1.jpg");
+    background-image: url("../images/carouselImages/cricket-home.jpeg");
     background-size: cover;
 }
  
 .formula1-background {
-    background-image: url("../images/carouselImages/f1-carousel2.jpg");
+    background-image: url("../images/carouselImages/f1-home.jpg");
     background-size: cover;
 }
 

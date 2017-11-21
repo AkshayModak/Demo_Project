@@ -68,7 +68,7 @@ buildscript {
 }
 
 tomcat {
-    contextPath = "";
+    contextPath = "/";
     tomcatRun.configFile = file("src/main/java/configs/nextrr-context.xml")
 }
 

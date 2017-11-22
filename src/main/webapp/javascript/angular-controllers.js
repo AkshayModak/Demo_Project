@@ -486,7 +486,6 @@ var formula1Controller = function($scope, APIService, $http, $sce, $rootScope) {
                 data[i].isFinished = true;
                 $scope.nextEvent = data[i + 1];
                 $scope.nextEvent.mainRace.circuitGuide = "https://www.youtube.com/embed/" + data[i + 1].mainRace.circuitGuide;
-                console.log($scope.nextEvent.circuitGuide);
                 $scope.trustCircuitGuide = function(circuitGuide) {
                     return $sce.trustAsResourceUrl(circuitGuide);
                 }

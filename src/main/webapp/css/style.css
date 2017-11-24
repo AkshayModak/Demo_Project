@@ -362,14 +362,10 @@ md-input-container { margin: 0 0 !important; }
         padding-bottom: 20px;
     }
 
-    .black-section > button {
-        color: white;
-        margin-left: 32%;
-        padding-top: 0;
-        text-align: center;
-        border: 1px solid red;
+    .black-section > div.text-center > button {
+        color: black;
+        background-color: white !important;
         padding: 10px;
-        border-radius : 5px;
     }
 
     .white-section {
@@ -399,15 +395,10 @@ md-input-container { margin: 0 0 !important; }
         padding-bottom: 20px;
     }
 
-    .white-section > button {
-        background-color: white;
-        color: black;
-        margin-left: 32%;
-        padding-top: 0;
-        text-align: center;
-        border: 1px solid red;
+    .white-section > div.text-center > button {
+        background-color: black;
+        color: white;
         padding: 10px;
-        border-radius : 5px;
     }
 }
 
@@ -553,19 +544,10 @@ md-input-container { margin: 0 0 !important; }
         padding-top: 40px;
     }
 
-    .black-section > button {
-        color: white;
-        margin-left: 40%;
-        padding-top: 0;
-        text-align: center;
-        border: 1px solid red;
+    .black-section > div.text-center > button {
+        background-color: white;
+        color: black;
         padding: 10px;
-        border-radius : 5px;
-    }
-
-    .black-section > button:hover {
-        background-color: black;
-        border: 2px solid red;
     }
 
     .white-section {
@@ -601,21 +583,10 @@ md-input-container { margin: 0 0 !important; }
         padding-bottom: 20px;
     }
 
-    .white-section > button {
-        background-color: white;
-        color: black;
-        margin-left: 40%;
-        padding-top: 0;
-        text-align: center;
-        border: 1px solid red;
+    .white-section > div.text-center > button {
+        background-color: black;
+        color: white;
         padding: 10px;
-        border-radius : 5px;
-    }
-
-    .white-section > button:hover {
-        background-color: white;
-        color: black;
-        border: 2px solid red;
     }
 }
 

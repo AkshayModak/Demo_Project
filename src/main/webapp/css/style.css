@@ -265,18 +265,19 @@ md-input-container { margin: 0 0 !important; }
     .movie-bar > ul > li > .btn { color : white !important; }
 
     .home-title {
-        border-top: solid 2px #adac97;
         color: white; 
         font-weight: bold; 
         font-size: 40px; 
         font-family: 'Coda Caption', sans-serif;
-        padding-left: 5%; 
-        padding-top: 45%;
+        position: absolute;
+        top: 45%;
+        left: 5%;
+        transform: translate(-5%, -50%);
     }
     
     .home-title > h1 {
         color: white;
-        font-size: 70px;
+        font-size: 60px;
         font-family: 'Dancing Script', cursive;
     }
 
@@ -450,13 +451,15 @@ md-input-container { margin: 0 0 !important; }
     }
 
     .home-title {
-        border-top: solid 2px #adac97;
         color: white; 
         font-weight: bold; 
         font-size: 90px; 
         font-family: 'Coda Caption', sans-serif;
-        padding-left: 38%; 
-        padding-top: 25%;
+        position: absolute;
+        float: left;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 
     .home-title > h1 {

@@ -473,10 +473,12 @@ var formula1Controller = function($scope, APIService, $http, $sce, $rootScope) {
             data[i].mainRace.date = raceDate + " " + monthNames[mainRaceDate.getMonth()];
             if (mainRaceDate.getTime() < new Date().getTime()) {
                 data[i].isFinished = true;
-                $scope.nextEvent = data[i + 1];
-                $scope.nextEvent.mainRace.circuitGuide = "https://www.youtube.com/embed/" + data[i + 1].mainRace.circuitGuide;
-                $scope.trustCircuitGuide = function(circuitGuide) {
-                    return $sce.trustAsResourceUrl(circuitGuide);
+                if (data[i + 1] != undefined) {
+                    $scope.nextEvent = data[i + 1];
+                    $scope.nextEvent.mainRace.circuitGuide = "https://www.youtube.com/embed/" + data[i + 1].mainRace.circuitGuide;
+                    $scope.trustCircuitGuide = function(circuitGuide) {
+                        return $sce.trustAsResourceUrl(circuitGuide);
+                    }
                 }
             }
         }

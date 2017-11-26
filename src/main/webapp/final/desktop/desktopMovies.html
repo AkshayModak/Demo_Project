@@ -12,9 +12,14 @@
                         <ul class="list-inline text-center">
                             <li class="col-xs-3 col-md-2">{{ movie.movieName }}</li>
                             <li class="col-xs-6">{{ movie.cast }}</li>
-                            <li class="col-xs-3">{{ movie.releaseDate }}</li>
-                            <li class="col-md-1" ng-if="movie.trailer">
-                            <button type="submit" class="btn btn-link" ng-click="open(movie)"><i class="fa fa-video-camera" aria-hidden="true"></i></button></li>
+                            <li class="col-xs-2">{{ movie.releaseDate }}</li>
+                            <li class="col-md-2" ng-if="movie.trailer">
+                                <ul class="list-inline">
+                                  <li class="text-center" ng-repeat="trailer in movie.trailer">
+                                    <button class="btn btn-link" style="margin-top: 35%;" ng-click="open(trailer)"><i  style="color:white;" class="fa fa-video-camera" aria-hidden="true"></i></button>
+                                  </li>
+                                </ul>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -49,16 +54,3 @@
     </md-tabs>
   </md-toolbar>
 </div>
-<!--MODAL WINDOW-->
-<script type="text/ng-template" id="myModalContent.html">
-    <div modal-movable>
-        <div class="modal-header">
-            {{ movie.movieName }}
-        </div>
-        <div class="modal-body">
-            <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" ng-src="{{ trustSrc(movie.trailer) }}" frameborder="0" allowfullscreen></iframe>
-            </div>
-        </div>
-    </div>
-</script>

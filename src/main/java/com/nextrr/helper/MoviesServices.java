@@ -22,7 +22,6 @@ public class MoviesServices {
 		ArrayList<Map> movieList = new ArrayList<Map>();
 		DatabaseUtils dbUtils = new DatabaseUtils();
 		String movieType = params.getFirst("movieType");
-		System.out.println("=====inside movieType======"+movieType);
 		Map<String, Object> queryMap = new HashMap<String, Object>();
 		queryMap.put("movie_type_id", movieType.toUpperCase());
 		Map<String, Object> movies = dbUtils.getEntityDataWithConditions("movies", queryMap);
@@ -33,9 +32,10 @@ public class MoviesServices {
 			int movieId = Integer.valueOf((String) movieResult.get("movie_id"));
 			String releaseDate = DefaultObjects.formatDate((String) movieResult.get("release_date"));
 			String trailer = (String) movieResult.get("trailer_link");
+			List<String> trailerList = NextrrUtils.getListFromCommaSeparatedString(trailer);
 			String cast = (String) movieResult.get("cast");
 
-			Map<String, Object> movieMap = MoviesHelper.getMovieMap(movieName, movieId, releaseDate, trailer, cast);
+			Map<String, Object> movieMap = MoviesHelper.getMovieMap(movieName, movieId, releaseDate, trailerList, cast);
 			movieList.add(movieMap);
 		}
 		

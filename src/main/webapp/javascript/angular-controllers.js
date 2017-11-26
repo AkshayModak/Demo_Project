@@ -416,16 +416,15 @@ var moviesController = function($scope, APIService, ModalService, $http, $uibMod
     /* Open trailer modal with passed movie
      * reference -- http://jsfiddle.net/8s9ss/4/ 
      *  */
-    $scope.open = function (_movie) {
+    $scope.open = function (trailerLink) {
         var modalInstance = $uibModal.open({
-          controller: "ModalInstanceCtrl",
-          templateUrl: 'myModalContent.html',
-            resolve: {
-                movie: function()
-                {
-                    return _movie;
-                }
-            }
+          controller: function($scope, $sce) {
+              $scope.trustSrc = function(trailer) {
+                  return $sce.trustAsResourceUrl(trailer);
+              }
+              $scope.trailer = trailerLink;
+          },
+          templateUrl: 'myModalContent.html'
         });
     };
 
@@ -449,16 +448,6 @@ var moviesController = function($scope, APIService, ModalService, $http, $uibMod
 
     $rootScope.pageTitle = "Movies | Nextrr";
 };
-
-var ModalInstanceCtrl = function ($scope, $uibModalInstance, movie, $sce) {
-    $scope.close = function () {
-        $uibModalInstance.dismiss('cancel');
-    };
-    $scope.trustSrc = function(trailer) {
-        return $sce.trustAsResourceUrl(trailer);
-    }
-    $scope.movie = movie;
-}
 
 var formula1Controller = function($scope, APIService, $http, $sce, $rootScope) {
 

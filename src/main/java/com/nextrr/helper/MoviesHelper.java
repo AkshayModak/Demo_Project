@@ -26,7 +26,7 @@ public class MoviesHelper {
         return movieMap;
     }
 
-    public static Map<String, Object> getMovieMap(String name, int id, String date, String trailer, String cast) {
+    public static Map<String, Object> getMovieMap(String name, int id, String date, List<String> trailer, String cast) {
 
         Map<String, Object> movieMap = new HashMap<String, Object>();
         movieMap.put("movieName", name);

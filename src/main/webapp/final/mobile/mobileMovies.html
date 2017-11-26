@@ -65,17 +65,4 @@
       </md-tab>
     </md-tabs>
   </md-toolbar>  
-<!--MODAL WINDOW-->
-<script type="text/ng-template" id="myModalContent.html">
-    <div modal-movable>
-        <div class="modal-header">
-            {{ movie.movieName }}
-        </div>
-        <div class="modal-body">
-            <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" ng-src="{{ trustSrc(movie.trailer) }}" frameborder="0" allowfullscreen></iframe>
-            </div>
-        </div>
-    </div>
-</script>
 </div>

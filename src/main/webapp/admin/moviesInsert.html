@@ -47,10 +47,12 @@
         </td>
         <td><md-datepicker ng-model="movie.releaseDate"
             md-placeholder="Enter date"></md-datepicker></td>
-        <td class="col-xs-3"><md-input-container
+        <td class="col-xs-3">
+          <md-input-container
             class="md-icon-float md-block"> <input
             aria-label="trailer" type="text" ng-model="movie.trailer">
-          </md-input-container></td>
+          </md-input-container>
+        </td>
         <td class="col-xs-1"><md-select ng-model="movie.movieType"
             placeholder="Hollywood"> <md-option
             ng-repeat="movieType in movieTypes"

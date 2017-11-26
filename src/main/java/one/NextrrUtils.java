@@ -4,15 +4,12 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.concurrent.ThreadLocalRandom;
 
 import architecture.utils.DebugWrapper;
@@ -23,6 +20,22 @@ public class NextrrUtils {
 
     public static String listToCommaSeperatedString(List<String> list) {
         return String.join(",", list);
+    }
+
+    public static List<String> getListFromCommaSeparatedString(String text) {
+        if (text != null && text != "") {
+            List<String> result = null;
+            if (text.contains(",")) {
+                result = Arrays.asList(text.split("\\s*,\\s*"));
+            } else {
+                List<String> tempList = new ArrayList<>();
+                tempList.add(text);
+                result = tempList;
+            }
+            return result;
+        } else {
+            return null;
+        }
     }
 
     public static String escapeMetaCharacters(String inputString) {

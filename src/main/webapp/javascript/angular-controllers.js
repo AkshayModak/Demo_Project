@@ -520,7 +520,6 @@ myApp.controller("fantasyCricketController", fantasyCricketController);
 myApp.controller("homeController", homeController);
 myApp.controller("contactUsController", contactUsController);
 myApp.controller('navbarController', navbarController);
-myApp.controller('ModalInstanceCtrl', ModalInstanceCtrl);
 
 /* ======== Routes Configurations ========*/
 myApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {

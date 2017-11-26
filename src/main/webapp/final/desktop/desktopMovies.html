@@ -7,7 +7,7 @@
                     <input ng-model="filterMovie" type="text">
                     <md-icon md-font-icon="fa fa-search"></md-icon>
                 </md-input-container>
-                <div ng-repeat= "movie in movies | filter: filterMovie">
+                <div ng-repeat= "movie in filteredMovies | filter: filterMovie">
                     <div class="movie-bar" style="background-color: {{ movie.movieColor }} !important; display: {{ movie.displayMovie }};">
                         <ul class="list-inline text-center">
                             <li class="col-xs-3 col-md-2">{{ movie.movieName }}</li>
@@ -33,7 +33,7 @@
                     <input ng-model="filterMovie" type="text">
                     <md-icon md-font-icon="fa fa-search"></md-icon>
                 </md-input-container>
-                <div ng-repeat= "movie in movies | filter: filterMovie">
+                <div ng-repeat= "movie in filteredMovies | filter: filterMovie">
                     <div class="movie-bar" style="background-color: {{ movie.movieColor }} !important; display: {{ movie.displayMovie }};">
                         <ul class="list-inline text-center">
                             <li class="col-xs-3 col-md-2">{{ movie.movieName }}</li>

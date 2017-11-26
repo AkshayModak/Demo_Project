@@ -396,9 +396,7 @@ var editMoviesController = function($scope, APIService, $http, $mdConstant) {
         var seperatedString = angular.copy(chip);
         seperatedString = seperatedString.toString();
         var chipsArray = seperatedString.split(', ');
-        console.log(chipsArray);
         angular.forEach(chipsArray, function(chipToAdd) {
-            /* $scope[model][index].cast.push(chipToAdd); */
             $scope[model][index - 1].cast.push(chipToAdd);
         });
         return null;

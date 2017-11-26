@@ -29,6 +29,28 @@ function format_time(date_obj) {
     return hour + ":" + minute + amPM;
 }
 
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+//Generic pagination logic
+function getPagination(scopeVariable, $scope, begin) {
+    $scope.filteredTodos = []
+    $scope.maxSize = begin + 10;
+    var listLength = $scope[scopeVariable].length;
+    var filteredScopeVariable = "filtered" + capitalizeFirstLetter(scopeVariable);
+
+    $scope[filteredScopeVariable] = $scope[scopeVariable].slice(begin, $scope.maxSize);
+    angular.element(document).on('scroll', function() {
+        // do your things like logging the Y-axis
+        if ((window.innerHeight + window.scrollY) >= jQuery(this).innerHeight()) {
+            // you're at the bottom of the page
+            var end = $scope[filteredScopeVariable].length + $scope.maxSize;
+            $scope[filteredScopeVariable] = $scope[scopeVariable].slice(begin, end);
+        }
+    });
+}
+
 /* ======== Controller Definitions =======*/
 var homeController = function($scope, $rootScope, APIService) {
     $rootScope.home = true;
@@ -305,17 +327,20 @@ var cricketController = function($scope, APIService, ModalService, $http, $uibMo
             var colors = ['#1a237e', '#880e4f', '#4a148c', '#004d40', '#6d4c41', '#455a64']; //Color list for cricket-bar. Chosen randomly
             var today = new Date();
             today.setHours(0,0,0,0);
+            var finishedMatches = 0;
             for (i=0; i < cricketList.length; i++) {
                 var randomColor = getRandomInt(0, 4);
                 cricketList[i].barColor = colors[randomColor];
                 matchDate = new Date(cricketList[i].match_date);
                 if (matchDate < today) {
                     cricketList[i].displayCricket = "display-none";
+                    finishedMatches = finishedMatches + 1;
                 } else {
                     cricketList[i].displayCricket = "display-block";
                 }
             }
             $scope.cricketList = cricketList;
+            getPagination('cricketList', $scope, finishedMatches);
             $rootScope.showLoader = false;
         });
     }
@@ -392,6 +417,7 @@ var moviesController = function($scope, APIService, ModalService, $http, $uibMod
                  to get a value that is either negative, positive, or zero. */
                 return new Date(a.releaseDate) - new Date(b.releaseDate);
             });
+            var releasedMovies = 0;
             for (i = 0; i < data.length; i++) {
                 var randomColor = getRandomInt(0, 4);
                 data[i].movieColor = colors[randomColor];
@@ -400,9 +426,11 @@ var moviesController = function($scope, APIService, ModalService, $http, $uibMod
                 var releaseDate = new Date(data[i].releaseDate);
                 if (releaseDate < today) {
                     data[i].displayMovie = "none";
+                    releasedMovies = releasedMovies + 1;
                 }
             }
             $scope.movies = data;
+            getPagination('movies', $scope, releasedMovies);
             $rootScope.showLoader = false;
         });
     }

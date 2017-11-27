@@ -270,6 +270,9 @@ var cricketController = function($scope, APIService, ModalService, $http, $uibMo
         $scope.filterString = "";
         if (string == '') {
             $scope.dropdown_index = -1;
+            getPagination('cricketList', $scope, $scope.finishedMatches);
+        } else {
+            $scope.filteredCricketList = $scope.cricketList;
         }
         $scope.filterString = string;
         $scope.selectedTeam = string;
@@ -327,20 +330,20 @@ var cricketController = function($scope, APIService, ModalService, $http, $uibMo
             var colors = ['#1a237e', '#880e4f', '#4a148c', '#004d40', '#6d4c41', '#455a64']; //Color list for cricket-bar. Chosen randomly
             var today = new Date();
             today.setHours(0,0,0,0);
-            var finishedMatches = 0;
+            $scope.finishedMatches = 0;
             for (i=0; i < cricketList.length; i++) {
                 var randomColor = getRandomInt(0, 4);
                 cricketList[i].barColor = colors[randomColor];
                 matchDate = new Date(cricketList[i].match_date);
                 if (matchDate < today) {
                     cricketList[i].displayCricket = "display-none";
-                    finishedMatches = finishedMatches + 1;
+                    $scope.finishedMatches = $scope.finishedMatches + 1;
                 } else {
                     cricketList[i].displayCricket = "display-block";
                 }
             }
             $scope.cricketList = cricketList;
-            getPagination('cricketList', $scope, finishedMatches);
+            getPagination('cricketList', $scope, $scope.finishedMatches);
             $rootScope.showLoader = false;
         });
     }

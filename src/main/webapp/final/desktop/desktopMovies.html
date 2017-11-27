@@ -16,7 +16,9 @@
                             <li class="col-md-2" ng-if="movie.trailer">
                                 <ul class="list-inline">
                                   <li class="text-center" ng-repeat="trailer in movie.trailer">
-                                    <button class="btn btn-link" style="margin-top: 35%;" ng-click="open(trailer)"><i  style="color:white;" class="fa fa-video-camera" aria-hidden="true"></i></button>
+                                    <button class="btn btn-link" ng-click="open(trailer)">
+                                        <img src="images/fonts/movie-trailer.svg" style="width: 20px; height: 20px;"/>
+                                    </button>
                                   </li>
                                 </ul>
                             </li>

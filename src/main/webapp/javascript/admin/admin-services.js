@@ -7,7 +7,7 @@ myApp.factory('AdminAPIService', [
             return {
                 doApiCall : function(obj) {
                     var xhr = $http({
-                        url : 'http://' + location.host + '/rest/admin/' + obj.req_name,
+                        url : 'https://' + location.host + '/rest/admin/' + obj.req_name,
                         method : 'POST',
                         timeout : obj.timeout,
                         params : obj.params,

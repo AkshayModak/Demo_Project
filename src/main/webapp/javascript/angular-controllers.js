@@ -67,6 +67,7 @@ var homeController = function($scope, $rootScope, APIService) {
                     $scope.movieContent = content[0];
                     $scope.cricketContent = content[1];
                     $scope.f1Content = content[2];
+                    $scope.fantasyCricketContent = content[3];
                 });
     }
     getContent();

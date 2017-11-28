@@ -317,6 +317,7 @@ var cricketController = function($scope, APIService, ModalService, $http, $uibMo
                 }
             }
         }
+        $scope.filteredCricketList = cricketList;
     }
     $scope.cricketList = [];
 
@@ -475,6 +476,7 @@ var moviesController = function($scope, APIService, ModalService, $http, $uibMod
                 }
             }
         }
+        $scope.filteredMovies = movies;
     }
 
     $rootScope.pageTitle = "Movies | Nextrr";
